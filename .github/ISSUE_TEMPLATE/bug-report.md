@@ -1,18 +1,10 @@
 ---
-name: "(예시) 마이페이지 화면 UI 완성"
-about: 마이페이지 기능 제외한 화면 UI 퍼블리싱 완료
-title: ''
-labels: ''
-assignees: ''
-
----
-
----
 name: Bug report
 about: Create a report to help us improve
-title: '[BUG]'
-labels: ''
+title: "[BUG]"
+labels: 'Priority : Critical, Type : Bug'
 assignees: ''
+
 ---
 
 ## Description
