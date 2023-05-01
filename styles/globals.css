@@ -3,9 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-}
-
 * {
   font-family: 'Noto Sans KR', sans-serif;
+}
+
+@layer components {
+  .header-btn {
+    @apply w-8 h-8 flex justify-center items-center;
+  }
 }

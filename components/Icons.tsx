@@ -321,3 +321,14 @@ export const EyeOffIcon = ({ color = '#999999', width = '24', height = '24' }: I
     />
   </svg>
 );
+
+export const MagnifyingGlass = ({ color = '#1C1C1C', width = '17.45', height = '16.91' }: IconPropsType) => (
+  <svg width={width} height={height} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M13.5455 13L17.3636 16.8182M15.1818 8.09091C15.1818 12.0071 12.0071 15.1818 8.09091 15.1818C4.17471 15.1818 1 12.0071 1 8.09091C1 4.17471 4.17471 1 8.09091 1C12.0071 1 15.1818 4.17471 15.1818 8.09091Z"
+      stroke={color}
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+);
