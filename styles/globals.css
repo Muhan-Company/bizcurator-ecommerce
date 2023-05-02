@@ -9,6 +9,10 @@
 
 @layer components {
   .header-btn {
-    @apply w-8 h-8 flex justify-center items-center;
+    @apply flex justify-center items-center;
+  }
+
+  .header-link {
+    @apply text-button-xs md:text-button-md font-normal text-gray_01;
   }
 }
