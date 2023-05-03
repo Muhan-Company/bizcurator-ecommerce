@@ -17,7 +17,7 @@ export default function HeaderDropdown({ isHovered }: { isHovered: boolean }) {
     <div
       className={`hidden ${
         isHovered ? 'lg:opacity-100' : 'lg:opacity-0 pointer-events-none'
-      } duration-150 absolute top-[calc(100%)] -left-[190px] lg:block lg:ml-24 xl:ml-48 w-64 bg-white box-shadow`}
+      } duration-150 absolute top-[calc(100%)] -left-[92px] xl:-left-[190px] lg:block lg:ml-24 xl:ml-48 w-64 bg-white box-shadow`}
     >
       <DropdownItem href="#" icon={LampIcon({ color: '#999999', width: '28', height: '28' })} category="객실용품" />
       <DropdownItem href="#" icon={ShowerIcon({ color: '#999999', width: '30', height: '30' })} category="욕실용품" />
