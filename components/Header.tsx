@@ -3,7 +3,7 @@ import TopHeader from './TopHeader';
 
 export default function Header() {
   return (
-    <header className="py-2 md:py-5 max-w-xl md:max-w-2xl xl:max-w-5xl mx-auto space-y-3 md:space-y-10 top-0 sticky">
+    <header className="shadow-md pt-2 lg:pt-5 lg:px-24 xl:px-48 space-y-3 lg:space-y-10 top-0 sticky">
       <TopHeader />
       <DownHeader />
     </header>

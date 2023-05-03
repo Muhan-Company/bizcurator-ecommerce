@@ -118,19 +118,11 @@ export const ToothBrushIcon = ({ color = '#1C1C1C', width = '41', height = '41' 
   </svg>
 );
 
-export const CartIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth="1.5"
-    stroke="currentColor"
-    className="w-5 md:w-8 h-5 md:h-8"
-  >
+export const CartIcon = ({ color = '#000', width = '32', height = '32' }: IconPropsType) => (
+  <svg width={width} height={height} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+      d="M26.4329 32C25.3013 32 24.4019 31.0982 24.4019 29.9636C24.4019 28.8291 25.3013 27.9273 26.4329 27.9273C27.5645 27.9273 28.464 28.8291 28.464 29.9636C28.464 31.0982 27.5355 32 26.4329 32ZM10.1844 32C9.05278 32 8.1533 31.0982 8.1533 29.9636C8.1533 28.8291 9.05278 27.9273 10.1844 27.9273C11.316 27.9273 12.2154 28.8291 12.2154 29.9636C12.2154 31.0982 11.287 32 10.1844 32ZM9.8652 26.1818C8.32739 26.1818 6.99269 24.96 6.8186 23.4182L4.84556 9.51273L3.71396 3.02545C3.62691 2.32727 3.01759 1.74545 2.35024 1.74545H0.870459C0.377199 1.74545 0 1.36727 0 0.872727C0 0.378182 0.377199 0 0.870459 0H2.35024C3.88805 0 5.25177 1.22182 5.45488 2.76364L6.58648 9.25091L8.55952 23.1855C8.61755 23.8545 9.22687 24.4364 9.8652 24.4364H28.7252C29.2184 24.4364 29.5956 24.8145 29.5956 25.3091C29.5956 25.8036 29.2184 26.1818 28.7252 26.1818H9.8652ZM11.316 21.5273C10.8517 21.5273 10.4745 21.1782 10.4455 20.7127C10.4165 20.48 10.5035 20.2473 10.6486 20.0727C10.7937 19.8982 11.0258 19.7818 11.2289 19.7818L26.9842 18.6182C27.6806 18.6182 28.2899 18.0655 28.377 17.3964L30.2049 6.92364C30.263 6.42909 30.1179 5.90545 29.8277 5.58545C29.6246 5.35273 29.3635 5.23636 29.0443 5.23636H8.99475C8.50149 5.23636 8.12429 4.85818 8.12429 4.36364C8.12429 3.86909 8.50149 3.49091 8.99475 3.49091H29.1024C29.9148 3.49091 30.6402 3.84 31.1915 4.42182C31.8008 5.12 32.0909 6.13818 31.9749 7.15636L30.1469 17.6291C29.9728 19.1418 28.6091 20.3345 27.1003 20.3345L11.432 21.4982C11.374 21.5273 11.345 21.5273 11.316 21.5273Z"
+      fill={color}
     />
   </svg>
 );
@@ -330,14 +322,14 @@ export const EyeOffIcon = ({ color = '#999999', width = '24', height = '24' }: I
   </svg>
 );
 
-export const MagnifyingGlass = () => (
+export const MagnifyingGlassIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth="1.5"
     stroke="currentColor"
-    className="w-5 h-5 md:w-8 md:h-8"
+    className="w-5 h-5 lg:w-8 lg:h-8"
   >
     <path
       strokeLinecap="round"
@@ -347,15 +339,15 @@ export const MagnifyingGlass = () => (
   </svg>
 );
 
-export const Logo = () => (
+export const LogoIcon = () => (
   <svg
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
-    className="w-[34px] h-[34px] md:w-[66px] md:h-[66px] md:mt-7"
+    className="w-[34px] h-[34px] lg:w-[66px] lg:h-[66px] lg:mt-7"
   >
     <rect
-      className="w-6 h-6 md:w-[46.859px] md:h-[46.859px]"
+      className="w-6 h-6 lg:w-[46.859px] lg:h-[46.859px]"
       transform="matrix(0.810456 -0.5858 0.582283 0.812986 0 14.0596)"
       fill="url(#pattern0)"
     />
@@ -373,7 +365,7 @@ export const Logo = () => (
   </svg>
 );
 
-export const Bars = () => (
+export const BarsIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -386,7 +378,7 @@ export const Bars = () => (
   </svg>
 );
 
-export const User = () => (
+export const UserIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -399,6 +391,23 @@ export const User = () => (
       strokeLinecap="round"
       strokeLinejoin="round"
       d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+    />
+  </svg>
+);
+
+export const Cart = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="currentColor"
+    className="w-5 lg:w-8 h-5 lg:h-8"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
     />
   </svg>
 );

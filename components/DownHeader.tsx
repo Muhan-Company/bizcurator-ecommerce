@@ -1,29 +1,26 @@
 import Link from 'next/link';
-import { Bars } from './Icons';
+import { BarsIcon } from './Icons';
+import NavLink from './NavLink';
 
 export default function DownHeader() {
   return (
-    <div className="h-[55px]">
-      <div className="px-6 md:px-0 md:flex md:justify-between">
-        <div className="hidden md:flex space-x-2 items-center flex-1">
-          <Bars />
+    <div>
+      <div className="px-6 lg:px-0 lg:flex lg:justify-between">
+        <div className="hidden lg:flex space-x-2 items-center flex-1">
+          <BarsIcon />
           <Link href={'#'} className="header-link">
             전체 상품 보기
           </Link>
         </div>
-        <div className="md:space-x-5 xl:space-x-12 flex justify-evenly md:justify-between">
-          <Link href={'/'} className="hidden md:inline md:header-link">
+        <div className="lg:space-x-5 xl:space-x-12 flex justify-evenly lg:justify-between">
+          <NavLink href={'/'} className="hidden lg:inline lg:header-link">
             홈
-          </Link>
-          <Link href={'#'} className="header-link">
-            바로구매
-          </Link>
-          <Link href={'#'} className="header-link mx-3">
+          </NavLink>
+          <NavLink href={'#'}>바로구매</NavLink>
+          <NavLink href={'#'} className="mx-3">
             제품구매 의뢰
-          </Link>
-          <Link href={'#'} className="header-link">
-            입점 의뢰
-          </Link>
+          </NavLink>
+          <NavLink href={'#'}>입점 의뢰</NavLink>
         </div>
       </div>
     </div>

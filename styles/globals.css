@@ -13,6 +13,6 @@
   }
 
   .header-link {
-    @apply text-button-xs md:text-button-md font-normal text-gray_01;
+    @apply text-button-xs md:text-button-sm lg:text-button-md font-normal text-gray_01 w-32 h-14 leading-[56px] text-center;
   }
 }
