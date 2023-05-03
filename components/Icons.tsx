@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 type IconPropsType = {
   className?: string;
   color?: string;
