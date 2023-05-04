@@ -3,9 +3,11 @@ import { Cart, LogoIcon, MagnifyingGlassIcon, UserIcon } from './Icons';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import SearchModal from './SearchModal';
+import LogInModal from './LogInModal';
 
 export default function TopHeader() {
   const [showSearchModal, setShowSearchModal] = useState<boolean>(false);
+  const [showLogInModal, setShowLogInModal] = useState<boolean>(false);
 
   return (
     <div className="h-16 lg:h-auto px-6 lg:px-0 flex justify-between items-center">
@@ -16,7 +18,8 @@ export default function TopHeader() {
       <div className="lg:flex flex-col lg:space-y-10">
         <div className="hidden lg:block space-x-5">
           <Link href={'#'}>회원가입</Link>
-          <button>로그인</button>
+          <button onClick={() => setShowLogInModal(true)}>로그인</button>
+          {showLogInModal && createPortal(<LogInModal setShowLogInModal={setShowLogInModal} />, document.body)}
           <Link href={'#'}>고객센터</Link>
         </div>
         <div className="flex items-center space-x-5 ml-auto">
