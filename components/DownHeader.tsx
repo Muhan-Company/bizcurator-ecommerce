@@ -1,17 +1,29 @@
 import Link from 'next/link';
 import { BarsIcon } from './Icons';
 import NavLink from './NavLink';
+import HeaderDropdown from './HeaderDropdown';
 
-export default function DownHeader() {
+interface HoverProps {
+  isHovered: boolean;
+  setIsHovered: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function DownHeader({ isHovered, setIsHovered }: HoverProps) {
   return (
     <div>
-      <div className="px-6 lg:px-0 lg:flex lg:justify-between">
-        <div className="hidden lg:flex space-x-2 items-center flex-1">
-          <BarsIcon />
-          <Link href={'#'} className="header-link">
-            전체 상품 보기
+      <div className="px-6 lg:px-0 lg:flex justify-between">
+        <div
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          className="hidden lg:block relative"
+        >
+          <Link href={'#'} className="lg:flex items-center">
+            <BarsIcon />
+            <h3 className="header-link">전체 상품 보기</h3>
           </Link>
+          <HeaderDropdown isHovered={isHovered} />
         </div>
+
         <div className="lg:space-x-5 xl:space-x-12 flex justify-evenly lg:justify-between">
           <NavLink href={'/'} className="hidden lg:inline lg:header-link">
             홈
