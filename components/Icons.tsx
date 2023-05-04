@@ -252,16 +252,16 @@ export const CloseIcon = ({ color = '#1C1C1C', width = '24', height = '24' }: Ic
   </svg>
 );
 
-export const CheckBoxIcon = ({ color = '#999999', width = '28', height = '28' }: IconPropsType) => (
-  <svg width={width} height={height} viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0.5" y="-0.5" width="27" height="27" rx="3.5" transform="matrix(1 0 0 -1 0 27)" stroke={color} />
+export const CheckBoxIcon = () => (
+  <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[18px] md:w-7 h-[18px] md:h-7">
+    <rect x="0.5" y="-0.5" width="27" height="27" rx="3.5" transform="matrix(1 0 0 -1 0 27)" stroke="#999999" />
   </svg>
 );
 
-export const CheckedBoxIcon = ({ color = '#16133A', width = '28', height = '28' }: IconPropsType) => (
-  <svg width={width} height={height} viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g clip-path="url(#clip0_450_8018)">
-      <rect width="28" height="28" rx="4" transform="matrix(1 0 0 -1 0 28)" fill={color} />
+export const CheckedBoxIcon = () => (
+  <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[18px] md:w-7 h-[18px] md:h-7">
+    <g clipPath="url(#clip0_450_8018)">
+      <rect width="28" height="28" rx="4" transform="matrix(1 0 0 -1 0 28)" fill="#16133A" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -269,7 +269,7 @@ export const CheckedBoxIcon = ({ color = '#16133A', width = '28', height = '28' 
         fill="white"
       />
     </g>
-    <rect x="0.5" y="-0.5" width="27" height="27" rx="3.5" transform="matrix(1 0 0 -1 0 27)" stroke={color} />
+    <rect x="0.5" y="-0.5" width="27" height="27" rx="3.5" transform="matrix(1 0 0 -1 0 27)" stroke="#16133A" />
     <defs>
       <clipPath id="clip0_450_8018">
         <rect width="28" height="28" rx="4" transform="matrix(1 0 0 -1 0 28)" fill="white" />
