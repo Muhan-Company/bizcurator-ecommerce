@@ -286,7 +286,7 @@ export const SmallCheckBoxIcon = ({ color = '#999999', width = '18', height = '1
 
 export const SmallCheckedBoxIcon = ({ color = '#16133A', width = '18', height = '18' }: IconPropsType) => (
   <svg width={width} height={height} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g clip-path="url(#clip0_450_8022)">
+    <g clipPath="url(#clip0_450_8022)">
       <rect width="18" height="18" rx="4" transform="matrix(1 0 0 -1 0 18)" fill={color} />
       <path
         fillRule="evenodd"
@@ -409,5 +409,26 @@ export const Cart = () => (
       strokeLinejoin="round"
       d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
     />
+  </svg>
+);
+
+export const PlusIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-3.5 md:w-6 h-3.5 md:h-6">
+    <path
+      d="M19 13H13V19C13 19 13 20 12 20C11 20 11 19 11 19V13H5C5 13 4 13 4 12C4 11 5 11 5 11H11V5C11 5 11 4 12 4C13 4 13 5 13 5V11H19C19 11 20 11 20 12C20 13 19 13 19 13Z"
+      fill="#1C1C1C"
+    />
+  </svg>
+);
+
+export const MinusIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-3.5 md:w-6 h-3.5 md:h-6">
+    <path d="M19 13H5C5 13 4 13 4 12C4 11 5 11 5 11H19C19 11 20 11 20 12C20 13 19 13 19 13Z" fill="#1C1C1C" />
+  </svg>
+);
+
+export const DisabledMinusIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-3.5 md:w-6 h-3.5 md:h-6">
+    <path d="M19 13H5C5 13 4 13 4 12C4 11 5 11 5 11H19C19 11 20 11 20 12C20 13 19 13 19 13Z" fill="#999999" />
   </svg>
 );
