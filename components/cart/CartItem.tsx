@@ -3,13 +3,15 @@ import React, { useState } from 'react';
 import { CloseIcon, DisabledMinusIcon, MinusIcon, PlusIcon, SmallCheckBoxIcon, SmallCheckedBoxIcon } from '../Icons';
 
 type CartItemPropsType = {
-  isSelected?: boolean;
+  isSelected: boolean;
+  setIsSelected: React.Dispatch<React.SetStateAction<boolean>>;
 };
-export default function CartItem({ isSelected = true }: CartItemPropsType) {
+export default function CartItem({ isSelected, setIsSelected }: CartItemPropsType) {
   return (
     <div className="flex py-[22px] border-b-[1px] border-b-gray_02">
-      {/* todo: 부모 컴포넌트에서 체크박스 선택값 연결 */}
-      <div className="pr-3">{isSelected ? <SmallCheckedBoxIcon /> : <SmallCheckBoxIcon />}</div>
+      <div className="pr-3" onClick={() => setIsSelected(!isSelected)}>
+        {isSelected ? <SmallCheckedBoxIcon /> : <SmallCheckBoxIcon />}
+      </div>
       <div className="flex grow">
         <div className="w-[86px] h-[86px] rounded-[10px] bg-gray_04">
           <Image src="/img/image 68.png" alt="thumnail" width={62} height={62} className="p-3 box-content" />
