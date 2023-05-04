@@ -3,9 +3,9 @@ import { MagnifyingGlassIcon } from './Icons';
 import { useRouter } from 'next/router';
 
 export default function SearchModal({
-  setShowLogInModal,
+  setShowSearchModal,
 }: {
-  setShowLogInModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowSearchModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [query, setQuery] = useState<string>('');
 
@@ -27,7 +27,7 @@ export default function SearchModal({
         <MagnifyingGlassIcon />
         <button hidden type="submit"></button>
       </form>
-      <div onClick={() => setShowLogInModal(false)} className="fixed inset-0 z-20 bg-black/70"></div>
+      <div onClick={() => setShowSearchModal(false)} className="fixed inset-0 z-20 bg-black/70"></div>
     </div>
   );
 }

@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import SearchModal from './SearchModal';
 
 export default function TopHeader() {
-  const [showLogInModal, setShowLogInModal] = useState<boolean>(false);
+  const [showSearchModal, setShowSearchModal] = useState<boolean>(false);
 
   return (
     <div className="h-16 lg:h-auto px-6 lg:px-0 flex justify-between items-center">
@@ -20,10 +20,10 @@ export default function TopHeader() {
           <Link href={'#'}>고객센터</Link>
         </div>
         <div className="flex items-center space-x-5 ml-auto">
-          <button className="header-btn" onClick={() => setShowLogInModal(true)}>
+          <button className="header-btn" onClick={() => setShowSearchModal(true)}>
             <MagnifyingGlassIcon />
           </button>
-          {showLogInModal && createPortal(<SearchModal setShowLogInModal={setShowLogInModal} />, document.body)}
+          {showSearchModal && createPortal(<SearchModal setShowSearchModal={setShowSearchModal} />, document.body)}
           <button className="hidden lg:inline header-btn">
             <UserIcon />
           </button>
