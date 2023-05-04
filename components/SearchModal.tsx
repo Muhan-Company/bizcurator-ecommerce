@@ -10,7 +10,10 @@ export default function SearchModal({
   const [query, setQuery] = useState<string>('');
 
   const router = useRouter();
-  const search = () => router.push(`/search?q=${query}`);
+  const search = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    router.push(`/search?q=${query}`);
+  };
 
   return (
     <div>
@@ -23,6 +26,7 @@ export default function SearchModal({
           onChange={(e) => setQuery(e.target.value)}
           type="text"
           className="text-lg md:text-xl outline-none flex-1"
+          autoFocus
         />
         <MagnifyingGlassIcon />
         <button hidden type="submit"></button>
