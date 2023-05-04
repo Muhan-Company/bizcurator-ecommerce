@@ -41,6 +41,40 @@ function CartItemInfo({ name = '상품이름', price = 5000, discount = 500 }: C
         {/* 정가 */}
         <span className="text-label-xs text-gray_01 line-through">{originalPrice}원</span>
       </div>
+      {/* 최소수량 입력받기 */}
+      <Counter min={10} />
+    </div>
+  );
+}
+
+type CounterPropsType = {
+  min: number;
+};
+function Counter({ min }: CounterPropsType) {
+  const [quantity, setQuantity] = useState(min);
+  return (
+    <div className="flex items-center justify-center  w-[78px] h-[26px] border-[1px] border-gray_02 rounded-[8px] box-content">
+      <div className="flex items-center justify-center px-2 py-1.5">
+        {min !== quantity ? (
+          <div onClick={() => setQuantity(quantity! - 1)}>
+            <MinusIcon />
+          </div>
+        ) : (
+          <div>
+            <DisabledMinusIcon />
+          </div>
+        )}
+        <input
+          className="w-[34px] box-content text-label-sm text-center"
+          onChange={(e) => setQuantity(Number(e.target.value))}
+          value={quantity}
+          // 최소수량 보다 작게 입력 후 input창 블러시 최소수량으로 재지정
+          onBlur={(e) => Number(e.target.value) < min && setQuantity(min)}
+        />
+        <div onClick={() => setQuantity(quantity! + 1)}>
+          <PlusIcon />
+        </div>
+      </div>
     </div>
   );
 }
