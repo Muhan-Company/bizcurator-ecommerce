@@ -3,9 +3,20 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-}
-
 * {
   font-family: 'Noto Sans KR', sans-serif;
+}
+
+@layer components {
+  .header-btn {
+    @apply flex justify-center items-center;
+  }
+
+  .header-link {
+    @apply text-button-xs md:text-button-sm lg:text-button-md font-normal text-gray_01 w-32 h-14 leading-[56px] text-center;
+  }
+
+  .box-shadow {
+    box-shadow: -1px 4px 10px rgba(0, 0, 0, 0.08);
+  }
 }

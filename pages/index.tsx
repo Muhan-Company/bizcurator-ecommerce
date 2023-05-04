@@ -1,9 +1,9 @@
-import Customer from "@/components/customer/CustomerCenter";
+import Header from '@/components/Header';
 
 export default function Home() {
   return (
     <main>
-      <Customer></Customer>
+      <Header />
     </main>
   );
 }
