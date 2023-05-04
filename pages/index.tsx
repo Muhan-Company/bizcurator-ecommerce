@@ -1,4 +1,4 @@
-import Customer from "@/components/Customer";
+import Customer from "@/components/customer/CustomerCenter";
 
 export default function Home() {
   return (

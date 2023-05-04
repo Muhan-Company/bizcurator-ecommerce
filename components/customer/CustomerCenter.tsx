@@ -23,14 +23,14 @@ const tabs: TabsType = [
     }
 ]
 
-export default function Customer() {
+export default function CustomerCenter() {
     const [selectedTab, setSelectedTab] = useState<number>(tabs[0].index)
 
     return (
         <div>
-            <div className="lg:px-24 xl:px-48">
-                <h1 className="text-black text-3xl mt-16 inline-block md:bg-red">고객센터</h1>
-                <div>
+            <div>
+                <h1 className="text-black text-3xl mt-16 inline-block md:block md:w-[1100px] md:mx-auto">고객센터</h1>
+                <div className="md:flex md:w-[1100px] md:mx-auto md:relative">
                     <Kakao />
                     <div className="mt-2 md:mt-9">
                         <CustomerTabMenu

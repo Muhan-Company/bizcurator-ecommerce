@@ -22,10 +22,10 @@ const CustomerTabMenu: FC<TabsProps> = ({
     const Panel = tabs && tabs.find((tab) => tab.index === selectedTab);
     return (
         <>
-            <div className="flex lg:w-56 flex-col">
+            <div className="flex md:w-[200px] md:flex-col">
                 {tabs.map((tab) => (
                     <div
-                        className={`text-base w-1/2 lg:w-full py-4 text-center mb:w-56 mb:py-5 block border border-gray-200 hover:bg-gray-200
+                        className={`text-base w-1/2 md:w-full py-4 text-center mb:w-56 mb:py-5 block border border-gray-200 hover:bg-gray-200
                         ${tab.index === selectedTab ? "bg-gray-200" : ""}`}
                         key={tab.index}
                         onClick={() => onClick(tab.index)}
@@ -42,12 +42,3 @@ const CustomerTabMenu: FC<TabsProps> = ({
 }
 
 export default CustomerTabMenu;
-
-// export default function CustomerTabMenu({ onClick }: Props) {
-//     return (
-//         <div onClick={onClick}
-//             className="text-base w-1/2 py-4 text-center mb:w-56 mb:py-5 block border border-gray-200 hover:bg-gray-200">
-//         </div>
-//     )
-// }
-
