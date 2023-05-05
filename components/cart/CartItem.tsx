@@ -16,7 +16,7 @@ export default function CartItem({ isSelected, setIsSelected }: CartItemPropsTyp
         <div className="w-[86px] md:w-[120px] h-[86px] md:h-[120px] rounded-[10px] bg-gray_04 p-3 box-content">
           <Image
             src="/img/image 68.png"
-            alt="thumnail"
+            alt="thumbnail"
             width={62}
             height={62}
             className="w-full	h-full md:object-cover"
