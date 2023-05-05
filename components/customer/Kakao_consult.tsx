@@ -7,7 +7,10 @@ export default function Kakao() {
                     {/* <br />*제품교환의 경우 카톡 채널로 바로 연락 부탁드립니다. */}
                 </span>
             </div>
-            <button className="w-10/12 md:w-[200px] bg-yellow-300 py-4 mx-8 rounded-lg mb-3">카톡채널 상담</button>
+            <button
+                className="w-10/12 md:w-[200px] bg-yellow-300 py-4 mx-8 rounded-lg mb-3"
+
+            >카톡채널 상담</button>
         </div>
     )
 }
