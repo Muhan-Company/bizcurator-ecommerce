@@ -1,11 +1,11 @@
-import CartItem from '@/components/cart/CartItem';
-import React, { useState } from 'react';
+import CartItemList from '@/components/cart/CartItemList';
 
 export default function Cart() {
-  const [isSelected, setIsSelected] = useState<boolean>(true);
   return (
     <>
-      <CartItem isSelected={isSelected} setIsSelected={setIsSelected} />
+      <div className="mx-3">
+        <CartItemList />
+      </div>
     </>
   );
 }
