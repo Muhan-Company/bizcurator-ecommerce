@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import DownHeader from './DownHeader';
 import TopHeader from './TopHeader';
+import DownHeader from './DownHeader';
 
 export default function Header() {
   const [isHovered, setIsHovered] = useState<boolean>(false);

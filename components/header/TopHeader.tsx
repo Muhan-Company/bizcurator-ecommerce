@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { Cart, LogoIcon, MagnifyingGlassIcon, UserIcon } from './Icons';
+import { Cart, LogoIcon, MagnifyingGlassIcon, UserIcon } from '../Icons';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import SearchModal from './SearchModal';
 import LogInModal from './LogInModal';
+import SearchModal from './SearchModal';
 
 export default function TopHeader() {
   const [showSearchModal, setShowSearchModal] = useState<boolean>(false);
