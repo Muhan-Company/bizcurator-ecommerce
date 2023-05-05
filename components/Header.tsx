@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import DownHeader from './DownHeader';
-import HeaderDropdown from './HeaderDropdown';
 import TopHeader from './TopHeader';
 
 export default function Header() {
