@@ -10,7 +10,7 @@ export default function TopHeader() {
   const [showLogInModal, setShowLogInModal] = useState<boolean>(false);
 
   return (
-    <div className="h-16 lg:h-auto px-6 lg:px-0 flex justify-between items-center">
+    <div className="px-6 lg:px-0 flex justify-between items-center">
       <Link href={'/'} className="flex items-center">
         <h1 className="text-[20px] lg:text-head-xl font-bold">BIZ CURATOR</h1>
         <LogoIcon />

@@ -19,4 +19,19 @@
   .box-shadow {
     box-shadow: -1px 4px 10px rgba(0, 0, 0, 0.08);
   }
+
+  .swiper-button-next {
+    @apply absolute top-1/2 -translate-y-1/2 right-3 z-10 cursor-pointer bg-black/80 flex justify-center items-center w-6 h-6 md:w-12 md:h-12 rounded-full;
+    background: rgba(28, 28, 28, 0.2);
+  }
+
+  .swiper-button-prev {
+    @apply absolute top-1/2 -translate-y-1/2 left-3 z-10 cursor-pointer bg-black/80 flex justify-center items-center w-6 h-6 md:w-12 md:h-12 rounded-full;
+    background: rgba(28, 28, 28, 0.2);
+  }
+
+  .swiper-pagination {
+    @apply text-white w-fit left-1/2 -translate-x-1/2 px-3 md:px-4 md:py-1 rounded-full md:text-xl !important;
+    background: rgba(28, 28, 28, 0.2);
+  }
 }
