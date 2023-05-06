@@ -24,9 +24,7 @@ export default function CartItemInfo({ name = '상품이름', price = 5000, disc
         </div>
       </div>
       {/* 최소수량 입력받기 */}
-      <div className="md:absolute">
-        <Counter min={10} />
-      </div>
+      <Counter min={10} />
     </div>
   );
 }
