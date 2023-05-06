@@ -47,13 +47,11 @@ export default function CartItemList({ items = [1] }: CartItemPropsType) {
           <CartPaymentAmountInfo />
           <div className="btn-mobile center gap-[7px]">
             {/* todo: 바로구매 페이지로 이동 */}
-            <Link href="/" className="w-[172px] btn-white grow">
-              <span className="py-[19px]">다른 제품 보기</span>
+            <Link href="/" className="w-[172px] h-[50px] btn-white grow py-[19px]">
+              다른 제품 보기
             </Link>
             {/* todo: 결제 페이지로 이동 */}
-            <button className="w-[172px] btn-primary grow">
-              <span className="py-[19px]">구매하기</span>
-            </button>
+            <button className="w-[172px] h-[50px] btn-primary grow py-[19px]">구매하기</button>
           </div>
         </div>
       )}
