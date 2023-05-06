@@ -26,9 +26,9 @@ function CartItemDeleteCompletedModal() {
   );
 }
 
-const CartModals = {
+const CartDeleteModals = {
   CartItemDeleteModal,
   CartItemDeleteCompletedModal,
 };
 
-export default CartModals;
+export default CartDeleteModals;
