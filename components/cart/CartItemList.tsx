@@ -34,26 +34,24 @@ export default function CartItemList({ items = [1] }: CartItemPropsType) {
           <div className="flex items-center mb-[22px] pb-3 border-b-[1px] border-black">
             <div onClick={allSelectHandler} className="flex items-center">
               {isAllSelected ? <CheckedBoxIcon /> : <CheckBoxIcon />}
-              <button className="pl-2.5 pr-4">
+              <button className="pl-2.5 pr-4 font-medium">
                 {/* todo: 선택된 개수/ 전체 개수 데이터 적용*/}
                 전체선택({'/' + items.length})
               </button>
               <div className=" text-gray_01">|{/* 가상요소 대체 */}</div>
             </div>
             {/* todo: 삭제 모달 연결 */}
-            <button className="ml-4">선택삭제</button>
+            <button className="ml-4 font-medium">선택삭제</button>
           </div>
           <CartItem isAllSelected={isAllSelected} setIsAllSelected={setIsAllSelected} />
           <CartPaymentAmountInfo />
           <div className="btn-mobile center gap-[7px]">
             {/* todo: 바로구매 페이지로 이동 */}
-            <Link href="/" className="w-[172px] btn-white grow">
-              <span className="py-[19px]">다른 제품 보기</span>
+            <Link href="/" className="w-[172px] h-[50px] btn-white grow py-[19px]">
+              다른 제품 보기
             </Link>
             {/* todo: 결제 페이지로 이동 */}
-            <button className="w-[172px] btn-primary grow">
-              <span className="py-[19px]">구매하기</span>
-            </button>
+            <button className="w-[172px] h-[50px] btn-primary grow py-[19px]">구매하기</button>
           </div>
         </div>
       )}
