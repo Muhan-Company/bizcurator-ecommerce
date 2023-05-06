@@ -1,8 +1,8 @@
-export default function Dashboard() {
+export default function OrderDelivery() {
     return (
         <>
             <div>
-                내용
+                주문배송
             </div>
         </>
     )
