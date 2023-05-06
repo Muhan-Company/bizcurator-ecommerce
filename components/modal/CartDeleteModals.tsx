@@ -13,7 +13,7 @@ function CartItemDeleteModal() {
 }
 
 // todo: 3초 후에 자동으로 닫히는 기능
-function CartItemDeleteCompletedModal() {
+function DeleteCompletedModal() {
   return (
     <div className="absolute center inset-0 bg-black/20 z-20">
       <div className="modal-shape flex flex-col gap-[26px] pt-[18px] pb-[5px]">
@@ -28,7 +28,7 @@ function CartItemDeleteCompletedModal() {
 
 const CartDeleteModals = {
   CartItemDeleteModal,
-  CartItemDeleteCompletedModal,
+  DeleteCompletedModal,
 };
 
 export default CartDeleteModals;
