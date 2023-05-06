@@ -12,6 +12,7 @@ function CartItemDeleteModal() {
   );
 }
 
+// todo: 3초 후에 자동으로 닫히는 기능
 function CartItemDeleteCompletedModal() {
   return (
     <div className="absolute center inset-0 bg-black/20 z-20">
