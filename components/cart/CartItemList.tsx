@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { CheckBoxIcon, CheckedBoxIcon } from '../Icons';
 import CartItem from './CartItem';
 import EmptyCart from './EmptyCart';
+import CartPaymentAmountInfo from './CartPaymentAmountInfo';
+import Link from 'next/link';
 
 type CartItemPropsType = {
   // todo: api 반환값 확정시 수정
@@ -24,13 +26,11 @@ export default function CartItemList({ items = [1] }: CartItemPropsType) {
   };
 
   return (
-    <div>
+    <div className="relative">
       {items.length === 0 ? (
-        <div className="relative">
-          <EmptyCart />
-        </div>
+        <EmptyCart />
       ) : (
-        <div className="mt-9 mb-[26px]">
+        <div className="h-screen pt-9">
           <div className="flex items-center mb-[22px] pb-3 border-b-[1px] border-black">
             <div onClick={allSelectHandler} className="flex items-center">
               {isAllSelected ? <CheckedBoxIcon /> : <CheckBoxIcon />}
@@ -44,6 +44,17 @@ export default function CartItemList({ items = [1] }: CartItemPropsType) {
             <button className="ml-4">선택삭제</button>
           </div>
           <CartItem isAllSelected={isAllSelected} setIsAllSelected={setIsAllSelected} />
+          <CartPaymentAmountInfo />
+          <div className="btn-mobile center gap-[7px]">
+            {/* todo: 바로구매 페이지로 이동 */}
+            <Link href="/" className="w-[172px] btn-white grow">
+              <span className="py-[19px]">다른 제품 보기</span>
+            </Link>
+            {/* todo: 결제 페이지로 이동 */}
+            <button className="w-[172px] btn-primary grow">
+              <span className="py-[19px]">구매하기</span>
+            </button>
+          </div>
         </div>
       )}
     </div>
