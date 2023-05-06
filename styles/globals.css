@@ -20,6 +20,21 @@
     box-shadow: -1px 4px 10px rgba(0, 0, 0, 0.08);
   }
 
+  .btn-white {
+    @apply flex items-center justify-center border border-[#DDDDDD] rounded-[8px] bg-white box-border cursor-pointer;
+  }
+  .btn-primary {
+    @apply flex items-center justify-center rounded-[8px] bg-primary text-white cursor-pointer;
+  }
+
+  .btn-mobile {
+    @apply absolute bottom-[90px] w-full;
+  }
+
+  .center {
+    @apply flex items-center justify-center;
+  }
+
   .swiper-button-next {
     @apply absolute top-1/2 -translate-y-1/2 right-3 z-10 cursor-pointer bg-black/80 flex justify-center items-center w-6 h-6 md:w-12 md:h-12 rounded-full;
     background: rgba(28, 28, 28, 0.2);
