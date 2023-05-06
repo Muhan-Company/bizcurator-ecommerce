@@ -1,5 +1,5 @@
 import Link from 'next/link';
-// import { BarsIcon } from './Icons';
+import { BarsIcon } from './Icons';
 import NavLink from './NavLink';
 import HeaderDropdown from './HeaderDropdown';
 
