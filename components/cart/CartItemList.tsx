@@ -34,14 +34,14 @@ export default function CartItemList({ items = [1] }: CartItemPropsType) {
           <div className="flex items-center mb-[22px] pb-3 border-b-[1px] border-black">
             <div onClick={allSelectHandler} className="flex items-center">
               {isAllSelected ? <CheckedBoxIcon /> : <CheckBoxIcon />}
-              <button className="pl-2.5 pr-4">
+              <button className="pl-2.5 pr-4 font-medium">
                 {/* todo: 선택된 개수/ 전체 개수 데이터 적용*/}
                 전체선택({'/' + items.length})
               </button>
               <div className=" text-gray_01">|{/* 가상요소 대체 */}</div>
             </div>
             {/* todo: 삭제 모달 연결 */}
-            <button className="ml-4">선택삭제</button>
+            <button className="ml-4 font-medium">선택삭제</button>
           </div>
           <CartItem isAllSelected={isAllSelected} setIsAllSelected={setIsAllSelected} />
           <CartPaymentAmountInfo />
