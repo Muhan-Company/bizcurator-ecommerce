@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Counter from '../cart/Counter';
+import Link from 'next/link';
 
 type CartItemAddModalProps = {
   name?: string;
@@ -60,8 +61,27 @@ function CartItemAddModal({
   );
 }
 
+function AddCompletedModal() {
+  return (
+    <div className="absolute center inset-0 z-20">
+      <div className="w-[351px] h-auto pt-[30px] px-3 modal-shape flex flex-col gap-0.5">
+        장바구니에 담았습니다.
+        <div className="center gap-2 py-6">
+          {/* todo: 모달 닫기 기능 연결 */}
+          <button className="btn-white w-[156px] h-[42px] py-[16px]">닫기</button>
+          {/* todo: 장바구니 페이지 연결 & 모달 닫기 */}
+          <Link href="/cart" className="btn-primary w-[156px] h-[42px] py-[16px]">
+            장바구니 확인
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const CartAddModals = {
   CartItemAddModal,
+  AddCompletedModal,
 };
 
 export default CartAddModals;
