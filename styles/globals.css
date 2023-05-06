@@ -46,7 +46,7 @@
   }
 
   .swiper-pagination {
-    @apply text-white w-fit left-1/2 -translate-x-1/2 px-3 md:px-4 md:py-1 rounded-full md:text-xl !important;
+    @apply text-white w-fit left-[80%] lg:left-1/2 lg:-translate-x-1/2 px-3 md:px-4 md:py-1 rounded-full md:text-xl !important;
     background: rgba(28, 28, 28, 0.2);
   }
 }

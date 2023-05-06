@@ -39,13 +39,53 @@ export default function MainBanner() {
         </div>
 
         <SwiperSlide>
-          <Image src={'/img/main 1.jpg'} alt="Main Banner 1" fill priority className="object-cover" />
+          <div className="relative h-full w-full">
+            <Image src={'/img/main 1.jpg'} alt="Main Banner 1" fill priority className="object-cover absolute" />
+            <h1 className="absolute top-7 left-10 text-white text-head-xs md:text-head-xl font-bold">
+              80수 순면 침구 커버 <br /> 다른 곳보다 저렴하게
+            </h1>
+            <h3
+              className="absolute font-medium text-title-xs md:text-title-lg
+ md:top-32 top-[104px] text-white left-10"
+            >
+              고급 순면소재로 만든 커버 10%할인
+            </h3>
+            <h4 className="text-label-sm md:text-label-md font-normal text-white left-10 bottom-2 absolute">
+              05.04~05.28
+            </h4>
+          </div>
         </SwiperSlide>
         <SwiperSlide>
-          <Image src={'/img/main 2.jpg'} alt="Main Banner 2" fill priority className="object-cover" />
+          <div className="relative h-full w-full">
+            <Image src={'/img/main 2.jpg'} alt="Main Banner 2" fill priority className="object-cover absolute" />
+            <h1 className="absolute top-7 left-10 text-white text-head-xs md:text-head-xl font-bold">
+              어매니티는 <br /> 대나무 칫솔로
+            </h1>
+            <h3
+              className="absolute font-medium text-title-xs top-[104px] md:text-title-lg
+                         md:top-32 text-white left-10"
+            >
+              대나무 칫솔로 호텔의 품격을 높이세요
+            </h3>
+            <h4 className="text-label-sm md:text-label-md font-normal text-white left-10 bottom-2 absolute">
+              05.04~05.28
+            </h4>
+          </div>
         </SwiperSlide>
         <SwiperSlide>
-          <Image src={'/img/main 3.jpg'} alt="Main Banner 3" fill priority className="object-cover" />
+          <div className="relative h-full w-full">
+            <Image src={'/img/main 3.jpg'} alt="Main Banner 3" fill priority className="object-cover" />
+            <h1 className="absolute top-7 left-10 text-white text-head-xs md:text-head-xl font-bold">
+              북유럽 감성 <br />
+              러그로 가성비 있게
+            </h1>
+            <h3 className="absolute font-medium text-title-xs md:text-title-lg top-[104px] md:top-32 text-white left-10">
+              우아한 스칸디나비아 풍의 공간을 집에서 만나보세요
+            </h3>
+            <h4 className="text-label-sm md:text-label-md font-normal text-white left-10 bottom-2 absolute">
+              05.04~05.28
+            </h4>
+          </div>
         </SwiperSlide>
 
         <div className="swiper-button-next">
