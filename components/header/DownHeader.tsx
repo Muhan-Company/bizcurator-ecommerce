@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { BarsIcon } from './Icons';
+import { BarsIcon } from '../Icons';
 import NavLink from './NavLink';
 import HeaderDropdown from './HeaderDropdown';
 
@@ -18,7 +18,7 @@ export default function DownHeader({ isHovered, setIsHovered }: HoverProps) {
           className="hidden lg:block relative"
         >
           <Link href={'#'} className="lg:flex items-center">
-            {/* <BarsIcon /> */}
+            <BarsIcon />
             <h3 className="header-link">전체 상품 보기</h3>
           </Link>
           <HeaderDropdown isHovered={isHovered} />

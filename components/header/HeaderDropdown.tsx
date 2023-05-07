@@ -1,4 +1,3 @@
-import DropdownItem from './DropdownItem';
 import {
   BedingIcon,
   CleanerIcon,
@@ -10,7 +9,8 @@ import {
   RadioIcon,
   ShowerIcon,
   ToothBrushIcon,
-} from './Icons';
+} from '../Icons';
+import DropdownItem from './DropdownItem';
 
 export default function HeaderDropdown({ isHovered }: { isHovered: boolean }) {
   return (
