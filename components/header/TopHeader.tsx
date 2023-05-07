@@ -1,16 +1,16 @@
 import Link from 'next/link';
-import { Cart, LogoIcon, MagnifyingGlassIcon, UserIcon } from './Icons';
+import { Cart, LogoIcon, MagnifyingGlassIcon, UserIcon } from '../Icons';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import SearchModal from './SearchModal';
 import LogInModal from './LogInModal';
+import SearchModal from './SearchModal';
 
 export default function TopHeader() {
   const [showSearchModal, setShowSearchModal] = useState<boolean>(false);
   const [showLogInModal, setShowLogInModal] = useState<boolean>(false);
 
   return (
-    <div className="h-16 lg:h-auto px-6 lg:px-0 flex justify-between items-center">
+    <div className="px-6 lg:px-0 flex justify-between items-center">
       <Link href={'/'} className="flex items-center">
         <h1 className="text-[20px] lg:text-head-xl font-bold">BIZ CURATOR</h1>
         <LogoIcon />

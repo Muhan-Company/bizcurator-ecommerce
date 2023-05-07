@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MagnifyingGlassIcon } from './Icons';
+import { MagnifyingGlassIcon } from '../Icons';
 import { useRouter } from 'next/router';
 
 export default function SearchModal({
