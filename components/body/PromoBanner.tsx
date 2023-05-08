@@ -9,7 +9,7 @@ export default function PromoBanner() {
   return (
     <div className="my-10 px-3">
       <Swiper loop spaceBetween={10} className="h-[242px]">
-        <SwiperSlide className="swiper-slide-1 rounded-[20px] relative">
+        <SwiperSlide className="swiper-slide-1 rounded-[20px] relative overflow-hidden">
           <Image
             src={'/img/bannerImg1.png?v=1'}
             alt="Promo Banner 1"
@@ -21,7 +21,7 @@ export default function PromoBanner() {
             바로구매로 <br /> 대량구매 시 <br /> 할인률이 올라가요
           </h1>
         </SwiperSlide>
-        <SwiperSlide className="swiper-slide-2 rounded-[20px] relative">
+        <SwiperSlide className="swiper-slide-2 rounded-[20px] relative overflow-hidden">
           <Image
             src={'/img/bannerImg2.png'}
             alt="Promo Banner 2"
@@ -32,7 +32,7 @@ export default function PromoBanner() {
           <h3 className="font-medium text-[26px] text-gray_03 absolute left-6 top-28">선물세트 할인 대전</h3>
           <h1 className="font-bold text-[64px] text-gray_03 absolute left-6 bottom-1.5">20%</h1>
         </SwiperSlide>
-        <SwiperSlide className="swiper-slide-3 rounded-[20px] relative">
+        <SwiperSlide className="swiper-slide-3 rounded-[20px] relative overflow-hidden">
           <Image
             src={'/img/bannerImg3.png'}
             alt="Promo Banner 3"
