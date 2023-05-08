@@ -31,7 +31,7 @@ export default function TopHeader() {
             <UserIcon />
           </button>
           <button className="header-btn">
-            <Cart />
+            <Cart className="w-5 lg:w-8 h-5 lg:h-8" />
           </button>
         </div>
       </div>
