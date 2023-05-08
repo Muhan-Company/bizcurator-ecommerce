@@ -10,10 +10,6 @@ type TabsProps = {
     onClick: (index: number) => void;
 }
 
-const click = () => {
-    console.log("dfdee")
-}
-
 const CustomerTabMenu: FC<TabsProps> = ({
     tabs = [],
     selectedTab = 0,
@@ -26,7 +22,7 @@ const CustomerTabMenu: FC<TabsProps> = ({
                 {tabs.map((tab) => (
                     <div
                         className={`text-base cursor-pointer w-1/2 md:w-full py-4 text-center mb:w-56 mb:py-5 block border border-gray-200 hover:bg-gray-200
-                        ${tab.index === selectedTab ? "bg-gray-200" : ""}`}
+                        ${tab.index === selectedTab && "bg-gray-200"}`}
                         key={tab.index}
                         onClick={() => onClick(tab.index)}
                     >
