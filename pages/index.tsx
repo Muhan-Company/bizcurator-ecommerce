@@ -1,7 +1,6 @@
 import MainBanner from '@/components/body/MainBanner';
 import PromoBanner from '@/components/body/PromoBanner';
 import ProductCategoryList from '@/components/body/ProductCategoryList';
-import PromoBanner from '@/components/body/PromoBanner';
 import Header from '@/components/header/Header';
 
 export default function Home() {
