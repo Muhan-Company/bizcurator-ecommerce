@@ -57,4 +57,24 @@
     @apply text-white w-fit left-[80%] lg:left-1/2 lg:-translate-x-1/2 px-3 md:px-4 md:py-1 rounded-full md:text-xl !important;
     background: rgba(28, 28, 28, 0.2);
   }
+
+  .swiper-slide-1 {
+    background: linear-gradient(
+        72.34deg,
+        #ceeae5 18.01%,
+        rgba(250, 251, 211, 0.7) 98.25%,
+        rgba(199, 217, 255, 0.2) 98.25%
+      ),
+      #ffffff;
+  }
+
+  .swiper-slide-2 {
+    background: linear-gradient(106.95deg, rgba(255, 149, 149, 0.1) 22.1%, rgba(73, 53, 199, 0.16) 68.39%),
+      linear-gradient(113.96deg, rgba(21, 19, 145, 0.2) 0%, rgba(4, 0, 203, 0.2) 94.43%), #ffffff;
+  }
+
+  .swiper-slide-3 {
+    background: linear-gradient(122.1deg, rgba(33, 255, 135, 0.2) 3.36%, rgba(227, 245, 110, 0.04) 91.12%),
+      linear-gradient(88.55deg, rgba(210, 224, 236, 0.2) 3.21%, rgba(169, 214, 255, 0.2) 98.77%), #ffffff;
+  }
 }
