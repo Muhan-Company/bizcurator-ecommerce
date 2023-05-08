@@ -4,44 +4,50 @@ import Link from 'next/link';
 
 type CartItemAddModalProps = {
   name?: string;
+  src?: string;
   price?: number;
   discount?: number;
   min?: number;
+  setShowCartItemAddModal: React.Dispatch<React.SetStateAction<boolean>>;
+  quantity: number;
+  setQuantity: React.Dispatch<React.SetStateAction<number>>;
 };
 
 // todo: 클릭한 상품 data 가져와서 적용하기
 function CartItemAddModal({
   name = '두루마리 휴지 24롤',
+  src = '/img/image 68.png',
   price = 1000,
   discount = 10,
   min = 100,
+  setShowCartItemAddModal,
+  quantity,
+  setQuantity,
 }: CartItemAddModalProps) {
-  const originalPrice = price.toLocaleString('ko-KR');
-  const discountedPrice = (price - discount).toLocaleString('ko-KR');
+  const originalPrice = (price * quantity).toLocaleString('ko-KR');
+  const discountedPrice = ((price - discount) * quantity).toLocaleString('ko-KR');
+
+  const closeModal = () => {
+    setShowCartItemAddModal(false);
+    document.body.classList.remove('modal-open');
+  };
 
   return (
-    <div className="absolute center inset-0 z-20">
-      <div className="w-[351px] h-auto pt-[30px] px-3 modal-shape flex flex-col">
-        <div className="flex justify-between w-full py-[18px]">
+    <div>
+      <div className="w-[351px] z-20 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto pt-[30px] px-3 modal-shape flex-col">
+        <div className="flex w-full space-x-[22px] py-[18px]">
           {/* 상품 썸네일 */}
-          <div className="w-[86px] rounded-[10px] bg-gray_04 p-3 box-border">
-            <Image
-              src="/img/image 68.png"
-              alt="thumbnail"
-              width={62}
-              height={62}
-              className="w-full	h-full object-cover"
-            />
-          </div>
+          <Image src={src} alt="Thumbnail" width={86} height={86} className="object-cover rounded-[10px]" />
           {/* 상품 정보 */}
-          <div className="pl-[22px] grow">
+          <div>
             <h3 className="font-normal">{name}</h3>
-            <span className="font-bold">{discountedPrice} 원</span>
+            <span className="font-bold">{price - discount} 원</span>
           </div>
         </div>
         {/* 수량 계산 */}
         <div className="w-full mb-10 px-2 py-[15px] flex items-center justify-between bg-gray_03">
-          <Counter min={min} />
+          <Counter min={min} quantity={quantity} setQuantity={setQuantity} />
+          <h4 className="font-medium text-main text-body-sm">총 금액</h4>
           <div className="flex flex-col text-end">
             {/* 할인적용 가격 */}
             <span className="font-bold">{discountedPrice}원</span>
@@ -52,11 +58,14 @@ function CartItemAddModal({
 
         <div className="center gap-2 py-6">
           {/* todo: 모달 닫기 기능 연결 */}
-          <button className="btn-white w-[156px] h-[42px] py-[19px]">취소</button>
+          <button className="btn-white w-[156px] h-[42px] py-[19px]" onClick={closeModal}>
+            취소
+          </button>
           {/* todo: 장바구니 담기 API 연결 및 장바구니 담기 성공 모달 연결 */}
           <button className="btn-primary w-[156px] h-[42px] py-[19px]">장바구니 담기</button>
         </div>
       </div>
+      <div className="modal-box-shadow fixed inset-0 modal bg-black/70 z-10" onClick={closeModal}></div>
     </div>
   );
 }

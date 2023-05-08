@@ -2,8 +2,8 @@ import Products from './Products';
 
 export default function WeeklyTrending() {
   return (
-    <div className="px-3 space-y-3 mb-10">
-      <h1 className="font-normal text-main text-head-xs">이번 주 인기 급상승Top3</h1>
+    <div className="px-3 lg:px-24 xl:px-48 space-y-3 lg:space-y-4 my-10">
+      <h1 className="font-normal text-main text-head-xs lg:font-bold lg:text-head-xl">이번 주 인기 급상승 Top3</h1>
       <Products />
     </div>
   );

@@ -1,15 +1,14 @@
-import { useState } from 'react';
 import { DisabledMinusIcon, MinusIcon, PlusIcon } from '../Icons';
 
 type CounterPropsType = {
   min: number;
+  quantity: number;
+  setQuantity: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function Counter({ min }: CounterPropsType) {
-  const [quantity, setQuantity] = useState(min);
-
+export default function Counter({ min, quantity, setQuantity }: CounterPropsType) {
   return (
-    <div className="flex items-center justify-center  w-[78px] md:w-[112px] h-[26px] md:h-[36px] border-[1px] border-gray_02 rounded-[8px] box-content bg-white">
+    <div className="flex items-center justify-center w-[78px] md:w-[112px] h-[26px] md:h-[36px] border-[1px] border-gray_02 rounded-[8px] box-content bg-white">
       <div className="flex items-center justify-center px-2 py-1.5">
         {min !== quantity ? (
           <div onClick={() => setQuantity(quantity! - 1)}>
