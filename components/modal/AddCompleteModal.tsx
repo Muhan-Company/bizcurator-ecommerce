@@ -25,7 +25,11 @@ export default function AddCompleteModal({
             닫기
           </button>
           {/* todo: 장바구니 페이지 연결 & 모달 닫기 */}
-          <Link href="/cart" className="btn-primary w-[156px] h-[42px] py-[16px]">
+          <Link
+            href="/cart"
+            className="btn-primary w-[156px] h-[42px] py-[16px]"
+            onClick={() => document.body.classList.remove('modal-open')}
+          >
             장바구니 확인
           </Link>
         </div>
