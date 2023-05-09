@@ -5,7 +5,7 @@ export default function OrderDelivery() {
         <>
             <AdminSearch />
             <div>
-                주문배송
+                주문배송dsdsds
             </div>
         </>
     )
