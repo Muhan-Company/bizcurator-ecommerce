@@ -14,7 +14,7 @@ export default function NavBar() {
   };
 
   return (
-    <div className="z-10 grid grid-cols-3 fixed left-0 bottom-0 right-0 h-16 bg-white rounded-t-[10px] px-3 shadow-[0_-4px_8px_rgba(0,0,0,0.08)]">
+    <div className="sm:hidden z-10 grid grid-cols-3 fixed left-0 bottom-0 right-0 h-16 bg-white rounded-t-[10px] px-3 shadow-[0_-4px_8px_rgba(0,0,0,0.08)]">
       <Link href={'/'} className="navbar-btn">
         <HomeIcon />
         <span className="navbar-text">메인</span>
