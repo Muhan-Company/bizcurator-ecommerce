@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import { Cart } from '../Icons';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import AddToCartModal from '../modal/AddToCartModal';
 import { createPortal } from 'react-dom';
-import CartAddModals from '../modal/CartAddModals';
 
 export default function Product() {
-  const [showCartItemAddModal, setShowCartItemAddModal] = useState<boolean>(false);
+  const [showAddToCartModal, setShowAddToCartModal] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(100);
 
   const openModal = () => {
-    setShowCartItemAddModal(true);
+    setShowAddToCartModal(true);
     document.body.classList.add('modal-open');
   };
 
@@ -32,14 +32,18 @@ export default function Product() {
         <h3 className="font-noraml text-title-xs lg:text-title-md text-main">가격비공개</h3>
       </div>
 
-      {showCartItemAddModal &&
+      {showAddToCartModal &&
         createPortal(
-          CartAddModals.CartItemAddModal({
-            quantity: quantity,
-            setQuantity: setQuantity,
-            setShowCartItemAddModal: setShowCartItemAddModal,
-            src: '/img/tissue.png',
-          }),
+          <AddToCartModal
+            setShowAddToCartModal={setShowAddToCartModal}
+            quantity={quantity}
+            setQuantity={setQuantity}
+            name={'두루마리 휴지 24롤'}
+            src={'/img/tissue.png'}
+            price={1000}
+            discount={10}
+            min={100}
+          />,
           document.body,
         )}
     </div>

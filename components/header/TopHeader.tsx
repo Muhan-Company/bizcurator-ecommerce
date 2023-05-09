@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { Cart, LogoIcon, MagnifyingGlassIcon, UserIcon } from '../Icons';
 import { useRecoilState } from 'recoil';
 import { createPortal } from 'react-dom';
-import LogInModal from './LogInModal';
-import SearchModal from './SearchModal';
+import LogInModal from '../modal/LogInModal';
+import SearchModal from '../modal/SearchModal';
 import { logInModalState, searchModalState } from '@/atoms/modalAtoms';
 
 export default function TopHeader() {
