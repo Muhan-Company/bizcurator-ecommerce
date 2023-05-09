@@ -397,14 +397,14 @@ export const UserIcon = () => (
   </svg>
 );
 
-export const Cart = () => (
+export const Cart = ({ className }: { className: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth="1.5"
     stroke="currentColor"
-    className="w-5 lg:w-8 h-5 lg:h-8"
+    className={className}
   >
     <path
       strokeLinecap="round"

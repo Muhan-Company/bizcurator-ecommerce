@@ -7,10 +7,7 @@ import Image from 'next/image';
 
 export default function PromoBanner() {
   return (
-    <div
-      className="
-    prioritymy-10 px-3 my-10 block sm:hidden"
-    >
+    <div className="px-3 mt-10 block sm:hidden">
       <Swiper loop spaceBetween={10} className="h-[242px]">
         <SwiperSlide className="swiper-slide-1 rounded-[20px] w-full h-full relative overflow-hidden">
           <Image
