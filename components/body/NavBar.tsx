@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { HomeIcon, MagnifyingGlassIcon, UserIcon } from '../Icons';
 import { useRecoilState } from 'recoil';
-import { logInModalState, searchModalState } from '@/atoms/modalAtoms';
+import { searchModalState } from '@/atoms/modalAtoms';
 import { createPortal } from 'react-dom';
 import SearchModal from '../header/SearchModal';
 
