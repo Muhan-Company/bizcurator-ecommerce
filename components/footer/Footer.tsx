@@ -1,10 +1,27 @@
+import { logInModalState } from '@/atoms/modalAtoms';
+import Link from 'next/link';
+import { useSetRecoilState } from 'recoil';
+
 export default function Footer() {
+  const setShowLogInModal = useSetRecoilState(logInModalState);
+
+  const openModal = () => {
+    setShowLogInModal(true);
+    document.body.classList.add('modal-open');
+  };
+
   return (
     <footer className="bg-main pt-5 pb-20">
       <div className="flex flex-col items-center gap-y-5 pb-5">
-        <button className="footer-btn">로그인</button>
-        <button className="footer-btn">회원가입</button>
-        <button className="footer-btn">고객센터</button>
+        <button onClick={openModal} className="footer-btn">
+          로그인
+        </button>
+        <Link href={'#'} className="footer-btn">
+          회원가입
+        </Link>
+        <Link href={'/user/customer'} className="footer-btn">
+          고객센터
+        </Link>
       </div>
       <div className="w-full seperator"></div>
       <div className="flex flex-col items-center py-5 gap-y-1.5">

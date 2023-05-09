@@ -6,7 +6,7 @@ import WeeklyTrending from '@/components/body/WeeklyTrending';
 import MonthlyTrending from '@/components/body/MonthlyTrending';
 import Recommendation from '@/components/body/Recommendation';
 import Footer from '@/components/footer/Footer';
-import NavBar from '@/components/body/NavBar';
+import NavBar from '@/components/footer/NavBar';
 
 export default function Home() {
   return (
