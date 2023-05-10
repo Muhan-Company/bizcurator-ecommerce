@@ -1,4 +1,4 @@
-import { ChevronUpIcon, KaKaoLogoIcon } from '../Icons';
+import { ArrowUpIcon, KaKaoLogoIcon } from '../Icons';
 
 export default function FloatingButton() {
   const scrollToTop = () => {
@@ -11,7 +11,7 @@ export default function FloatingButton() {
         <KaKaoLogoIcon />
       </button>
       <button onClick={scrollToTop} className="shadow-[0px_2px_12px_rgba(0,0,0,0.1)] rounded-full bg-white p-2">
-        <ChevronUpIcon />
+        <ArrowUpIcon />
       </button>
     </div>
   );
