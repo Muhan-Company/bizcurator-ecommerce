@@ -15,6 +15,11 @@ export default function SearchModal({
     router.push(`/search?q=${query}`);
   };
 
+  const closeModal = () => {
+    setShowSearchModal(false);
+    document.body.classList.remove('modal-open');
+  };
+
   return (
     <div>
       <form
@@ -28,10 +33,10 @@ export default function SearchModal({
           className="text-lg md:text-xl outline-none flex-1"
           autoFocus
         />
-        <MagnifyingGlassIcon />
+        <MagnifyingGlassIcon color="main" />
         <button hidden type="submit"></button>
       </form>
-      <div onClick={() => setShowSearchModal(false)} className="fixed inset-0 z-20 bg-black/70"></div>
+      <div onClick={closeModal} className="fixed inset-0 z-20 bg-black/70"></div>
     </div>
   );
 }
