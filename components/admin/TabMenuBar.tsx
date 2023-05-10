@@ -96,7 +96,7 @@ const TabMenuBar: React.FC<TabMenuBarProps> = ({
                     </ul>
                 </div>
             </div >
-            <div className="w-[1600px] ml-80">
+            <div className="ml-80">
                 <AdminHeader TabMenuBarData={TabMenuBarData} activeTab={activeTab} />
                 {activeSubMenu?.TabComponent && (
                     <activeSubMenu.TabComponent index={activeTab} />
