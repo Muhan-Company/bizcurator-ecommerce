@@ -7,6 +7,12 @@
   font-family: 'Noto Sans KR', sans-serif;
 }
 
+/* @layer base {
+  body {
+    @apply;
+  }
+} */
+
 @layer components {
   .header-btn {
     @apply flex justify-center items-center;
@@ -80,5 +86,29 @@
 
   .modal-open {
     overflow: hidden;
+  }
+
+  .seperator {
+    border: 1px solid #d9d9d9;
+  }
+
+  .footer-btn {
+    @apply font-normal text-button-sm text-gray_02;
+  }
+
+  .footer-span {
+    @apply font-normal text-button-xs text-gray_02;
+  }
+
+  .short-seperator {
+    @apply inline-block w-[1px] h-[15px] bg-gray_02;
+  }
+
+  .navbar-text {
+    @apply font-normal text-[10px] text-primary;
+  }
+
+  .navbar-btn {
+    @apply center flex-col gap-y-1.5;
   }
 }
