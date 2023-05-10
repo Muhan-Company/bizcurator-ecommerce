@@ -13,7 +13,7 @@ export default function Order({ orderTime = '2023-04-20', paymentId = '123456546
       <div className="pb-[14px] flex flex-col border-b-[1px] border-b-black">
         <div className="pb-3 flex items-center justify-between font-medium">
           <div>{orderTime}</div>
-          <Link href={''} className="center text-label-sm text-gray_01">
+          <Link href={`/user/orders/${paymentId}`} className="center text-label-sm text-gray_01">
             전체주문 상세보기 <ChevronRightIcon color="#999" />
           </Link>
         </div>
