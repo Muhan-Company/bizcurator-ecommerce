@@ -8,6 +8,7 @@ export default function FloatingButtons() {
   return (
     <div className="fixed bottom-20 sm:bottom-3 right-3 z-10 flex flex-col items-center gap-y-3">
       <a
+        target="_blank"
         href="https://pf.kakao.com/_DQiRxj"
         className="bg-[#FEE500] rounded-full p-2 shadow-[0px_2px_12px_rgba(0,0,0,0.1)]"
       >
