@@ -6,7 +6,7 @@ export default function FloatingButton() {
   };
 
   return (
-    <div className="fixed bottom-20 right-3 z-10 flex flex-col items-center gap-y-3">
+    <div className="fixed bottom-20 sm:bottom-3 right-3 z-10 flex flex-col items-center gap-y-3">
       <button className="bg-[#FEE500] rounded-full p-2 shadow-[0px_2px_12px_rgba(0,0,0,0.1)]">
         <KaKaoLogoIcon />
       </button>

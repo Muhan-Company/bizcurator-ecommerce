@@ -11,7 +11,7 @@ import Image from 'next/image';
 
 export default function MainBanner() {
   return (
-    <>
+    <div className="pt-14 lg:pt-24">
       <Swiper
         modules={[Pagination, Navigation]}
         pagination={{ type: 'fraction', el: '.swiper-pagination' }}
@@ -105,6 +105,6 @@ export default function MainBanner() {
         </div>
         <div className="swiper-pagination"></div>
       </Swiper>
-    </>
+    </div>
   );
 }
