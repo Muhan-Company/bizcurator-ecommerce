@@ -8,7 +8,6 @@ import NavBar from '@/components/footer/NavBar';
 import RequestBanner from '@/components/body/RequestBanner';
 import DownHeader from '@/components/header/DownHeader';
 import Layout from '@/components/layout/Layout';
-import { useState } from 'react';
 import Footer from '@/components/footer/Footer';
 
 export default function Home() {
