@@ -15,7 +15,7 @@ export default function DownHeader() {
         onMouseLeave={() => setIsHovered(false)}
         className="hidden lg:block relative"
       >
-        <Link href={'#'} className="lg:flex items-center">
+        <Link href={'/products?sort=newest'} className="lg:flex items-center">
           <BarsIcon />
           <h3 className="header-link">전체 상품 보기</h3>
         </Link>
@@ -26,7 +26,7 @@ export default function DownHeader() {
         <NavLink href={'/'} className="hidden lg:inline lg:header-link">
           홈
         </NavLink>
-        <NavLink href={'#'}>바로구매</NavLink>
+        <NavLink href={'/products?sort=newest'}>바로구매</NavLink>
         <NavLink href={'#'} className="mx-3">
           제품구매 의뢰
         </NavLink>
