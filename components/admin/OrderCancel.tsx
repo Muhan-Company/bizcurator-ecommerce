@@ -1,17 +1,12 @@
-import React from 'react';
+import AdminSearch from "./AdminSearch"
 
-type SubmenuProps = {
-    label: string;
-    content: React.ReactNode;
-};
-
-const Submenu = ({ label, content }: SubmenuProps) => {
+export default function OrderCancel() {
     return (
-        <div className="ml-4 py-2">
-            <div className="font-bold">{`${label} 입니다`}</div>
-            <div className="mt-2">{`${content}이에요`}</div>
-        </div>
-    );
-};
-
-export default Submenu;
+        <>
+            <AdminSearch />
+            <div className="w-[1500px] rounded-[10px] mx-[60px] bg-slate-400 h-[600px] mt-[15px]"
+            >OrderCancel
+            </div>
+        </>
+    )
+}
