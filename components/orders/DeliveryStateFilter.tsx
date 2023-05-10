@@ -34,7 +34,7 @@ function DeliveryStateFilterButton({ index, count, state, active, setActive }: D
       className={`w-14 center flex-col ${
         DELIVERY_STATE[active] === state ? 'text-primary' : 'text-gray_01'
       } cursor-pointer`}
-      onClick={(e) => setActive(index)}
+      onClick={() => setActive(index)}
     >
       <div className="text-[20px] font-bold">{count}</div>
       <div className="text-label-sm">{state}</div>
