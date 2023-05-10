@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ChevronRightIcon } from '../Icons';
 
 export default function RequestBanner() {
   return (
@@ -9,14 +10,7 @@ export default function RequestBanner() {
         </h1>
         <h3 className="flex items-center gap-x-2 font-normal text-primary text-button-sm lg:text-title-md text-center">
           <span>무료로 의뢰하고 시간을 절약하세요</span>
-          <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M0.503141 9.8302C0.332286 9.65935 0.332286 9.38234 0.503141 9.21148L4.56878 5.14584L0.503142 1.0802C0.332287 0.909348 0.332287 0.632338 0.503142 0.461484C0.673996 0.29063 0.951005 0.29063 1.12186 0.461484L5.49686 4.83648C5.66771 5.00734 5.66771 5.28435 5.49686 5.4552L1.12186 9.8302C0.951005 10.0011 0.673995 10.0011 0.503141 9.8302Z"
-              fill="#16133A"
-            />
-          </svg>
+          <ChevronRightIcon />
         </h3>
       </Link>
     </div>

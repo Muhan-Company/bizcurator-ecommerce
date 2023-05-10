@@ -8,6 +8,7 @@ import Recommendation from '@/components/body/Recommendation';
 import Footer from '@/components/footer/Footer';
 import NavBar from '@/components/footer/NavBar';
 import RequestBanner from '@/components/body/RequestBanner';
+import FloatingButton from '@/components/body/FloatingButton';
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
       <Recommendation />
       <RequestBanner />
       <Footer />
+      <FloatingButton />
       <NavBar />
     </main>
   );
