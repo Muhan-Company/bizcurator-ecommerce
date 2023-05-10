@@ -10,7 +10,7 @@ export default function RequestBanner() {
         </h1>
         <h3 className="flex items-center gap-x-2 font-normal text-primary text-button-sm lg:text-title-md text-center">
           <span>무료로 의뢰하고 시간을 절약하세요</span>
-          <ChevronRightIcon />
+          <ChevronRightIcon color="#16133A" width="20" height="20" />
         </h3>
       </Link>
     </div>

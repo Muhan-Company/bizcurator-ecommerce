@@ -223,13 +223,13 @@ export const ChevronLeftIcon = ({ color = '#000', width = '24', height = '24' }:
   </svg>
 );
 
-export const ChevronRightIcon = () => (
-  <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const ChevronRightIcon = ({ color = '#000', width = '24', height = '24' }: IconPropsType) => (
+  <svg width={width} height={height} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
-      d="M0.503141 9.8302C0.332286 9.65935 0.332286 9.38234 0.503141 9.21148L4.56878 5.14584L0.503142 1.0802C0.332287 0.909348 0.332287 0.632338 0.503142 0.461484C0.673996 0.29063 0.951005 0.29063 1.12186 0.461484L5.49686 4.83648C5.66771 5.00734 5.66771 5.28435 5.49686 5.4552L1.12186 9.8302C0.951005 10.0011 0.673995 10.0011 0.503141 9.8302Z"
-      fill="#16133A"
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M8.54289 17.9571C8.15237 17.5666 8.15237 16.9334 8.54289 16.5429L13.3358 11.75L8.54289 6.95711C8.15237 6.56658 8.15237 5.93342 8.54289 5.54289C8.93342 5.15237 9.56658 5.15237 9.95711 5.54289L15.4571 11.0429C15.8476 11.4334 15.8476 12.0666 15.4571 12.4571L9.95711 17.9571C9.56658 18.3476 8.93342 18.3476 8.54289 17.9571Z"
+      fill={color}
     />
   </svg>
 );

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import AddToCartModal from '../modal/AddToCartModal';
 import { createPortal } from 'react-dom';
 
-export default function RecommendationProduct() {
+export default function Product() {
   const [showAddToCartModal, setShowAddToCartModal] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(100);
 
