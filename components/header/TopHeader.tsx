@@ -36,9 +36,9 @@ export default function TopHeader() {
           <button className="hidden lg:inline header-btn">
             <UserIcon color="main" />
           </button>
-          <button className="header-btn">
+          <Link href={'/user/cart'} className="header-btn">
             <Cart className="w-5 lg:w-8 h-5 lg:h-8" />
-          </button>
+          </Link>
         </div>
       </div>
     </header>
