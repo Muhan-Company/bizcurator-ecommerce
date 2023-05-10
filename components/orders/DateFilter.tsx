@@ -22,7 +22,7 @@ export default function DateFilter() {
 
 type DateFilterButton = {
   period: string;
-  onClick?: (e: any) => void;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
   active: string;
   setActive: (active: string) => void;
 };
