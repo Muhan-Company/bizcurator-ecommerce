@@ -41,6 +41,10 @@
     @apply flex items-center justify-center;
   }
 
+  .center-between {
+    @apply flex items-center justify-between;
+  }
+
   .modal-box-shadow {
     box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.08);
   }
