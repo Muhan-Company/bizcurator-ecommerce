@@ -6,6 +6,7 @@ import Layout from '@/components/layout/Layout';
 import CategoryFilter from '@/components/products/CategoryFilter';
 import ProductList from '@/components/products/ProductList';
 import SearchBar from '@/components/products/SearchBar';
+import Sort from '@/components/products/Sort';
 import { useRecoilValue } from 'recoil';
 
 export default function Products() {
@@ -16,7 +17,10 @@ export default function Products() {
       <DownHeader />
       <CategoryFilter />
       {showSearchBar ? <SearchBar /> : <div className="h-[55px]"></div>}
-      <ProductList />
+      <div className="relative">
+        <Sort />
+        <ProductList />
+      </div>
       <NavBar />
       <Footer />
     </Layout>
