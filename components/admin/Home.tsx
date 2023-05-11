@@ -1,22 +1,26 @@
 import TabMenuBar from "./TabMenuBar"
 import Dashboard from "./Dashboard";
 import OrderDelivery from "./OrderDelivery";
-import React, { useState } from "react";
 import OrderCancel from "./OrderCancel";
+import React, { useState, FC } from "react";
 import OrderRefund from "./OrderRefund";
+import MemberManage from "./MemberManage";
+import VendorList from "./VendorList";
+
+//TabsType은 title, index, component속성을가짐
+type SubMenuType = {
+    title: string;
+    index: number;
+    TabComponent: FC<{}>;
+};
 
 type TabsType = {
     title: string;
     index: number;
-    TabComponent: React.FC<{}>;
+    TabComponent: FC<{}>;
     subMenu?: boolean;
-    subMenuList?: {
-        title: string;
-        index: number;
-        TabComponent: React.FC<{}>;
-    }[]
+    subMenuList?: SubMenuType[];
 }[];
-//TabsType은 title, index, component속성을가짐
 
 const tabs: TabsType = [
     {
@@ -34,17 +38,17 @@ const tabs: TabsType = [
     {
         title: '주문 취소 환불',
         index: 3,
-        TabComponent: OrderCancel,
+        TabComponent: OrderDelivery,
         subMenu: true,
         subMenuList: [
             {
-                title: '취소 요청 내역',
-                index: 3,
+                title: '주문 취소',
+                index: 1,
                 TabComponent: OrderCancel,
             },
             {
-                title: '환불 요청 내역',
-                index: 32,
+                title: '환불 처리',
+                index: 2,
                 TabComponent: OrderRefund,
             },
         ],
@@ -52,27 +56,37 @@ const tabs: TabsType = [
     {
         title: '회원 관리',
         index: 4,
-        TabComponent: OrderDelivery,
+        TabComponent: MemberManage,
         subMenu: false,
     },
     {
         title: '입점 판매사 리스트',
         index: 5,
-        TabComponent: OrderDelivery,
-        subMenu: true,
-        subMenuList: [
-            {
-                title: '입점',
-                index: 33,
-                TabComponent: OrderDelivery,
-            },
-        ],
+        TabComponent: VendorList,
+        subMenu: false,
     },
     {
         title: '의뢰서',
         index: 6,
         TabComponent: OrderDelivery,
         subMenu: true,
+        subMenuList: [
+            {
+                title: '제품 구매 의뢰',
+                index: 5,
+                TabComponent: OrderCancel,
+            },
+            {
+                title: '제품 제작 의뢰',
+                index: 6,
+                TabComponent: OrderCancel,
+            },
+            {
+                title: '판매자 입점의뢰',
+                index: 7,
+                TabComponent: OrderCancel,
+            },
+        ],
     },
     {
         title: '상품관리',
@@ -87,20 +101,23 @@ const tabs: TabsType = [
         subMenu: false,
     }
 ]
-//tabs는 위3개의 속성을가진 객체로 이루어짐
 
 export default function Home() {
     const [activeTab, setActiveTab] = useState<number>(tabs[0].index);
+    const [subActiveTab, setSubActiveTab] = useState<number>(0);
+
     return (
         <div className="h-screen bg-gray-100">
             <TabMenuBar
+                onSubMenuClick={(parentIndex, index) => {
+                    setActiveTab(parentIndex)
+                    setSubActiveTab(index)
+                }}
+                subActiveTab={subActiveTab}
                 onClick={setActiveTab}
                 activeTab={activeTab}
                 TabMenuBarData={tabs} />
         </div>
     )
 }
-
-
-
 
