@@ -10,7 +10,7 @@ type OrderItemInfoProps = {
 export default function OrderItemInfo({ delivery_state }: OrderItemInfoProps) {
   const currentState = getDelivreryStateToString(delivery_state);
   return (
-    <OrderDetailLayout title="주문 제품 정보">
+    <OrderDetailLayout.OrderDetailItemsContentLayout title="주문 제품 정보">
       {/* todo: image, name, amount, delivery_state props 내려주기*/}
       <OrderItem delivery_state={delivery_state}>
         {/* 주문상태: 구매확정(3)시 모든 버튼 안보임 */}
@@ -20,20 +20,20 @@ export default function OrderItemInfo({ delivery_state }: OrderItemInfoProps) {
         {currentState !== '구매확정' && (
           <div className="flex justify-end text-label-sm">
             {currentState === '배송완료' && (
-              <Link href={'/orders/refund'} className="w-[65px] h-[32px] ml-[6px] btn-white">
+              <Link href={'/orders/refund'} className="btn-order-detail">
                 환불
               </Link>
             )}
             {currentState === '결제완료' && (
-              <Link href={'/orders/cancel'} className="w-[65px] h-[32px] ml-[6px] btn-white">
+              <Link href={'/orders/cancel'} className="btn-order-detail">
                 주문취소
               </Link>
             )}
-            {currentState !== '결제완료' && <button className="w-[65px] h-[32px] ml-[6px] btn-white">배송조회</button>}
-            <button className="w-[65px] h-[32px] ml-[6px] btn-white">구매확정</button>
+            {currentState !== '결제완료' && <button className="btn-order-detail">배송조회</button>}
+            <button className="btn-order-detail">구매확정</button>
           </div>
         )}
       </OrderItem>
-    </OrderDetailLayout>
+    </OrderDetailLayout.OrderDetailItemsContentLayout>
   );
 }
