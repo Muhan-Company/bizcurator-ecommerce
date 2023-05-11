@@ -15,7 +15,7 @@ export default function OrderItem({
   delivery_state = 0,
   children,
 }: OrderItemProps) {
-  const currnetState = getDelivreryStateToString(delivery_state);
+  const currentState = getDelivreryStateToString(delivery_state);
   return (
     <div className="py-3 border-b-[1px] border-b-gray_02">
       <div className="center">
@@ -25,7 +25,7 @@ export default function OrderItem({
         <div className="grow flex flex-col">
           <OrderItemInfo title="상품명" value={name} />
           <OrderItemInfo title="결제금액" value={amount.toLocaleString('kr-KR') + '원'} />
-          <OrderItemInfo title="주문상태" value={currnetState} />
+          <OrderItemInfo title="주문상태" value={currentState} />
         </div>
       </div>
       {children}
