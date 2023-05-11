@@ -1,7 +1,7 @@
 export default function AdminSearch() {
     return (
         <>
-            <div className="w-[1500px] rounded-[10px] bg-[#fff] p-[30px] mt-[30px] mx-[60px]">
+            <div className="w-[1500px] rounded-[10px] bg-[#fff] p-[30px] mt-[15px] mx-[60px]">
                 <div>
                     <span className="mr-24">검색어</span>
                     <input
