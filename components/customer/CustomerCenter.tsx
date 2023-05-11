@@ -28,8 +28,8 @@ export default function CustomerCenter() {
 
     return (
         <div>
-            <div>
-                <h1 className="text-black text-3xl mt-16 inline-block md:block md:w-[1100px] md:mx-auto">고객센터</h1>
+            <div className="mt-[110px]">
+                <h1 className="text-black text-3xl mt-16 hidden md:block md:w-[1100px] md:mx-auto">고객센터</h1>
                 <div className="md:flex md:w-[1100px] md:mx-auto md:relative">
                     <Kakao />
                     <div className="mt-2 md:mt-9">
