@@ -23,10 +23,10 @@ export default function TopHeader() {
       </Link>
       <div className="lg:flex flex-col lg:space-y-10">
         <div className="hidden lg:block space-x-5">
-          <Link href={'#'}>회원가입</Link>
+          <Link href={'/'}>회원가입</Link>
           <button onClick={() => setShowLogInModal(true)}>로그인</button>
           {showLogInModal && createPortal(<LogInModal setShowLogInModal={setShowLogInModal} />, document.body)}
-          <Link href={'#'}>고객센터</Link>
+          <Link href={'/'}>고객센터</Link>
         </div>
         <div className="flex items-center space-x-5 ml-auto">
           <button className="header-btn" onClick={openModal}>

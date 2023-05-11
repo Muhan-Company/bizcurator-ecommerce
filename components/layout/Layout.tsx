@@ -1,4 +1,4 @@
-import FloatingButtons from '../body/FloatingButtons';
+import FloatingButtons from '../home/FloatingButtons';
 import TopHeader from '../header/TopHeader';
 
 export default function Layout({ children }: { children: React.ReactNode }) {

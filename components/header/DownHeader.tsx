@@ -27,10 +27,10 @@ export default function DownHeader() {
           홈
         </NavLink>
         <NavLink href={'/products?sort=newest'}>바로구매</NavLink>
-        <NavLink href={'#'} className="mx-3">
+        <NavLink href={'/'} className="mx-3">
           제품구매 의뢰
         </NavLink>
-        <NavLink href={'#'}>입점 의뢰</NavLink>
+        <NavLink href={'/'}>입점 의뢰</NavLink>
       </div>
     </header>
   );

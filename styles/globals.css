@@ -22,10 +22,6 @@
     @apply text-button-xs md:text-button-sm lg:text-button-md font-normal text-gray_01 w-32 h-14 leading-[56px] text-center;
   }
 
-  .box-shadow {
-    box-shadow: -1px 4px 10px rgba(0, 0, 0, 0.08);
-  }
-
   .btn-white {
     @apply flex items-center justify-center border border-[#DDDDDD] rounded-[8px] bg-white box-border cursor-pointer font-normal;
   }
@@ -110,5 +106,9 @@
 
   .navbar-btn {
     @apply center flex-col gap-y-1.5;
+  }
+
+  .scrollbar-hidden::-webkit-scrollbar {
+    @apply hidden;
   }
 }
