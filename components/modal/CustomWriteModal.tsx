@@ -6,7 +6,7 @@ type Item = {
     title: string;
     content: string;
     date: string;
-    isFixed: boolean;
+    isFixed: string;
 }
 
 type CustomWritePropsType = {
@@ -14,15 +14,17 @@ type CustomWritePropsType = {
     item?: Item;
 }
 type WriteFormType = {
+    id: string;
     title: string;
     content: string;
-    isFixed: boolean; //고정공지인지아닌지 false true
+    isFixed: string; //고정공지인지아닌지 false true
 }
 
 const writeFormState: WriteFormType = { //WriteFormType의 기본값
+    id: '',
     title: '',
     content: '',
-    isFixed: false,
+    isFixed: '',
 }
 
 export default function CustomWriteModal({
@@ -37,10 +39,11 @@ export default function CustomWriteModal({
 
     const [writeForm, setWriteForm] = useState<WriteFormType>(writeFormState);
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>) => {
-        const { name, value, type } = e.target;
+        const { id, name, value, type } = e.target;
         if (type === "radio") {
             const isChecked = (e.target as HTMLInputElement).checked;
-            setWriteForm((prev) => ({ ...prev, isFixed: isChecked }));
+            setWriteForm((prev) => ({ ...prev, isFixed: id }));
+            console.log(isChecked);
         } else {
             setWriteForm((prev) => ({ ...prev, [name]: value }));
         }
@@ -56,7 +59,7 @@ export default function CustomWriteModal({
                 alert('내용을 입력하세요');
                 return;
             }
-            console.log(writeForm);
+            console.log(writeForm)
         }
     };
 
@@ -67,7 +70,7 @@ export default function CustomWriteModal({
             {item ?
                 <>
                     <form onSubmit={handleSubmit}>
-                        <div className="bg-black text-sm bg-opacity-60 fixed flex inset-0 items-center justify-center h-screen z-50">
+                        <div className="bg-black text-xs bg-opacity-60 fixed flex inset-0 items-center justify-center h-screen z-50">
                             <div
                                 className="bg-[#fff] w-full h-1/2 rounded-xl px-5"
                                 ref={ref}>
@@ -118,14 +121,14 @@ export default function CustomWriteModal({
                                     </div>
                                 </div>
                                 <button
-                                    className="rounded-lg mt-12 border-[#999] border px-[14px] py-[6px] text-sm"
+                                    className="rounded-lg mt-12 border-[#999] border px-[14px] py-[6px] text-xs"
                                     type="submit">수정하기</button>
                             </div>
                         </div>
                     </form>
                 </> : <>
                     <form onSubmit={handleSubmit}>
-                        <div className="bg-black text-sm bg-opacity-60 fixed flex inset-0 items-center justify-center h-screen z-50">
+                        <div className="bg-black text-xs bg-opacity-60 fixed flex inset-0 items-center justify-center h-screen z-50">
                             <div
                                 className="bg-[#fff] w-full h-1/2 rounded-xl px-5"
                                 ref={ref}>
@@ -161,7 +164,7 @@ export default function CustomWriteModal({
                                             name="isFixed"
                                             className="mr-5"
                                             onChange={handleChange}
-                                            checked={writeForm.isFixed === true}
+                                            checked={writeForm.isFixed === 'isFixed'}
                                             type="radio"
                                         />
                                         <label htmlFor="notFixed">고정공지로 미등록</label>
@@ -170,13 +173,13 @@ export default function CustomWriteModal({
                                             name="isFixed"
                                             className="mr-5"
                                             onChange={handleChange}
-                                            checked={writeForm.isFixed === false}
+                                            checked={writeForm.isFixed === 'notFixed'}
                                             type="radio"
                                         />
                                     </div>
                                 </div>
                                 <button
-                                    className="rounded-lg mt-12 border-[#999] border px-[14px] py-[6px] text-sm"
+                                    className="rounded-lg mt-12 border-[#999] border px-[14px] py-[6px] text-xs"
                                     type="submit">등록하기</button>
                             </div>
                         </div>
