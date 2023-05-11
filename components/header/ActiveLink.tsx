@@ -9,7 +9,7 @@ interface ActiveLinkProps {
 
 export default function ActiveLink({ href, children, className }: ActiveLinkProps) {
   const router = useRouter();
-  const isActive = router.asPath === href;
+  const isActive = router.pathname.slice(0, 9) === href.slice(0, 9);
 
   return (
     <Link href={href} className={`${isActive && 'text-main border-b-[1px] border-main'} ${className} header-link`}>
