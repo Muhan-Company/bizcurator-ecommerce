@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-interface NavLinkProps {
+interface ActiveLinkProps {
   href: string;
   children: string;
   className?: string;
 }
 
-export default function NavLink({ href, children, className }: NavLinkProps) {
+export default function ActiveLink({ href, children, className }: ActiveLinkProps) {
   const router = useRouter();
   const isActive = router.asPath === href;
 
