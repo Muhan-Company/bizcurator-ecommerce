@@ -17,11 +17,11 @@ export default function Product() {
   };
 
   let category_id = 1;
-  let itme_id = 1234;
+  let item_id = 1234;
 
   return (
     <div
-      onClick={() => router.push(`/products/${category_id}?itemId=${itme_id}`)}
+      onClick={() => router.push(`/products/${category_id}?itemId=${item_id}`)}
       className="w-full sm:space-y-3 lg:space-y-4"
     >
       <div className="aspect-square relative">

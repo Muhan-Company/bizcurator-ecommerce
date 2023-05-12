@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Counter from '../cart/Counter';
 import AddCompleteModal from './AddCompleteModal';
 import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { addCompleteModalState } from '@/atoms/modalAtoms';
 
 type AddToCartPropsType = {
   name: string;
@@ -27,7 +29,7 @@ export default function AddToCartModal({
 }: AddToCartPropsType) {
   const originalPrice = (price * quantity).toLocaleString('ko-KR');
   const discountedPrice = ((price - discount) * quantity).toLocaleString('ko-KR');
-  const [showAddCompleteModal, setShowAddCompleteModal] = useState<boolean>(false);
+  const [showAddCompleteModal, setShowAddCompleteModal] = useRecoilState(addCompleteModalState);
 
   const closeModal = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -43,10 +45,7 @@ export default function AddToCartModal({
   return (
     <>
       {showAddCompleteModal ? (
-        <AddCompleteModal
-          setShowAddCompleteModal={setShowAddCompleteModal}
-          setShowAddToCartModal={setShowAddToCartModal}
-        />
+        <AddCompleteModal setShowAddToCartModal={setShowAddToCartModal} />
       ) : (
         <>
           <div

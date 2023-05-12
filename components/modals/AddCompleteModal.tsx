@@ -1,19 +1,24 @@
+import { addCompleteModalState } from '@/atoms/modalAtoms';
 import Link from 'next/link';
+import { useSetRecoilState } from 'recoil';
 
 interface AddCompleteModalPropsType {
-  setShowAddToCartModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowAddCompleteModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowAddToCartModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  fold: () => void;
 }
 
-export default function AddCompleteModal({
-  setShowAddCompleteModal,
-  setShowAddToCartModal,
-}: AddCompleteModalPropsType) {
+export default function AddCompleteModal({ setShowAddToCartModal, fold }: AddCompleteModalPropsType) {
+  const setShowAddCompleteModal = useSetRecoilState(addCompleteModalState);
+
   const closeModal = (e: React.MouseEvent) => {
     e.stopPropagation();
     setShowAddCompleteModal(false);
-    setShowAddToCartModal(false);
     document.body.classList.remove('modal-open');
+    fold();
+
+    if (setShowAddToCartModal) {
+      setShowAddToCartModal(false);
+    }
   };
 
   return (
@@ -38,7 +43,7 @@ export default function AddCompleteModal({
           </Link>
         </div>
       </div>
-      <div className="modal-box-shadow fixed inset-0 modal bg-black/70 z-10" onClick={closeModal}></div>
+      <div className="modal-box-shadow fixed inset-0 bg-black/70 z-10" onClick={closeModal}></div>
     </>
   );
 }

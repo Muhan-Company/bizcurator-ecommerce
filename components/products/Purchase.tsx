@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import Counter from '../cart/Counter';
 import { ChevronDown } from '../Icons';
+import { useRecoilState } from 'recoil';
+import { addCompleteModalState, buyCompleteModalState } from '@/atoms/modalAtoms';
+import { createPortal } from 'react-dom';
+import AddCompleteModal from '../modals/AddCompleteModal';
+import BuyCompleteModal from '../modals/BuyCompleteModal';
 
 interface PurchaseProps {
   name: string;
@@ -12,20 +17,41 @@ interface PurchaseProps {
 export default function Purchase({ name, min_quantity, regular_price, sale_price }: PurchaseProps) {
   const [quantity, setQuantity] = useState<number>(20);
   const [folded, setFolded] = useState<boolean>(true);
+  const [showAddCompleteModal, setShowAddCompleteModal] = useRecoilState(addCompleteModalState);
+  const [showBuyCompleteModal, setShowBuyCompleteModal] = useRecoilState(buyCompleteModalState);
+
+  const fold = () => {
+    setFolded(true);
+    setQuantity(min_quantity);
+  };
 
   const addToCart = () => {
-    () => setFolded(false);
+    setShowAddCompleteModal(true);
+    document.body.classList.add('modal-open');
+  };
+
+  const handleClick = () => {
+    if (folded) {
+      setFolded(false);
+    } else {
+      addToCart();
+    }
   };
 
   const buyItem = () => {
-    () => setFolded(false);
+    if (folded) {
+      setFolded(false);
+    } else {
+      setShowBuyCompleteModal(true);
+      document.body.classList.add('modal-open');
+    }
   };
 
   return (
     <div className="z-10 fixed bottom-0 bg-white rounded-t-[10px] right-0 left-0 shadow-[0px_-2px_8px_rgba(0,0,0,0.08)]">
       <div className={`${folded ? 'hidden' : 'block'}`}>
         <div className="text-center mb-5">
-          <button onClick={() => setFolded(true)}>
+          <button onClick={fold}>
             <ChevronDown />
           </button>
         </div>
@@ -50,7 +76,7 @@ export default function Purchase({ name, min_quantity, regular_price, sale_price
 
       <div className="py-2 space-y-6">
         <div className="center gap-x-2">
-          <button onClick={addToCart} className="btn-white w-[172px] h-[42px] py-[19px]">
+          <button onClick={handleClick} className="btn-white w-[172px] h-[42px] py-[19px]">
             장바구니
           </button>
 
@@ -61,6 +87,9 @@ export default function Purchase({ name, min_quantity, regular_price, sale_price
 
         <div className="mx-auto w-[138px] h-[5px] bg-black rounded-[100px]"></div>
       </div>
+
+      {showAddCompleteModal && createPortal(<AddCompleteModal fold={fold} />, document.body)}
+      {showBuyCompleteModal && createPortal(<BuyCompleteModal fold={fold} />, document.body)}
     </div>
   );
 }
