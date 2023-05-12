@@ -3,10 +3,10 @@ import CustomWriteModal from "../modal/CustomWriteModal";
 import { createPortal } from 'react-dom';
 
 interface Item {
-    id: number;
+    itemId: number;
     title: string;
     content: string;
-    isFixed: boolean;
+    isFixed: string;
     date: string;
 }
 
@@ -18,6 +18,9 @@ export default function NoticeList({ item }: ItemListProps) {
     const [selectIndex, setSelectIndex] = useState<number | null>(null)
     const [writeOpenModal, setWriteOpenModal] = useState<boolean>(false);
 
+
+    console.log(item);
+
     const listClick = (index: number) => {
         setSelectIndex(selectIndex === index ? null : index);
     }
@@ -27,11 +30,13 @@ export default function NoticeList({ item }: ItemListProps) {
         setWriteOpenModal(true);
     }
     const onEditClick = (index: number) => {
-        // console.log("click")
-        // console.log(index);
-        // console.log(item[index]);
-        setSelectIndex(index);
         setWriteOpenModal(true)
+        console.log(setSelectIndex(index))
+    }
+
+    const onDeleteClick = (index: number) => {
+        const updateData = item.filter((i) => i.itemId !== index + 1);
+        console.log(updateData);
     }
 
     return (
@@ -72,7 +77,9 @@ export default function NoticeList({ item }: ItemListProps) {
                                     type="button"
                                     onClick={() => onEditClick(index)}
                                 >수정</button>
-                                <button className="rounded-lg mt-12 border-[#999] border px-[14px] py-[6px]">삭제</button>
+                                <button className="rounded-lg mt-12 border-[#999] border px-[14px] py-[6px]"
+                                    onClick={() => onDeleteClick(index)}
+                                >삭제</button>
                             </div>
                         }
                     </div>
