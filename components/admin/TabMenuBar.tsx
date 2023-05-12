@@ -1,9 +1,12 @@
+import Link from "next/link";
 import AdminHeader from "./AdminHeader";
 import { useState, FC } from "react";
+import { useRouter } from "next/router";
 
 type SubMenuType = {
     title: string;
     index: number;
+    href: string; //href속성
     TabComponent: FC<{ index: number }>;
 }
 
@@ -11,6 +14,7 @@ type TabMenuBarProps = {
     TabMenuBarData: {
         title: string;
         index: number;
+        href: string; //href속성
         TabComponent: FC<{ index: number }>;
         subMenu?: boolean;
         subMenuList?: SubMenuType[];
@@ -35,6 +39,11 @@ const TabMenuBar: React.FC<TabMenuBarProps> = ({
         (subMenu) => subMenu.index === subActiveTab
     );
 
+    const router = useRouter()
+    const { pid } = router.query
+    console.log({ pid });
+    console.log(TabMenuBarData.map((i) => i.href))
+    console.log(TabMenuBarData.map((i) => i.TabComponent.name))
 
     const handleSubClick = (parentIndex: number, index: number) => {
         onSubMenuClick(parentIndex, index);
@@ -73,7 +82,9 @@ const TabMenuBar: React.FC<TabMenuBarProps> = ({
                                 onMouseLeave={handleTabMouseLeave}
                                 onClick={() => handleTabClick(menu.index)}
                             >
-                                {menu.title}
+                                <Link href={`/admin/${menu.TabComponent.name}`}>
+                                    {menu.title}
+                                </Link>
                                 {menu.subMenu && hoveredTabIndex === menu.index && menu.subMenuList && (
                                     //submenu가 true이고 hoverIndex와 menu.index값이 동일하고 menu.submenuList가 존재하면 아래 렌더링
                                     <ul className=" mt-2 text-white">
@@ -86,7 +97,9 @@ const TabMenuBar: React.FC<TabMenuBarProps> = ({
                                             //메뉴index와 activeTab이 true고 submenuIndex와 subActiveTab이 true여야 배경색이 먹음
                                             //submenu쪽만 하면 submenu없는 다른 메뉴클릭시 active가 남아있음
                                             >
-                                                {subMenu.title}
+                                                <Link href={`/admin/${subMenu.TabComponent.name}`}>
+                                                    {subMenu.title}
+                                                </Link>
                                             </li>
                                         ))}
                                     </ul>
