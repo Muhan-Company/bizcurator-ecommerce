@@ -16,7 +16,7 @@ export default function Footer() {
         <button onClick={openModal} className="footer-btn">
           로그인
         </button>
-        <Link href={'#'} className="footer-btn">
+        <Link href={'/'} className="footer-btn">
           회원가입
         </Link>
         <Link href={'/user/customer'} className="footer-btn">
