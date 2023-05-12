@@ -6,14 +6,15 @@ import SortModal from '../modal/SortModal';
 export interface SortByElment {
   id: number;
   sortName: string;
+  english: string;
 }
 
 export default function Sort() {
   const sortByList = [
-    { id: 1, sortName: '신상품' },
-    { id: 2, sortName: '인기순' },
-    { id: 3, sortName: '낮은 가격' },
-    { id: 4, sortName: '높은 가격' },
+    { id: 1, sortName: '신상품', english: 'newest' },
+    { id: 2, sortName: '인기순', english: 'popular' },
+    { id: 3, sortName: '낮은 가격', english: 'low_price' },
+    { id: 4, sortName: '높은 가격', english: 'high_price' },
   ];
   const [sortBy, setSortBy] = useState<SortByElment>(sortByList[0]);
   const [showSortModal, setShowSortModal] = useState<boolean>(false);

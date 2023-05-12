@@ -11,13 +11,13 @@ interface SortModalProps {
 
 export default function SortModal({ sortByList, setShowSortModal, sortBy, setSortBy }: SortModalProps) {
   const router = useRouter();
-  const categoryId = router.query.categry_id;
+  const categoryId = router.query.category_id;
 
   const closeModal = () => {
     setShowSortModal(false);
     document.body.classList.remove('modal-open');
 
-    router.push(`/products/${categoryId}?sort=${encodeURIComponent(sortBy.sortName)}`);
+    router.push(`/products/categories/${categoryId}?sort=${encodeURIComponent(sortBy.english)}`);
   };
 
   return (

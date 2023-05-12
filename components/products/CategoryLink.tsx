@@ -12,7 +12,7 @@ export default function CategoryLink({ id, name }: CategoryLinkProps) {
 
   return (
     <Link
-      href={`/products/${id}?sort=newest`}
+      href={`/products/categories/${id}?sort=newest`}
       className={`${
         isActive ? 'text-main' : 'text-gray_01'
       } font-medium text-label-sm inline-block min-w-fit text-center`}
