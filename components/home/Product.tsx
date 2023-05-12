@@ -3,6 +3,7 @@ import { Cart } from '../Icons';
 import React, { useState } from 'react';
 import AddToCartModal from '../modal/AddToCartModal';
 import { createPortal } from 'react-dom';
+import Link from 'next/link';
 
 export default function Product() {
   const [showAddToCartModal, setShowAddToCartModal] = useState<boolean>(false);
@@ -12,9 +13,11 @@ export default function Product() {
     setShowAddToCartModal(true);
     document.body.classList.add('modal-open');
   };
+  let category_id;
+  let itme_id;
 
   return (
-    <div className="w-full sm:space-y-3 lg:space-y-4">
+    <Link href={`/products/${category_id}?itemId=${itme_id}`} className="inline-block w-full sm:space-y-3 lg:space-y-4">
       <div className="aspect-square relative">
         <Image src={'/img/tissue.png'} alt="Product" fill sizes="100%" className="object-cover" />
         <button
@@ -46,6 +49,6 @@ export default function Product() {
           />,
           document.body,
         )}
-    </div>
+    </Link>
   );
 }

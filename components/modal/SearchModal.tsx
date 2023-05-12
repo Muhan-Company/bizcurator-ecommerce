@@ -12,7 +12,7 @@ export default function SearchModal({
   const router = useRouter();
   const search = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/search?q=${query}`);
+    router.push(`/search?q=${encodeURIComponent(query)}`);
   };
 
   const closeModal = () => {
@@ -21,7 +21,7 @@ export default function SearchModal({
   };
 
   return (
-    <div>
+    <>
       <form
         onSubmit={search}
         className="flex space-x-3 items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-md w-[327px] h-[47px] md:rounded-lg md:w-96 md:h-12 z-30 px-3"
@@ -37,6 +37,6 @@ export default function SearchModal({
         <button hidden type="submit"></button>
       </form>
       <div onClick={closeModal} className="fixed inset-0 z-20 bg-black/70"></div>
-    </div>
+    </>
   );
 }
