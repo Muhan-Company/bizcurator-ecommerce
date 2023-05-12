@@ -29,7 +29,8 @@ export default function AddToCartModal({
   const discountedPrice = ((price - discount) * quantity).toLocaleString('ko-KR');
   const [showAddCompleteModal, setShowAddCompleteModal] = useState<boolean>(false);
 
-  const closeModal = () => {
+  const closeModal = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setShowAddToCartModal(false);
     document.body.classList.remove('modal-open');
     setQuantity(min);
@@ -48,7 +49,10 @@ export default function AddToCartModal({
         />
       ) : (
         <>
-          <div className="w-[351px] z-20 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto pt-[30px] px-3 modal-shape flex-col">
+          <div
+            onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
+            className="w-[351px] z-20 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto pt-[30px] px-3 modal-shape flex-col"
+          >
             <div className="flex w-full space-x-[22px] py-[18px]">
               {/* 상품 썸네일 */}
               <Image src={src} alt="Thumbnail" width={86} height={86} className="object-cover rounded-[10px]" />
