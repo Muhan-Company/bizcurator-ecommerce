@@ -50,7 +50,7 @@
     @apply w-[351px] h-[156px] center bg-white rounded-[8px] modal-box-shadow font-medium;
   }
   .modal-background {
-    @apply absolute center inset-0 bg-black/20 z-20;
+    @apply h-screen absolute center inset-0 bg-black/20 z-20;
   }
 
   .swiper-button-next {
