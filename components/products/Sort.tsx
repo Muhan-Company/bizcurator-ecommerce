@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '../Icons';
 import { createPortal } from 'react-dom';
-import SortModal from '../modal/SortModal';
+import SortModal from '../modals/SortModal';
 
 export interface SortByElment {
   id: number;

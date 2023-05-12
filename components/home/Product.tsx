@@ -1,9 +1,8 @@
 import Image from 'next/image';
 import { Cart } from '../Icons';
 import React, { useState } from 'react';
-import AddToCartModal from '../modal/AddToCartModal';
+import AddToCartModal from '../modals/AddToCartModal';
 import { createPortal } from 'react-dom';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 export default function Product() {

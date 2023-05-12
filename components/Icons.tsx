@@ -523,3 +523,9 @@ export const ChevronRight = () => (
     <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
   </svg>
 );
+
+export const ChevronDown = () => (
+  <svg width="17" height="6" viewBox="0 0 17 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M1 1.25L8.5 4.75L16 1.25" stroke="#999999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);

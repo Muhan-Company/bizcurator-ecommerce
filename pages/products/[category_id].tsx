@@ -1,47 +1,24 @@
 import Footer from '@/components/footer/Footer';
 import DownHeader from '@/components/header/DownHeader';
-import Layout from '@/components/layout/Layout';
-import Image from 'next/image';
-import { ChevronLeft, ChevronRight } from '@/components/Icons';
-
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import required modules
-import { Pagination, Navigation } from 'swiper';
-
-// Import Swiper styles
-import 'swiper/css';
+import TopHeader from '@/components/header/TopHeader';
+import ProductCarousel from '@/components/products/ProductCarousel';
+import ProductInfo from '@/components/products/ProductInfo';
+import Purchase from '@/components/products/Purchase';
 
 export default function Item() {
+  let name = '야외 테이블과 의자 세트/화이트';
+  let min_quantity = 20;
+  let regular_price = 30000;
+  let sale_price = 20000;
+
   return (
-    <Layout>
+    <>
+      <TopHeader />
       <DownHeader />
-
-      <Swiper
-        modules={[Navigation, Pagination]}
-        navigation={{
-          nextEl: '.swiper-button-next-2',
-          prevEl: '.swiper-button-prev-2',
-        }}
-        loop
-        className="h-[375px] mt-[68px] relative"
-      >
-        <div className="swiper-button-prev-2">
-          <ChevronLeft />
-        </div>
-        <SwiperSlide>
-          <Image src={'/img/main 1.jpg'} alt="Main Banner 1" fill priority className="object-cover" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image src={'/img/main 3.jpg'} alt="Main Banner 3" fill priority className="object-cover" />
-        </SwiperSlide>
-        <div className="swiper-button-next-2">
-          <ChevronRight />
-        </div>
-      </Swiper>
-
+      <ProductCarousel />
+      <ProductInfo />
+      <Purchase name={name} min_quantity={min_quantity} regular_price={regular_price} sale_price={sale_price} />
       <Footer />
-    </Layout>
+    </>
   );
 }
