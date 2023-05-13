@@ -1,5 +1,4 @@
 import { toast } from 'react-hot-toast';
-import Notification from '../Toasters/Notification';
 
 export default function MyInfo() {
   const notify = () => toast('수정은 마이페이지에서 가능합니다.');
@@ -12,7 +11,6 @@ export default function MyInfo() {
         <h3 className="my-info">이름</h3>
         <h3 className="my-info">번호</h3>
       </section>
-      <Notification />
     </div>
   );
 }

@@ -12,7 +12,7 @@ export default function Notification() {
           width: '351px',
           height: '68px',
           backgroundColor: '#FFFFFF',
-          borderRadius: '8px 8px 0px 0px',
+          borderRadius: '8px',
           boxShadow: '0px 0px 40px rgba(0, 0, 0, 0.08)',
           color: '#1C1C1C',
           fontWeight: '400',
