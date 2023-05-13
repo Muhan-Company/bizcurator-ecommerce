@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { BarsIcon } from '../Icons';
-import NavLink from './NavLink';
+import ActiveLink from './ActiveLink';
 import HeaderDropdown from './HeaderDropdown';
 import { useRecoilState } from 'recoil';
 import hoverState from '@/atoms/hoverAtoms';
@@ -15,7 +15,7 @@ export default function DownHeader() {
         onMouseLeave={() => setIsHovered(false)}
         className="hidden lg:block relative"
       >
-        <Link href={'#'} className="lg:flex items-center">
+        <Link href={'/products/1?sort=newest'} className="lg:flex items-center">
           <BarsIcon />
           <h3 className="header-link">전체 상품 보기</h3>
         </Link>
@@ -23,14 +23,14 @@ export default function DownHeader() {
       </div>
 
       <div className="lg:space-x-5 xl:space-x-12 flex justify-evenly lg:justify-between">
-        <NavLink href={'/'} className="hidden lg:inline lg:header-link">
+        <ActiveLink href={'/'} className="hidden lg:inline lg:header-link">
           홈
-        </NavLink>
-        <NavLink href={'#'}>바로구매</NavLink>
-        <NavLink href={'#'} className="mx-3">
+        </ActiveLink>
+        <ActiveLink href={'/products/1?sort=newest'}>바로구매</ActiveLink>
+        <ActiveLink href={'/'} className="mx-3">
           제품구매 의뢰
-        </NavLink>
-        <NavLink href={'#'}>입점 의뢰</NavLink>
+        </ActiveLink>
+        <ActiveLink href={'/'}>입점 의뢰</ActiveLink>
       </div>
     </header>
   );

@@ -7,12 +7,6 @@
   font-family: 'Noto Sans KR', sans-serif;
 }
 
-/* @layer base {
-  body {
-    @apply;
-  }
-} */
-
 @layer components {
   .header-btn {
     @apply flex justify-center items-center;
@@ -20,10 +14,6 @@
 
   .header-link {
     @apply text-button-xs md:text-button-sm lg:text-button-md font-normal text-gray_01 w-32 h-14 leading-[56px] text-center;
-  }
-
-  .box-shadow {
-    box-shadow: -1px 4px 10px rgba(0, 0, 0, 0.08);
   }
 
   .btn-white {
@@ -37,8 +27,16 @@
     @apply absolute bottom-[90px] w-full;
   }
 
+  .btn-order-detail {
+    @apply w-[65px] h-[32px] ml-[6px] flex items-center justify-center border border-[#DDDDDD] rounded-[8px] bg-white box-border cursor-pointer font-normal;
+  }
+
   .center {
     @apply flex items-center justify-center;
+  }
+
+  .center-between {
+    @apply flex items-center justify-between;
   }
 
   .modal-box-shadow {
@@ -110,5 +108,9 @@
 
   .navbar-btn {
     @apply center flex-col gap-y-1.5;
+  }
+
+  .scrollbar-hidden::-webkit-scrollbar {
+    @apply hidden;
   }
 }

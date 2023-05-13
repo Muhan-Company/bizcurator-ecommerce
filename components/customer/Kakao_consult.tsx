@@ -9,8 +9,14 @@ export default function Kakao() {
             </div>
             <button
                 className="w-10/12 md:w-[200px] bg-yellow-300 py-4 mx-8 rounded-lg mb-3"
-
-            >카톡채널 상담</button>
+            >
+                <a
+                    target="_blank"
+                    href="http://pf.kakao.com/_xoPaYxj"
+                >
+                    카톡 채널 상담
+                </a>
+            </button>
         </div>
     )
 }

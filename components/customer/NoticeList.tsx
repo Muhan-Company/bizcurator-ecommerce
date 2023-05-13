@@ -3,10 +3,10 @@ import CustomWriteModal from "../modal/CustomWriteModal";
 import { createPortal } from 'react-dom';
 
 interface Item {
-    id: number;
+    itemId: number;
     title: string;
     content: string;
-    isFixed: boolean;
+    isFixed: string;
     date: string;
 }
 
@@ -18,6 +18,9 @@ export default function NoticeList({ item }: ItemListProps) {
     const [selectIndex, setSelectIndex] = useState<number | null>(null)
     const [writeOpenModal, setWriteOpenModal] = useState<boolean>(false);
 
+
+    console.log(item);
+
     const listClick = (index: number) => {
         setSelectIndex(selectIndex === index ? null : index);
     }
@@ -27,11 +30,13 @@ export default function NoticeList({ item }: ItemListProps) {
         setWriteOpenModal(true);
     }
     const onEditClick = (index: number) => {
-        // console.log("click")
-        // console.log(index);
-        // console.log(item[index]);
-        setSelectIndex(index);
         setWriteOpenModal(true)
+        console.log(setSelectIndex(index))
+    }
+
+    const onDeleteClick = (index: number) => {
+        const updateData = item.filter((i) => i.itemId !== index + 1);
+        console.log(updateData);
     }
 
     return (
@@ -54,29 +59,29 @@ export default function NoticeList({ item }: ItemListProps) {
                         {selectIndex === index &&
 
                             <div
-                                className="bg-[#fafafa] break-words py-9 px-5"
+                                className="bg-[#fafafa] break-words py-9 px-5 text-xs"
                             >
                                 <div>
-                                    <h3 className="hidden md:block md:ml-8 md:mb-6">
-                                        - {item.title}
+                                    <h3 className="md:block md:ml-8 md:mb-6">
+                                        ● {item.title}
                                     </h3>
-                                    <span className="text-xs md:ml-5">
+                                    <span className="md:ml-5 inline-block py-7">
                                         {item.content}
                                     </span>
-                                    <span className="text-xs inline-block py-5">
+                                    <span>
                                         감사합니다.
                                     </span>
                                 </div>
                                 <button
-                                    className="rounded-lg mt-12 border-[#999] border px-[14px] py-[6px] text-sm"
+                                    className="rounded-lg mt-12 border-[#999] border px-[14px] py-[6px] mr-2"
                                     type="button"
                                     onClick={() => onEditClick(index)}
                                 >수정</button>
-                                <button className="rounded-lg mt-12 border-[#999] border px-[14px] py-[6px] text-sm">삭제</button>
+                                <button className="rounded-lg mt-12 border-[#999] border px-[14px] py-[6px]"
+                                    onClick={() => onDeleteClick(index)}
+                                >삭제</button>
                             </div>
-
                         }
-
                     </div>
 
                 ))}
