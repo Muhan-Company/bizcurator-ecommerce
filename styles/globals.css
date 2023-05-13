@@ -129,4 +129,8 @@
   .scrollbar-hidden::-webkit-scrollbar {
     @apply hidden;
   }
+
+  .my-info {
+    @apply h-[50px] bg-gray_04 rounded-lg font-normal text-gray_01 text-body-sm px-4 leading-[50px];
+  }
 }
