@@ -488,6 +488,12 @@ export const ArrowUpIcon = () => (
   </svg>
 );
 
+export const BackIcon = () => (
+  <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block ml-7">
+    <path d="M7.45711 0.542893C7.84763 0.933418 7.84763 1.56658 7.45711 1.95711L2.66421 6.75L7.45711 11.5429C7.84763 11.9334 7.84763 12.5666 7.45711 12.9571C7.06658 13.3476 6.43342 13.3476 6.04289 12.9571L0.542893 7.45711C0.152369 7.06658 0.152369 6.43342 0.542893 6.04289L6.04289 0.542893C6.43342 0.152369 7.06658 0.152369 7.45711 0.542893Z" fill="#999999" />
+  </svg>
+
+)
 export const CheckIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="#1C1C1C" className="w-5 h-5">
     <path
