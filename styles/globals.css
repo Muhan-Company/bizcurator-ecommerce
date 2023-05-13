@@ -17,21 +17,21 @@
   }
 
   .btn-white {
-    @apply flex items-center justify-center border border-[#DDDDDD] rounded-[8px] bg-white box-border cursor-pointer font-normal;
+    @apply center border border-[#DDDDDD] rounded-[8px] bg-white box-border cursor-pointer font-normal;
   }
   .btn-primary {
-    @apply flex items-center justify-center rounded-[8px] bg-primary text-white cursor-pointer font-normal;
+    @apply center rounded-[8px] bg-primary text-white cursor-pointer font-normal;
   }
 
   .btn-mobile {
     @apply absolute bottom-[90px] w-full;
   }
   .btn-large {
-    @apply w-full h-[42px] flex items-center justify-center rounded-[8px] bg-primary text-white cursor-pointer font-medium;
+    @apply w-full h-[42px] center rounded-[8px] bg-primary text-white cursor-pointer font-medium;
   }
 
   .btn-order-detail {
-    @apply w-[65px] h-[32px] ml-[6px] flex items-center justify-center border border-[#DDDDDD] rounded-[8px] bg-white box-border cursor-pointer font-normal;
+    @apply w-[65px] h-[32px] ml-[6px] center border border-[#DDDDDD] rounded-[8px] bg-white box-border cursor-pointer font-normal;
   }
 
   .center {
