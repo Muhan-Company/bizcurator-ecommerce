@@ -1,28 +1,24 @@
-import searchBarState from '@/atoms/seachBarAtom';
 import Footer from '@/components/footer/Footer';
-import NavBar from '@/components/footer/NavBar';
 import DownHeader from '@/components/header/DownHeader';
-import Layout from '@/components/layout/Layout';
-import CategoryFilter from '@/components/products/CategoryFilter';
-import ProductList from '@/components/products/ProductList';
-import SearchBar from '@/components/products/SearchBar';
-import Sort from '@/components/products/Sort';
-import { useRecoilValue } from 'recoil';
+import TopHeader from '@/components/header/TopHeader';
+import ProductCarousel from '@/components/products/ProductCarousel';
+import ProductInfo from '@/components/products/ProductInfo';
+import Purchase from '@/components/products/Purchase';
 
-export default function Products() {
-  const showSearchBar = useRecoilValue(searchBarState);
+export default function Item() {
+  let name = '야외 테이블과 의자 세트/화이트';
+  let min_quantity = 20;
+  let regular_price = 30000;
+  let sale_price = 20000;
 
   return (
-    <Layout>
+    <>
+      <TopHeader />
       <DownHeader />
-      <CategoryFilter />
-      {showSearchBar ? <SearchBar /> : <div className="h-[55px]"></div>}
-      <div className="relative">
-        <Sort />
-        <ProductList />
-      </div>
-      <NavBar />
+      <ProductCarousel />
+      <ProductInfo />
+      <Purchase name={name} min_quantity={min_quantity} regular_price={regular_price} sale_price={sale_price} />
       <Footer />
-    </Layout>
+    </>
   );
 }

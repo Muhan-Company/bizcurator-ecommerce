@@ -1,102 +1,97 @@
-import React, { useState } from "react";
-import CustomWriteModal from "../modal/CustomWriteModal";
+import React, { useState } from 'react';
+import CustomWriteModal from '../modals/CustomWriteModal';
 import { createPortal } from 'react-dom';
 
 interface Item {
-    itemId: number;
-    title: string;
-    content: string;
-    isFixed: string;
-    date: string;
+  itemId: number;
+  title: string;
+  content: string;
+  isFixed: string;
+  date: string;
 }
 
 interface ItemListProps {
-    item: Item[];
+  item: Item[];
 }
 
 export default function NoticeList({ item }: ItemListProps) {
-    const [selectIndex, setSelectIndex] = useState<number | null>(null)
-    const [writeOpenModal, setWriteOpenModal] = useState<boolean>(false);
+  const [selectIndex, setSelectIndex] = useState<number | null>(null);
+  const [writeOpenModal, setWriteOpenModal] = useState<boolean>(false);
 
+  console.log(item);
 
-    console.log(item);
+  const listClick = (index: number) => {
+    setSelectIndex(selectIndex === index ? null : index);
+  };
 
-    const listClick = (index: number) => {
-        setSelectIndex(selectIndex === index ? null : index);
-    }
+  const writeModal = () => {
+    setSelectIndex(null); //리스트를 클릭해서 상세정보가 나온상태에서 글쓰기를 누르면 item이 있는걸로 간주하기때문에 사용
+    setWriteOpenModal(true);
+  };
+  const onEditClick = (index: number) => {
+    setWriteOpenModal(true);
+    console.log(setSelectIndex(index));
+  };
 
-    const writeModal = () => {
-        setSelectIndex(null); //리스트를 클릭해서 상세정보가 나온상태에서 글쓰기를 누르면 item이 있는걸로 간주하기때문에 사용
-        setWriteOpenModal(true);
-    }
-    const onEditClick = (index: number) => {
-        setWriteOpenModal(true)
-        console.log(setSelectIndex(index))
-    }
+  const onDeleteClick = (index: number) => {
+    const updateData = item.filter((i) => i.itemId !== index + 1);
+    console.log(updateData);
+  };
 
-    const onDeleteClick = (index: number) => {
-        const updateData = item.filter((i) => i.itemId !== index + 1);
-        console.log(updateData);
-    }
-
-    return (
-        <>
-            <div className="relative">
-                <div className="opacity-0 md:opacity-100 md:flex md:justify-between md:px-10 md:py-4 md:border-black md:border-y md:mt-4">
-                    <span>번호</span>
-                    <span>제목</span>
-                    <span>작성일</span>
+  return (
+    <>
+      <div className="relative">
+        <div className="opacity-0 md:opacity-100 md:flex md:justify-between md:px-10 md:py-4 md:border-black md:border-y md:mt-4">
+          <span>번호</span>
+          <span>제목</span>
+          <span>작성일</span>
+        </div>
+        {item?.map((item, index) => (
+          <div key={index}>
+            <div
+              className="pt-5 pb-5 border-b cursor-pointer relative md:ml-auto mt-4"
+              onClick={() => listClick(index)}
+            >
+              <span className="ml-3 text-sm md:text-base md:ml-12">{item.title}</span>
+              <span className="absolute top-5 right-2 text-[#999]">{item.date}</span>
+            </div>
+            {selectIndex === index && (
+              <div className="bg-[#fafafa] break-words py-9 px-5 text-xs">
+                <div>
+                  <h3 className="md:block md:ml-8 md:mb-6">● {item.title}</h3>
+                  <span className="md:ml-5 inline-block py-7">{item.content}</span>
+                  <span>감사합니다.</span>
                 </div>
-                {item?.map((item, index) => (
-                    <div key={index}>
-                        <div
-                            className="pt-5 pb-5 border-b cursor-pointer relative md:ml-auto mt-4"
-                            onClick={() => listClick(index)}
-                        >
-                            <span className="ml-3 text-sm md:text-base md:ml-12">{item.title}</span>
-                            <span className="absolute top-5 right-2 text-[#999]">{item.date}</span>
-                        </div>
-                        {selectIndex === index &&
-
-                            <div
-                                className="bg-[#fafafa] break-words py-9 px-5 text-xs"
-                            >
-                                <div>
-                                    <h3 className="md:block md:ml-8 md:mb-6">
-                                        ● {item.title}
-                                    </h3>
-                                    <span className="md:ml-5 inline-block py-7">
-                                        {item.content}
-                                    </span>
-                                    <span>
-                                        감사합니다.
-                                    </span>
-                                </div>
-                                <button
-                                    className="rounded-lg mt-12 border-[#999] border px-[14px] py-[6px] mr-2"
-                                    type="button"
-                                    onClick={() => onEditClick(index)}
-                                >수정</button>
-                                <button className="rounded-lg mt-12 border-[#999] border px-[14px] py-[6px]"
-                                    onClick={() => onDeleteClick(index)}
-                                >삭제</button>
-                            </div>
-                        }
-                    </div>
-
-                ))}
                 <button
-                    onClick={writeModal}
-                    className="absolute top-2 right-2 rounded-lg border px-[14px] py-[6px] text-xs"
-                >글쓰기</button>
-            </div >
-            {/* writeOpenModal이 true이면 createportal로 모달 렌더링 */}
-            {writeOpenModal && createPortal
-                (<CustomWriteModal
-                    setWriteOpenModal={setWriteOpenModal}
-                    item={selectIndex !== null ? item[selectIndex] : undefined} // 수정할 아이템 전달
-                />,
-                    document.body)}
-        </>
-    )
+                  className="rounded-lg mt-12 border-[#999] border px-[14px] py-[6px] mr-2"
+                  type="button"
+                  onClick={() => onEditClick(index)}
+                >
+                  수정
+                </button>
+                <button
+                  className="rounded-lg mt-12 border-[#999] border px-[14px] py-[6px]"
+                  onClick={() => onDeleteClick(index)}
+                >
+                  삭제
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+        <button onClick={writeModal} className="absolute top-2 right-2 rounded-lg border px-[14px] py-[6px] text-xs">
+          글쓰기
+        </button>
+      </div>
+      {/* writeOpenModal이 true이면 createportal로 모달 렌더링 */}
+      {writeOpenModal &&
+        createPortal(
+          <CustomWriteModal
+            setWriteOpenModal={setWriteOpenModal}
+            item={selectIndex !== null ? item[selectIndex] : undefined} // 수정할 아이템 전달
+          />,
+          document.body,
+        )}
+    </>
+  );
 }

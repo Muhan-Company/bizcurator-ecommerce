@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { Cart, LogoIcon, MagnifyingGlassIcon, UserIcon } from '../Icons';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { createPortal } from 'react-dom';
-import LogInModal from '../modal/LogInModal';
-import SearchModal from '../modal/SearchModal';
+import LogInModal from '../modals/LogInModal';
+import SearchModal from '../modals/SearchModal';
 import { logInModalState, searchModalState } from '@/atoms/modalAtoms';
 import searchBarState from '@/atoms/seachBarAtom';
 
@@ -15,7 +15,7 @@ export default function TopHeader() {
   const isMobileScreen = () => {
     if (typeof window !== 'undefined') {
       const screenWidth = window.innerWidth;
-      return screenWidth >= 375 && screenWidth < 430;
+      return screenWidth >= 375 && screenWidth <= 430;
     }
     return false; // Default to false if window is undefined (e.g., server-side rendering)
   };

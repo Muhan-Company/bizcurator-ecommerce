@@ -503,3 +503,35 @@ export const CheckIcon = () => (
     />
   </svg>
 );
+
+export const ChevronLeft = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="currentColor"
+    className="w-6 h-6 text-main"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+  </svg>
+);
+
+export const ChevronRight = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="currentColor"
+    className="w-6 h-6 text-main"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+  </svg>
+);
+
+export const ChevronDown = () => (
+  <svg width="17" height="6" viewBox="0 0 17 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M1 1.25L8.5 4.75L16 1.25" stroke="#999999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
