@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom';
-import { useScrollLock } from './hook/useScrollLock';
+import { useScrollLock } from '@/hooks/useScrollLock';
 import { useRouter } from 'next/router';
 type SingleButtonModalProps = {
   content: string;
