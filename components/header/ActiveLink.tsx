@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-interface ActiveLinkProps {
+export interface ActiveLinkProps {
   href: string;
   children: string;
   className?: string;
