@@ -4,15 +4,17 @@ import DownHeader from '@/components/header/DownHeader';
 import Layout from '@/components/layout/Layout';
 import Description from '@/components/request/Description';
 import FormTitle from '@/components/request/FormTitle';
-import PurchaseForm from '@/components/request/purchase/PurchaseForm';
+import MyInfo from '@/components/request/MyInfo';
+import RequestForm from '@/components/request/RequestForm';
 
-export default function Purchase() {
+export default function PurchaseRequest() {
   return (
     <Layout>
       <DownHeader />
       <FormTitle />
       <Description />
-      <PurchaseForm />
+      <MyInfo />
+      <RequestForm />
       <Footer />
       <NavBar />
     </Layout>

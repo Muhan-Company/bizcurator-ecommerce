@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Counter from '../cart/Counter';
 import AddCompleteModal from './AddCompleteModal';
-import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { addCompleteModalState } from '@/atoms/modalAtoms';
 
@@ -50,7 +49,7 @@ export default function AddToCartModal({
         <>
           <div
             onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
-            className="w-[351px] z-20 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto pt-[30px] px-3 modal-shape flex-col"
+            className="w-[351px] modal-contents h-auto pt-[30px] px-3 flex-col center modal-box-shadow"
           >
             <div className="flex w-full space-x-[22px] py-[18px]">
               {/* 상품 썸네일 */}
@@ -84,7 +83,7 @@ export default function AddToCartModal({
               </button>
             </div>
           </div>
-          <div className="modal-box-shadow fixed inset-0 modal bg-black/70 z-10" onClick={closeModal}></div>
+          <div className="modal-overlay" onClick={closeModal}></div>
         </>
       )}
     </>

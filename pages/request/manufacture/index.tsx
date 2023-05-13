@@ -4,6 +4,7 @@ import DownHeader from '@/components/header/DownHeader';
 import Layout from '@/components/layout/Layout';
 import Description from '@/components/request/Description';
 import FormTitle from '@/components/request/FormTitle';
+import MyInfo from '@/components/request/MyInfo';
 
 export default function Manufacture() {
   return (
@@ -11,6 +12,7 @@ export default function Manufacture() {
       <DownHeader />
       <FormTitle />
       <Description />
+      <MyInfo />
       <Footer />
       <NavBar />
     </Layout>

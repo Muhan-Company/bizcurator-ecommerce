@@ -18,7 +18,7 @@ const SignupSchema = yup
   })
   .required();
 
-export default function PurchaseForm() {
+export default function RequestForm() {
   const {
     register,
     handleSubmit,
