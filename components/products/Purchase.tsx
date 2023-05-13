@@ -16,12 +16,12 @@ interface PurchaseProps {
 
 export default function Purchase({ name, min_quantity, regular_price, sale_price }: PurchaseProps) {
   const [quantity, setQuantity] = useState<number>(20);
-  const [folded, setFolded] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
   const [showAddCompleteModal, setShowAddCompleteModal] = useRecoilState(addCompleteModalState);
   const [showBuyCompleteModal, setShowBuyCompleteModal] = useRecoilState(buyCompleteModalState);
 
-  const fold = () => {
-    setFolded(true);
+  const closeAccordion = () => {
+    setOpen(false);
     setQuantity(min_quantity);
   };
 
@@ -31,27 +31,27 @@ export default function Purchase({ name, min_quantity, regular_price, sale_price
   };
 
   const handleClick = () => {
-    if (folded) {
-      setFolded(false);
-    } else {
+    if (open) {
       addToCart();
+    } else {
+      setOpen(true);
     }
   };
 
   const buyItem = () => {
-    if (folded) {
-      setFolded(false);
-    } else {
+    if (open) {
       setShowBuyCompleteModal(true);
       document.body.classList.add('modal-open');
+    } else {
+      setOpen(true);
     }
   };
 
   return (
     <div className="z-10 fixed bottom-0 bg-white rounded-t-[10px] right-0 left-0 shadow-[0px_-2px_8px_rgba(0,0,0,0.08)]">
-      <div className={`${folded ? 'hidden' : 'block'}`}>
+      <div className={`${open ? 'max-h-[137px]' : 'max-h-0 overflow-hidden'} transition-all duration-300`}>
         <div className="text-center mb-5">
-          <button onClick={fold}>
+          <button onClick={closeAccordion}>
             <ChevronDown />
           </button>
         </div>
@@ -88,8 +88,8 @@ export default function Purchase({ name, min_quantity, regular_price, sale_price
         <div className="mx-auto w-[138px] h-[5px] bg-black rounded-[100px]"></div>
       </div>
 
-      {showAddCompleteModal && createPortal(<AddCompleteModal fold={fold} />, document.body)}
-      {showBuyCompleteModal && createPortal(<BuyCompleteModal fold={fold} />, document.body)}
+      {showAddCompleteModal && createPortal(<AddCompleteModal closeAccordion={closeAccordion} />, document.body)}
+      {showBuyCompleteModal && createPortal(<BuyCompleteModal closeAccordion={closeAccordion} />, document.body)}
     </div>
   );
 }

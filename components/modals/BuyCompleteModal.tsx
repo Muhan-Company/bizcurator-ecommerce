@@ -1,14 +1,14 @@
 import { buyCompleteModalState } from '@/atoms/modalAtoms';
 import { useSetRecoilState } from 'recoil';
 
-export default function BuyCompleteModal({ fold }: { fold: () => void }) {
+export default function BuyCompleteModal({ closeAccordion }: { closeAccordion: () => void }) {
   const setShowBuyCompleteModal = useSetRecoilState(buyCompleteModalState);
 
   const closeModal = () => {
     setShowBuyCompleteModal(false);
     document.body.classList.remove('modal-open');
 
-    fold();
+    closeAccordion();
   };
 
   return (
