@@ -4,17 +4,17 @@ import { useSetRecoilState } from 'recoil';
 
 interface AddCompleteModalPropsType {
   setShowAddToCartModal?: React.Dispatch<React.SetStateAction<boolean>>;
-  fold: () => void;
+  closeAccordion: () => void;
 }
 
-export default function AddCompleteModal({ setShowAddToCartModal, fold }: AddCompleteModalPropsType) {
+export default function AddCompleteModal({ setShowAddToCartModal, closeAccordion }: AddCompleteModalPropsType) {
   const setShowAddCompleteModal = useSetRecoilState(addCompleteModalState);
 
   const closeModal = (e: React.MouseEvent) => {
     e.stopPropagation();
     setShowAddCompleteModal(false);
     document.body.classList.remove('modal-open');
-    fold();
+    closeAccordion();
 
     if (setShowAddToCartModal) {
       setShowAddToCartModal(false);
