@@ -49,7 +49,7 @@ export default function Purchase({ name, min_quantity, regular_price, sale_price
 
   return (
     <div className="z-10 fixed bottom-0 bg-white rounded-t-[10px] right-0 left-0 shadow-[0px_-2px_8px_rgba(0,0,0,0.08)]">
-      <div className={`${!open ? 'hidden' : 'block'}`}>
+      <div className={`${open ? 'max-h-[137px]' : 'max-h-0 overflow-hidden'} transition-all duration-300`}>
         <div className="text-center mb-5">
           <button onClick={closeAccordion}>
             <ChevronDown />
