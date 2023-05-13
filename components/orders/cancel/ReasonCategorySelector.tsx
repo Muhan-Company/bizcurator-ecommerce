@@ -11,7 +11,7 @@ export default function ReasonCategorySelector({ categoryValues }: ReasonCategor
   return (
     <div
       className="absolute left-[80px] w-[212px] px-[11px] text-label-sm text-gray_01 border-[1px] border-[#DDD] rounded-[8px] bg-white"
-      onClick={(e) => setIsOpen(!isOpen)}
+      onClick={() => setIsOpen(!isOpen)}
     >
       <div className="pl-[6px] py-[11px] center-between">
         {selectedValue} {isOpen ? <ChevronUpIcon width="14" height="14" /> : <ChevronDownIcon width="14" height="14" />}
