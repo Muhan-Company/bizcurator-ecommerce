@@ -1,7 +1,19 @@
 import { toast } from 'react-hot-toast';
 
 export default function MyInfo() {
-  const notify = () => toast('수정은 마이페이지에서 가능합니다.');
+  let toastId: null | string = null;
+
+  const notify = () => {
+    // Clear previous toast if it exists
+    if (toastId) {
+      toast.remove(toastId);
+    }
+
+    // Show the new toast
+    toastId = toast('수정은 마이페이지에서 가능합니다.');
+
+    () => toastId;
+  };
 
   return (
     <div className="mt-10 mx-3" onClick={notify}>
