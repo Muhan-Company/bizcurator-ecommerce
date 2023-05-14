@@ -30,7 +30,7 @@ export default function TopHeader() {
   };
 
   return (
-    <header className="px-6 flex justify-between items-center z-10 bg-white pt-2 lg:pt-5 lg:px-24 xl:px-48 top-0 sticky">
+    <header className="px-6 flex justify-between items-center z-20 bg-white pt-2 lg:pt-5 lg:px-24 xl:px-48 top-0 sticky">
       <Link href={'/'} className="flex items-center">
         <h1 className="text-[20px] lg:text-head-xl font-bold">BIZ CURATOR</h1>
         <LogoIcon />

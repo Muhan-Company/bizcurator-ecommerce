@@ -9,7 +9,7 @@ export default function DownHeader() {
   const [isHovered, setIsHovered] = useRecoilState(hoverState);
 
   return (
-    <header className="px-6 lg:px-24 xl:px-48 pt-3 lg:pt-10 lg:flex justify-between z-10 bg-white fixed top-[42px] lg:top-[116px] left-0 right-0 shadow-[0px_2px_10px_rgba(0,0,0,0.08)]">
+    <header className="px-6 lg:px-24 xl:px-48 pt-3 lg:pt-10 lg:flex justify-between z-20 bg-white fixed top-[42px] lg:top-[116px] left-0 right-0 shadow-[0px_2px_10px_rgba(0,0,0,0.08)]">
       <div
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}

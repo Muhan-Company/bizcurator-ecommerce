@@ -5,7 +5,7 @@ import Layout from '@/components/layout/Layout';
 import Description from '@/components/request/Description';
 import FormTitle from '@/components/request/FormTitle';
 import MyInfo from '@/components/request/MyInfo';
-import RequestForm from '@/components/request/RequestForm';
+import PurchaseForm from '@/components/request/PurchaseForm';
 
 export default function PurchaseRequest() {
   return (
@@ -15,7 +15,7 @@ export default function PurchaseRequest() {
       <Description />
       <MyInfo />
       <div className="h-[1px] bg-gray_02 my-8"></div>
-      <RequestForm />
+      <PurchaseForm />
       <Footer />
       <NavBar />
     </Layout>
