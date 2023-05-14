@@ -4,15 +4,7 @@ import * as yup from 'yup';
 import One from './One';
 import Two from './Two';
 import { useState } from 'react';
-
-export interface IFormInputs {
-  itemName: string;
-}
-
-export interface Category {
-  id: number;
-  name: string;
-}
+import { Category, IFormInputs } from './PurchaseForm';
 
 const SignupSchema = yup
   .object({
@@ -20,7 +12,7 @@ const SignupSchema = yup
   })
   .required();
 
-export default function PurchaseForm() {
+export default function ManufactureForm() {
   const {
     register,
     handleSubmit,
@@ -30,49 +22,12 @@ export default function PurchaseForm() {
   });
 
   const categories = [
-    {
-      id: 1,
-      name: '객실용품',
-    },
-    {
-      id: 2,
-      name: '욕실용품',
-    },
-    {
-      id: 3,
-      name: '위생용품',
-    },
-    {
-      id: 4,
-      name: '침구류',
-    },
-    {
-      id: 5,
-      name: '가전/전자제품',
-    },
-    {
-      id: 6,
-      name: '청소/시설관리',
-    },
-    {
-      id: 7,
-      name: '소방/안전관리',
-    },
-    {
-      id: 8,
-      name: '사무용품',
-    },
-    {
-      id: 9,
-      name: '음료/식품',
-    },
-    {
-      id: 10,
-      name: '선물세트',
-    },
+    { id: 1, name: '창업(제품판매)' },
+    { id: 2, name: '작품 제작' },
+    { id: 3, name: '개인적인 목적' },
   ];
 
-  const [selectedCategory, setSelectedCategory] = useState<Category>({ id: 0, name: '카테고리 선택' });
+  const [selectedCategory, setSelectedCategory] = useState<Category>({ id: 0, name: '제작목적 선택' });
   const notSelected = selectedCategory.id === 0;
 
   const onSubmit = (data: IFormInputs) => {
@@ -80,8 +35,8 @@ export default function PurchaseForm() {
   };
 
   const formValues = {
-    title: '구매 희망 품목',
-    description: '구매하고자 하는 상품의 카테고리를 선택하시고 상품명을 입력하세요',
+    title: '제품제작 의뢰',
+    description: '제품을 만들고자 하는 목적을 고르고 제품 이름을 입력해주세요',
     register,
     errors,
     categories,

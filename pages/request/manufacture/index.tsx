@@ -4,6 +4,7 @@ import DownHeader from '@/components/header/DownHeader';
 import Layout from '@/components/layout/Layout';
 import Description from '@/components/request/Description';
 import FormTitle from '@/components/request/FormTitle';
+import ManufactureForm from '@/components/request/ManufactureForm';
 import MyInfo from '@/components/request/MyInfo';
 
 export default function Manufacture() {
@@ -14,6 +15,7 @@ export default function Manufacture() {
       <Description />
       <MyInfo />
       <div className="h-[1px] bg-gray_02 my-8"></div>
+      <ManufactureForm />
       <Footer />
       <NavBar />
       <MyInfo />
