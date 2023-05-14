@@ -2,14 +2,15 @@ import Image from 'next/image';
 import OrderDetailLayout from '../[paymentId]/OrderDetailLayout';
 
 type CancelItemInfoProps = {
+  title: string;
   image: string;
   name: string;
   quantity: number;
   cost_per_one: number;
 };
-export default function CancelItemInfo({ image, name, quantity, cost_per_one }: CancelItemInfoProps) {
+export default function CancelItemInfo({ title, image, name, quantity, cost_per_one }: CancelItemInfoProps) {
   return (
-    <OrderDetailLayout.OrderDetailItemsContentLayout title="주문취소 제품 정보">
+    <OrderDetailLayout.OrderDetailItemsContentLayout title={title}>
       <div className="flex">
         <div className="w-[86px] md:w-[120px] h-[86px] md:h-[120px] rounded-[10px] bg-gray_04 p-3 box-border">
           <Image src={image} alt="thumbnail" width={86} height={86} className="w-full	h-full md:object-cover" />
