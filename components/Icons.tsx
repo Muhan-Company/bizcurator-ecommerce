@@ -578,3 +578,34 @@ export const ItsMallIcon = () => (
     <path d="M1.31543 11C1.31543 9.89543 2.21086 9 3.31543 9H6.33297C7.43754 9 8.33297 9.89543 8.33297 11V15C8.33297 16.1046 7.43754 17 6.33297 17H3.31543C2.21086 17 1.31543 16.1046 1.31543 15V11Z" fill="#313C52" stroke="white" />
   </svg>
 )
+export const ChevronLeft = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="currentColor"
+    className="w-6 h-6 text-main"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+  </svg>
+);
+
+export const ChevronRight = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="currentColor"
+    className="w-6 h-6 text-main"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+  </svg>
+);
+
+export const ChevronDown = () => (
+  <svg width="17" height="6" viewBox="0 0 17 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M1 1.25L8.5 4.75L16 1.25" stroke="#999999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);

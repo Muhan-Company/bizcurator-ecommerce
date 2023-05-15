@@ -1,23 +1,29 @@
 import Image from 'next/image';
 import { Cart } from '../Icons';
 import React, { useState } from 'react';
-import AddToCartModal from '../modal/AddToCartModal';
+import AddToCartModal from '../modals/AddToCartModal';
 import { createPortal } from 'react-dom';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function Product() {
   const [showAddToCartModal, setShowAddToCartModal] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(100);
+  const router = useRouter();
 
-  const openModal = () => {
+  const openModal = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     setShowAddToCartModal(true);
     document.body.classList.add('modal-open');
   };
-  let category_id;
-  let itme_id;
+
+  let category_id = 1;
+  let item_id = 1234;
 
   return (
-    <Link href={`/products/${category_id}?itemId=${itme_id}`} className="inline-block w-full sm:space-y-3 lg:space-y-4">
+    <div
+      onClick={() => router.push(`/products/${category_id}?itemId=${item_id}`)}
+      className="w-full sm:space-y-3 lg:space-y-4"
+    >
       <div className="aspect-square relative">
         <Image src={'/img/tissue.png'} alt="Product" fill sizes="100%" className="object-cover" />
         <button
@@ -49,6 +55,6 @@ export default function Product() {
           />,
           document.body,
         )}
-    </Link>
+    </div>
   );
 }

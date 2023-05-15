@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { useQuery } from "react-query";
 
 type ProductSearch = {
     id: number;
@@ -17,13 +16,13 @@ function AdminSearch({
     searchUrl
 }:
     SearchProps) {
-    const [searchText, setSearchText] = useState("");
-    const { isLoading, isError, data } = useQuery<ProductSearch[], Error>(queryKey, () => {
-        if (searchText.trim() === "") {
-            return Promise.resolve([]);
-        }
-        return fetch(`${searchUrl}?searchText=${searchText}`).then((res) => res.json());
-    });
+    // const [searchText, setSearchText] = useState("");
+    // const { isLoading, isError, data } = useQuery<ProductSearch[], Error>(queryKey, () => {
+    //     if (searchText.trim() === "") {
+    //         return Promise.resolve([]);
+    //     }
+    //     return fetch(`${searchUrl}?searchText=${searchText}`).then((res) => res.json());
+    // });
 
     const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -47,7 +46,7 @@ function AdminSearch({
 
     return (
         <>
-            <form onSubmit={handleSearch}>
+            {/* <form onSubmit={handleSearch}>
                 <div className="w-[1500px] rounded-[10px] bg-[#fff] p-[30px] mt-[15px] mx-[60px]">
                     <div>
                         <span className="mr-24">검색어</span>
@@ -64,7 +63,7 @@ function AdminSearch({
             {isError && <div>Error fetching data</div>}
             {data && data.map((product) => (
                 <div key={product.id}>{product.product}</div>
-            ))}
+            ))} */}
         </>
     )
 }
