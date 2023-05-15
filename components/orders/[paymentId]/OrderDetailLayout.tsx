@@ -28,7 +28,7 @@ type OrderDetailTextContentProps = {
 function OrderDetailTextContent({ title, value, className }: OrderDetailTextContentProps) {
   return (
     <div className="pb-[14px] flex text-label-sm">
-      <h3 className="w-[100px] text-gray_01">{title}</h3>
+      <h3 className="w-[100px] shrink-0 text-gray_01">{title}</h3>
       <span className={className}>{value}</span>
     </div>
   );
