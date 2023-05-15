@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Radio from './Radio';
-import AddressToBringBack from './AddressToBringBack';
+import SubTitleLayout from './SubTitleLayout';
+import SearchAddressForm from '@/components/SearchAddressForm';
 
 export default function HowToReturn() {
   const [returnRadioValue, setReturnRadioValue] = useState('직접발송');
@@ -24,11 +25,17 @@ export default function HowToReturn() {
             <Radio.RadioInput name="address" label="배송지 정보와 동일" defaultChecked />
             <Radio.RadioInput name="address" label="수거지 변경" />
           </Radio.RadioInputContainer>
-          <AddressToBringBack
-            postal_code={'12345'}
-            address={'서울 강남구 역삼로 12 (역삼동, 오큐시스)/105호'}
-            disabled={adressRadioValue === '배송지 정보와 동일'}
-          />
+          <SubTitleLayout title="수거지 주소">
+            {adressRadioValue === '배송지 정보와 동일' ? (
+              <SearchAddressForm
+                postalCode={'12345'}
+                address={'서울 강남구 역삼로 12 (역삼동, 오큐시스)/105호'}
+                disabled
+              />
+            ) : (
+              <SearchAddressForm />
+            )}
+          </SubTitleLayout>
         </div>
       )}
     </div>
