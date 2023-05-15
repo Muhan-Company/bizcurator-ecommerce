@@ -30,9 +30,9 @@ function RadioInput({ name, label, defaultChecked }: RadioInputProps) {
         name={name}
         value={label}
         defaultChecked={defaultChecked}
-        className={`peer/${label} radio-custom`}
+        className="peer/radio radio-custom"
       />
-      <label htmlFor={label} className={`peer-checked/${label}:text-main`}>
+      <label htmlFor={label} className="peer-checked/radio:text-main">
         {label}
       </label>
     </div>
