@@ -1,3 +1,4 @@
+import SubTitleLayout from './SubTitleLayout';
 import OrderDetailLayout from '../[paymentId]/OrderDetailLayout';
 
 type RefundInfoProps = {
@@ -6,13 +7,12 @@ type RefundInfoProps = {
 };
 export default function RefundInfo({ total_money, bank_account }: RefundInfoProps) {
   return (
-    <div>
-      <h3 className="pt-[15px] pb-5 text-title-xs font-medium">환불정보</h3>
+    <SubTitleLayout title="환불정보">
       <OrderDetailLayout.OrderDetailTextContent
         title="환불예정금액"
         value={`${total_money.toLocaleString('kr-KR')}원`}
       />
-      <OrderDetailLayout.OrderDetailTextContent title="환불계좌" value={bank_account} />
-    </div>
+      <OrderDetailLayout.OrderDetailTextContent title="환불계좌" value={bank_account} className="break-keep" />
+    </SubTitleLayout>
   );
 }

@@ -21,7 +21,7 @@ export default function OrderItemInfo({ order_id, delivery_state }: OrderItemInf
         {currentState !== '구매확정' && (
           <div className="flex justify-end text-label-sm">
             {currentState === '배송완료' && (
-              <Link href={'/orders/refund'} className="btn-order-detail">
+              <Link href={`/orders/refund/${order_id}`} className="btn-order-detail">
                 환불
               </Link>
             )}
