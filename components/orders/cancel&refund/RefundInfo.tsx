@@ -1,4 +1,4 @@
-import SubTitleLayout from './SubtitleLayout';
+import SubTitleLayout from './SubTitleLayout';
 import OrderDetailLayout from '../[paymentId]/OrderDetailLayout';
 
 type RefundInfoProps = {

@@ -1,5 +1,5 @@
 import { FormEventHandler } from 'react';
-import SubTitleLayout from './SubtitleLayout';
+import SubTitleLayout from './SubTitleLayout';
 
 type RadioInputContainerProps = {
   title: string;

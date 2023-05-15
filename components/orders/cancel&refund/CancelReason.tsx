@@ -1,6 +1,6 @@
 import React from 'react';
 import ReasonCategorySelector from './ReasonCategorySelector';
-import SubTitleLayout from './SubtitleLayout';
+import SubTitleLayout from './SubTitleLayout';
 
 const CANCEL_REASON = ['고객변심', '서비스 불만족', '배송지연'];
 

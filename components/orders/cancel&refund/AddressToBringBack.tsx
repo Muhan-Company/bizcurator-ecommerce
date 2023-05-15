@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import SubTitleLayout from './SubtitleLayout';
+import SubTitleLayout from './SubTitleLayout';
 
 type AddressToBringBackProps = {
   postal_code: string;
