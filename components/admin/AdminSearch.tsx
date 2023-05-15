@@ -11,8 +11,24 @@ type SearchProps = {
     searchUrl: string;
 }
 
-function AdminSearch({ queryKey, searchUrl }: SearchProps) {
 
+function AdminSearch({
+    queryKey,
+    searchUrl
+}:
+    SearchProps) {
+    const [searchText, setSearchText] = useState("");
+    const { isLoading, isError, data } = useQuery<ProductSearch[], Error>(queryKey, () => {
+        if (searchText.trim() === "") {
+            return Promise.resolve([]);
+        }
+        return fetch(`${searchUrl}?searchText=${searchText}`).then((res) => res.json());
+    });
+
+    const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        // 검색 API 호출
+    }
     // const [searchTerm, setSearchTerm] = useState('');
 
     // const { isLoading, isError, data } = useQuery<ProductSearch[]>(queryKey, async () => {
@@ -31,15 +47,24 @@ function AdminSearch({ queryKey, searchUrl }: SearchProps) {
 
     return (
         <>
-            <div className="w-[1500px] rounded-[10px] bg-[#fff] p-[30px] mt-[15px] mx-[60px]">
-                <div>
-                    <span className="mr-24">검색어</span>
-                    <input
-                        className="w-[1200px] border py-5 rounded-[10px] mr-3"
-                    />
-                    <button className="p-5 border border-[#999]  rounded-[10px]">검색</button>
+            <form onSubmit={handleSearch}>
+                <div className="w-[1500px] rounded-[10px] bg-[#fff] p-[30px] mt-[15px] mx-[60px]">
+                    <div>
+                        <span className="mr-24">검색어</span>
+                        <input
+                            className="w-[1200px] border py-5 rounded-[10px] mr-3"
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
+                        />
+                        <button className="p-5 border border-[#999]  rounded-[10px]">검색</button>
+                    </div>
                 </div>
-            </div>
+            </form>
+            {isLoading && <div>Loading...</div>}
+            {isError && <div>Error fetching data</div>}
+            {data && data.map((product) => (
+                <div key={product.id}>{product.product}</div>
+            ))}
         </>
     )
 }
