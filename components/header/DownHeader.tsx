@@ -3,7 +3,7 @@ import { BarsIcon } from '../Icons';
 import ActiveLink from './ActiveLink';
 import HeaderDropdown from './HeaderDropdown';
 import { useRecoilState } from 'recoil';
-import hoverState from '@/atoms/hoverAtoms';
+import hoverState from '@/atoms/hoverAtom';
 
 export default function DownHeader() {
   const [isHovered, setIsHovered] = useRecoilState(hoverState);

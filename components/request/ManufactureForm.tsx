@@ -6,6 +6,7 @@ import Two from './Numbers/Two';
 import Three from './Numbers/Three';
 import { useState } from 'react';
 import { Category, IFormInputs } from './PurchaseForm';
+import Four from './Numbers/Four';
 
 const SignupSchema = yup
   .object({
@@ -68,6 +69,7 @@ export default function ManufactureForm() {
       <One formValues1={formValues1} />
       <Two formValues2={formValues2} />
       <Three formValues3={formValues3} />
+      <Four />
       <input
         type="submit"
         value={'제출하기'}
