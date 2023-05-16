@@ -1,12 +1,15 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import One from './One';
-import Two from './Two';
+import One from './Numbers/One';
+import Two from './Numbers/Two';
+import Three from './Numbers/Three';
 import { useState } from 'react';
 
 export interface IFormInputs {
-  itemName: string;
+  one: string;
+  two: string;
+  three: string;
 }
 
 export interface Category {
@@ -16,7 +19,9 @@ export interface Category {
 
 const SignupSchema = yup
   .object({
-    itemName: yup.string().required('상품명을 입력하세요'),
+    one: yup.string().required('상품명을 입력하세요'),
+    two: yup.string().required('상품에 대해 설명해주세요'),
+    three: yup.string().required('수량을 입력하세요'),
   })
   .required();
 
@@ -80,24 +85,41 @@ export default function PurchaseForm() {
   };
 
   const formValues = {
-    title: '구매 희망 품목',
-    description: '구매하고자 하는 상품의 카테고리를 선택하시고 상품명을 입력하세요',
     register,
     errors,
+  };
+
+  const formValues1 = {
+    ...formValues,
+    title: '구매 희망 품목',
+    description: '구매하고자 하는 상품의 카테고리를 선택하시고 상품명을 입력하세요',
     categories,
     selectedCategory,
     setSelectedCategory,
   };
 
+  const formValues2 = {
+    ...formValues,
+    title: '제품 성분명',
+    description: '구매하고자 하는 제품의 성분 및 색상을 간단하게 설명해주세요( e.g., 액체형 샴푸, 흰색 슬리퍼)',
+  };
+
+  const formValues3 = {
+    ...formValues,
+    title: '구매 수량',
+    description: '구매하고자 하는 제품 예상 수량을 작성해주세요',
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mx-3 mb-40">
-      <One formValues={formValues} />
-      <Two />
+      <One formValues1={formValues1} />
+      <Two formValues2={formValues2} />
+      <Three formValues3={formValues3} />
       <input
         type="submit"
         value={'제출하기'}
         disabled={notSelected}
-        className="disabled:cursor-not-allowed disabled:opacity-70 bg-primary h-[60px] rounded-lg w-full text-white font-normal text-button-md"
+        className="mt-[60px] disabled:cursor-not-allowed disabled:opacity-50 bg-primary h-[60px] rounded-lg w-full text-white font-normal text-button-md"
       />
     </form>
   );

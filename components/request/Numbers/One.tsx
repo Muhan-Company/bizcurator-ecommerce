@@ -1,20 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDownIcon, ChevronUpIcon } from '../Icons';
-import { Category, IFormInputs } from './PurchaseForm';
+import { ChevronDownIcon, ChevronUpIcon } from '../../Icons';
+import { Category, IFormInputs } from '../PurchaseForm';
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
 
-interface FormType {
+export interface FormValues {
   title: string;
   description: string;
   register: UseFormRegister<IFormInputs>;
   errors: FieldErrors<IFormInputs>;
+}
+
+interface FormValues1 extends FormValues {
   categories: Category[];
   selectedCategory: Category;
   setSelectedCategory: React.Dispatch<React.SetStateAction<Category>>;
 }
 
-export default function One({ formValues }: { formValues: FormType }) {
-  const { title, description, register, errors, categories, selectedCategory, setSelectedCategory } = formValues;
+export default function One({ formValues1 }: { formValues1: FormValues1 }) {
+  const { title, description, register, errors, categories, selectedCategory, setSelectedCategory } = formValues1;
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -73,10 +76,11 @@ export default function One({ formValues }: { formValues: FormType }) {
         </ul>
 
         <input
-          {...register('itemName')}
-          className="px-4 font-normal text-main text-body-xs bg-gray_04 rounded-lg h-[50px] w-full outline-none"
+          disabled={selectedCategory.name === '카테고리 선택'}
+          {...register('one')}
+          className="disabled:cursor-not-allowed bg-gray-100 px-4 font-normal text-main text-body-xs disabled:bg-gray_04 rounded-lg h-[50px] w-full outline-none"
         />
-        {errors.itemName && <p className="text-red text-xs font-medium">{errors.itemName.message}</p>}
+        {errors.one && <p className="text-red text-xs font-medium">{errors.one.message}</p>}
       </div>
     </>
   );

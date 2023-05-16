@@ -1,14 +1,17 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import One from './One';
-import Two from './Two';
+import One from './Numbers/One';
+import Two from './Numbers/Two';
+import Three from './Numbers/Three';
 import { useState } from 'react';
 import { Category, IFormInputs } from './PurchaseForm';
 
 const SignupSchema = yup
   .object({
-    itemName: yup.string().required('상품명을 입력하세요'),
+    one: yup.string().required('제품명을 입력하세요'),
+    two: yup.string().required('제품에 대해 설명해주세요'),
+    three: yup.string().required('수량을 입력하세요'),
   })
   .required();
 
@@ -35,24 +38,41 @@ export default function ManufactureForm() {
   };
 
   const formValues = {
-    title: '제품제작 의뢰',
-    description: '제품을 만들고자 하는 목적을 고르고 제품 이름을 입력해주세요',
     register,
     errors,
+  };
+
+  const formValues1 = {
+    ...formValues,
+    title: '제품제작 의뢰',
+    description: '제품을 만들고자 하는 목적을 고르고 제품 이름을 입력해주세요',
     categories,
     selectedCategory,
     setSelectedCategory,
   };
 
+  const formValues2 = {
+    ...formValues,
+    title: '제작하고자 하는 제품 설명',
+    description: '만들고자 하는 제품의 컨셉 또는 용도를 설명해주세요',
+  };
+
+  const formValues3 = {
+    ...formValues,
+    title: '제작 수량',
+    description: '만들고자 하는 제품 예상 수량을 작성해주세요',
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mx-3 mb-40">
-      <One formValues={formValues} />
-      <Two />
+      <One formValues1={formValues1} />
+      <Two formValues2={formValues2} />
+      <Three formValues3={formValues3} />
       <input
         type="submit"
         value={'제출하기'}
         disabled={notSelected}
-        className="disabled:cursor-not-allowed disabled:opacity-70 bg-primary h-[60px] rounded-lg w-full text-white font-normal text-button-md"
+        className="mt-[60px] disabled:cursor-not-allowed disabled:opacity-70 bg-primary h-[60px] rounded-lg w-full text-white font-normal text-button-md"
       />
     </form>
   );
