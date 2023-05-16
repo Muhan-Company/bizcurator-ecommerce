@@ -1,12 +1,17 @@
+
+
 import React, { useRef, useState, ChangeEvent, useEffect } from "react"
 import useOnClickOutside from "@/hooks/UseOnClickOutSide"
+import { atom, useRecoilValue } from "recoil";
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
 
 type Item = {
     itemId: number;
     title: string;
     content: string;
-    date: string;
-    isFixed: string;
+    // date: string;
+    isFixed: boolean;
 }
 
 type CustomWritePropsType = {
@@ -18,17 +23,23 @@ type WriteFormType = {
     id: number;
     title: string;
     content: string;
-    isFixed: string; //고정공지인지아닌지 false true
-    date?: string;
+    isFixed: boolean; //고정공지인지아닌지 false true
+    // date?: string;
 }
 
 const writeFormState: WriteFormType = { //WriteFormType의 기본값
     id: 0,
     title: '',
     content: '',
-    isFixed: '',
-    date: '',
+    isFixed: false,
+    // date: '',
 }
+
+const accessTokenState = atom<string>({
+    key: "accessTokenState",
+    default: "", // 초기값은 빈 문자열이며, 실제로는 로그인 후 얻은 액세스 토큰 값으로 설정해야 합니다.
+});
+
 
 export default function CustomWriteModal({
     setWriteOpenModal,
@@ -39,7 +50,7 @@ export default function CustomWriteModal({
     useOnClickOutside(ref, () => {
         setWriteOpenModal(false)
     })
-
+    const accessToken = useRecoilValue(accessTokenState);
     const [writeForm, setWriteForm] = useState<WriteFormType>(writeFormState);
 
     useEffect(() => { //item이 존재하면 writeForm에 저장되어있는 상태를 복사하고 item이 변경할때마다 업데이트
@@ -51,7 +62,7 @@ export default function CustomWriteModal({
                     title: item.title,
                     content: item.content,
                     isFixed: item.isFixed,
-                    date: item.date,
+                    // date: item.date,
                 };
             });
         }
@@ -65,7 +76,7 @@ export default function CustomWriteModal({
         if (type === "radio") {
             setWriteForm({
                 ...writeForm!,
-                isFixed: value === "isFixed" ? "isFixed" : "notFixed",
+                isFixed: value === "isFixed" ? true : false,
             });
         } else {
             setWriteForm({
@@ -84,15 +95,37 @@ export default function CustomWriteModal({
 
 
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>) => {
-        const { id, name, value, type } = e.target;
+        const { name, value, type } = e.target;
         if (type === "radio") {
-            const isChecked = (e.target as HTMLInputElement).checked;
-            setWriteForm((prev) => ({ ...prev, isFixed: id }));
-            console.log(isChecked);
+            setWriteForm((prev) => ({
+                ...prev,
+                isFixed: name === "isFixed" ? !prev.isFixed : prev.isFixed,
+            }));
         } else {
             setWriteForm((prev) => ({ ...prev, [name]: value }));
         }
     };
+
+    const createNotice = async (data: WriteFormType) => {
+        const response = await axios.post("http://43.201.195.195:8080/api/notices", data, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        return response.data;
+    };
+
+    const mutation = useMutation(createNotice, { //useMutation을 통해 데이터생성(react-query)
+        onSuccess: (data) => {
+            console.log(data);
+            // 성공적으로 저장되었을 때의 동작 추가
+        },
+        onError: (error) => {
+            console.log(error);
+            // 저장 실패 시의 처리 추가
+        },
+    });
+
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -103,8 +136,8 @@ export default function CustomWriteModal({
                 alert('내용을 입력하세요');
                 return;
             }
-            console.log(writeForm)
         }
+        mutation.mutate(writeForm);
     };
 
 
@@ -130,7 +163,7 @@ export default function CustomWriteModal({
                                     />
                                 </div>
                                 <div className="flex items-center mt-6">
-                                    <label htmlFor="content">내용d<span className="text-red">*</span></label>
+                                    <label htmlFor="content">내용<span className="text-red">*</span></label>
                                     <textarea
                                         name="content"
                                         id="content"
@@ -148,7 +181,7 @@ export default function CustomWriteModal({
                                             name="isFixed"
                                             className="mr-5"
                                             onChange={editHandleChange}
-                                            checked={writeForm.isFixed === 'isFixed'}
+                                            checked={writeForm.isFixed === true}
                                             type="radio"
                                         />
                                         <label htmlFor="notFixed">고정공지로 미등록</label>
@@ -157,7 +190,7 @@ export default function CustomWriteModal({
                                             name="isFixed"
                                             className="mr-5"
                                             onChange={editHandleChange}
-                                            checked={writeForm.isFixed === 'notFixed'}
+                                            checked={writeForm.isFixed === false}
                                             type="radio"
                                         />
                                     </div>
@@ -206,7 +239,7 @@ export default function CustomWriteModal({
                                             name="isFixed"
                                             className="mr-5"
                                             onChange={handleChange}
-                                            checked={writeForm.isFixed === 'isFixed'}
+                                            checked={writeForm.isFixed === true}
                                             type="radio"
                                         />
                                         <label htmlFor="notFixed">고정공지로 미등록</label>
@@ -215,7 +248,7 @@ export default function CustomWriteModal({
                                             name="isFixed"
                                             className="mr-5"
                                             onChange={handleChange}
-                                            checked={writeForm.isFixed === 'notFixed'}
+                                            checked={writeForm.isFixed === false}
                                             type="radio"
                                         />
                                     </div>
