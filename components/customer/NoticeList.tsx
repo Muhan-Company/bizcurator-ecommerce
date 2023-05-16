@@ -1,12 +1,12 @@
-
 import React, { useState } from 'react';
 import CustomWriteModal from '../modals/CustomWriteModal';
 import { createPortal } from 'react-dom';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
+import axiosInstance from '@/apis/config';
 
 interface Item {
-  itemId: number;
+  id: number;
   title: string;
   content: string;
   isFixed: boolean;
@@ -28,12 +28,9 @@ export default function NoticeList({ data }: ItemListProps) {
   const [selectIndex, setSelectIndex] = useState<number | null>(null);
   const [writeOpenModal, setWriteOpenModal] = useState<boolean>(false);
 
-
-  console.log(data);
-
   const listClick = (index: number) => {
     setSelectIndex(selectIndex === index ? null : index);
-  }
+  } // 항목을 클릭했을때 호출되는 함수이고 index를 찾아서 클릭이 된다.
 
   const writeModal = () => {
     setSelectIndex(null); //리스트를 클릭해서 상세정보가 나온상태에서 글쓰기를 누르면 item이 있는걸로 간주하기때문에 사용
@@ -46,22 +43,18 @@ export default function NoticeList({ data }: ItemListProps) {
 
   const onDeleteClick = async (index: number) => {
     try {
-      const itemId = data[index].itemId;
-      console.log(itemId);
-      await deleteNoticeMutation.mutateAsync(itemId);
-      console.log("삭제성공");
+      const id = data[index].id;
+      await deleteNoticeMutation.mutateAsync(id);
     } catch (error) {
       console.log('삭제 실패', error);
     }
-  };
+  }; //
 
-  const deleteNoticeMutation = useMutation((itemId: number) => {
-    return axios.delete(`http://43.201.195.195:8080/api/notices/${itemId}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-  })
+  //interceptor.ts에 저장되어있는 axiosInstance 서버주소를통해 delete주소로 보낸다
+  //토큰값을 임의로 저장해놓았음
+  const deleteNoticeMutation = useMutation((id: number) =>
+    axiosInstance.delete(`/api/notices/${id}`));
+
 
 
   return (

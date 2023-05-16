@@ -3,14 +3,14 @@ import NoticeList from "./NoticeList";
 import { useQuery } from "@tanstack/react-query";
 import { atom, useRecoilValue } from "recoil";
 import axios from "axios";
-
+import axiosInstance from "@/apis/config";
 
 interface Item {
-    itemId: number;
+    id: number;
     title: string;
     content: string;
     date: string;
-    isFixed: boolean;
+    is_fixed: boolean;
 }
 
 const lastArticleIdState = atom<number>({
@@ -20,7 +20,7 @@ const lastArticleIdState = atom<number>({
 
 const sizeState = atom<number>({
     key: "size",
-    default: 10,
+    default: 20,
 })
 
 const axiosData = async (lastArticleId: number, size: number) => {
@@ -52,7 +52,7 @@ const Notice: FC<{}> = () => {
         [lastArticleId, size],
         () => axiosData(lastArticleId, size)
     );
-
+    console.log(data);
     if (isLoading) {
         return <div>Loading...</div>;
     }

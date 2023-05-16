@@ -1,5 +1,3 @@
-
-
 import React, { useRef, useState, ChangeEvent, useEffect } from "react"
 import useOnClickOutside from "@/hooks/UseOnClickOutSide"
 import { atom, useRecoilValue } from "recoil";
@@ -7,7 +5,7 @@ import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 
 type Item = {
-    itemId: number;
+    id: number;
     title: string;
     content: string;
     // date: string;
@@ -45,7 +43,7 @@ export default function CustomWriteModal({
     setWriteOpenModal,
     item,
 }: CustomWritePropsType) {
-
+    console.log(item);
     const ref = useRef<HTMLDivElement>(null); // 특정DOM요소에 접근할때 사용
     useOnClickOutside(ref, () => {
         setWriteOpenModal(false)
@@ -58,7 +56,7 @@ export default function CustomWriteModal({
             setWriteForm((prevWriteForm) => {
                 return {
                     ...prevWriteForm,
-                    id: item.itemId,
+                    id: item.id,
                     title: item.title,
                     content: item.content,
                     isFixed: item.isFixed,
@@ -71,12 +69,12 @@ export default function CustomWriteModal({
     const editHandleChange = (
         e: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>
     ) => {
+
         const { name, value, type } = e.target;
-        console.log(e.target);
         if (type === "radio") {
             setWriteForm({
                 ...writeForm!,
-                isFixed: value === "isFixed" ? true : false,
+                isFixed: writeForm.isFixed === true ? false : true,
             });
         } else {
             setWriteForm({
@@ -181,7 +179,7 @@ export default function CustomWriteModal({
                                             name="isFixed"
                                             className="mr-5"
                                             onChange={editHandleChange}
-                                            checked={writeForm.isFixed === true}
+                                            checked={writeForm.isFixed}
                                             type="radio"
                                         />
                                         <label htmlFor="notFixed">고정공지로 미등록</label>
@@ -190,10 +188,11 @@ export default function CustomWriteModal({
                                             name="isFixed"
                                             className="mr-5"
                                             onChange={editHandleChange}
-                                            checked={writeForm.isFixed === false}
+                                            checked={writeForm.isFixed}
                                             type="radio"
                                         />
                                     </div>
+
                                 </div>
                                 <button
                                     className="rounded-lg mt-12 border-[#999] border px-[14px] py-[6px] text-xs"
