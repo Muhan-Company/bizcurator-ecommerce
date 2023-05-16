@@ -27,6 +27,7 @@ const dummyData: Item[] = [
     }
 ]
 
+
 const Notice: FC<{}> = () => {
     return (
         <Fragment>

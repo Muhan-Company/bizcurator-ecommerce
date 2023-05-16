@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CustomWriteModal from '../modals/CustomWriteModal';
 import { createPortal } from 'react-dom';
+// import { useQuery } from "react-query";
 
 interface Item {
   itemId: number;
@@ -14,15 +15,23 @@ interface ItemListProps {
   item: Item[];
 }
 
+// const fetchNotices = async (lastArticleId: number, size: number): Promise<Item[]> => {
+//         const response = await fetch(`api/notices?lastArticleId=${lastArticleId}&size=${size}`)
+//         console.log(response);
+//         const data = await response.json();
+//         return data;
+//     }
+
 export default function NoticeList({ item }: ItemListProps) {
   const [selectIndex, setSelectIndex] = useState<number | null>(null);
   const [writeOpenModal, setWriteOpenModal] = useState<boolean>(false);
+
 
   console.log(item);
 
   const listClick = (index: number) => {
     setSelectIndex(selectIndex === index ? null : index);
-  };
+  }
 
   const writeModal = () => {
     setSelectIndex(null); //리스트를 클릭해서 상세정보가 나온상태에서 글쓰기를 누르면 item이 있는걸로 간주하기때문에 사용
