@@ -5,6 +5,7 @@ import One from './Numbers/One';
 import Two from './Numbers/Two';
 import Three from './Numbers/Three';
 import { useState } from 'react';
+import Four from './Numbers/Four';
 
 export interface IFormInputs {
   one: string;
@@ -110,11 +111,17 @@ export default function PurchaseForm() {
     description: '구매하고자 하는 제품 예상 수량을 작성해주세요',
   };
 
+  const formValues4 = {
+    title: '견적 수령 희망일',
+    description: '신청 문의 후, 견적을 받아보고 싶은 날짜를 작성해주세요',
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mx-3 mb-40">
       <One formValues1={formValues1} />
       <Two formValues2={formValues2} />
       <Three formValues3={formValues3} />
+      <Four formValues4={formValues4} />
       <input
         type="submit"
         value={'제출하기'}
