@@ -1,17 +1,17 @@
+import SidebarItem from "@/components/admin/SidebarItem";
 import AdminHeader from "@/components/admin/AdminHeader";
 import AdminSearch from "@/components/admin/AdminSearch";
-import SidebarItem from "@/components/admin/SidebarItem";
+import AdminMemberManage from "@/components/admin/MemberManage";
 
-const Admin = () => {
+export default function MemberManage() {
     return (
         <div className="flex h-screen">
             <SidebarItem />
             <div className="ml-80 w-[1600px]">
                 <AdminHeader />
                 <AdminSearch />
+                <AdminMemberManage />
             </div>
         </div>
-    );
-};
-
-export default Admin;
+    )
+}
