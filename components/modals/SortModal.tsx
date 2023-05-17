@@ -30,7 +30,7 @@ export default function SortModal({ sortByList, setShowSortModal, sortBy, setSor
           </li>
         ))}
       </ul>
-      <div onClick={closeModal} className="fixed inset-0 z-20 bg-black/70"></div>
+      <div onClick={closeModal} className="modal-overlay"></div>
     </>
   );
 }

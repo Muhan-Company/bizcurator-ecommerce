@@ -13,7 +13,7 @@ export default function BuyCompleteModal({ closeAccordion }: { closeAccordion: (
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-y-6 z-20 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white w-[351px] h-36 rounded-lg modal-box-shadow">
+      <div className="center flex-col gap-y-6 modal-contents w-[351px] h-36 modal-box-shadow">
         <p className="font-normal text-body-md text-main">구매가 완료되었습니다.</p>
         <button
           onClick={closeModal}
@@ -22,7 +22,7 @@ export default function BuyCompleteModal({ closeAccordion }: { closeAccordion: (
           닫기
         </button>
       </div>
-      <div className="bg-black/70 fixed inset-0 z-10" onClick={closeModal}></div>
+      <div className="modal-overlay" onClick={closeModal}></div>
     </>
   );
 }
