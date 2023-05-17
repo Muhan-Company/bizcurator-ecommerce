@@ -1,11 +1,11 @@
 import { cancelRefundTabState } from '@/atoms/cancel&refundAtoms';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import CancelRefundOrderItemContainer from './CancelRefundOrderItemContainer';
 import { useGetCancelRefundList } from '@/apis/cancel&refund';
 import { selectedDateFilterState } from '@/atoms/selectedDateFilterAtom';
 
 export default function CancelRefundOrderList() {
-  const [selectedDateFilter] = useRecoilState(selectedDateFilterState);
+  const selectedDateFilter = useRecoilValue(selectedDateFilterState);
   const [activedTab, setActivedTab] = useRecoilState(cancelRefundTabState);
 
   // 탭을 누를떄마다 활성탭 상태값 변경
