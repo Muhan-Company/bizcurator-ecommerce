@@ -7,12 +7,12 @@ import Three from './Numbers/Three';
 import { useState } from 'react';
 import Four from './Numbers/Four';
 import Five from './Numbers/Five';
+import Six from './Numbers/Six';
 
 export interface IFormInputs {
   one: string;
   two: string;
   three: string;
-  four: string;
 }
 
 export interface Category {
@@ -25,7 +25,6 @@ const SignupSchema = yup
     one: yup.string().required('상품명을 입력하세요'),
     two: yup.string().required('상품에 대해 설명해주세요'),
     three: yup.string().required('수량을 입력하세요'),
-    four: yup.string().required('날짜를 입력하세요'),
   })
   .required();
 
@@ -84,11 +83,13 @@ export default function PurchaseForm() {
   const [selectedCategory, setSelectedCategory] = useState<Category>({ id: 0, name: '카테고리 선택' });
   const [firstDate, setFirstDate] = useState<Date | undefined>(undefined);
   const [secondDate, setSecondDate] = useState<Date | undefined>(undefined);
+  const [request, setRequest] = useState<string>('');
 
   const notSelected = selectedCategory.id === 0;
 
   const onSubmit = (data: IFormInputs) => {
-    alert(JSON.stringify(data));
+    const newData = { ...data, firstDate, secondDate, request };
+    alert(JSON.stringify(newData));
   };
 
   const formValues = {
@@ -131,6 +132,14 @@ export default function PurchaseForm() {
     setSecondDate,
   };
 
+  const formValues6 = {
+    title: '제품 이미지',
+    description:
+      '요청사항이나 유사 컨셉의 제품 혹은 현재 사용 중인 제품의 이미지나 스케치를 첨부해주세요. (상세한 요청사항을 적어주시면 요청하신 부분과 일치하는 제품의 견적을 받을 확률이 높아집니다. 상세하게 작성 부탁드립니다)',
+    request,
+    setRequest,
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mx-3 mb-40">
       <One formValues1={formValues1} />
@@ -138,10 +147,11 @@ export default function PurchaseForm() {
       <Three formValues3={formValues3} />
       <Four formValues4={formValues4} />
       <Five formValues5={formValues5} />
+      <Six formValues6={formValues6} />
       <input
         type="submit"
         value={'제출하기'}
-        disabled={notSelected || !firstDate || !secondDate}
+        disabled={notSelected || !firstDate || !secondDate || !request}
         className="mt-[60px] disabled:cursor-not-allowed disabled:opacity-50 bg-primary h-[60px] rounded-lg w-full text-white font-normal text-button-md"
       />
     </form>

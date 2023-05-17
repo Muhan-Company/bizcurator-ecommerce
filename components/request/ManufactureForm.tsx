@@ -1,20 +1,20 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Category, IFormInputs } from './PurchaseForm';
 import * as yup from 'yup';
 import One from './Numbers/One';
 import Two from './Numbers/Two';
 import Three from './Numbers/Three';
-import { useState } from 'react';
-import { Category, IFormInputs } from './PurchaseForm';
 import Four from './Numbers/Four';
 import Five from './Numbers/Five';
+import Six from './Numbers/Six';
 
 const SignupSchema = yup
   .object({
     one: yup.string().required('제품명을 입력하세요'),
     two: yup.string().required('제품에 대해 설명해주세요'),
     three: yup.string().required('수량을 입력하세요'),
-    four: yup.string().required('날짜를 입력하세요'),
   })
   .required();
 
@@ -36,11 +36,13 @@ export default function ManufactureForm() {
   const [selectedCategory, setSelectedCategory] = useState<Category>({ id: 0, name: '제작목적 선택' });
   const [firstDate, setFirstDate] = useState<Date | undefined>(undefined);
   const [secondDate, setSecondDate] = useState<Date | undefined>(undefined);
+  const [request, setRequest] = useState<string>('');
 
   const notSelected = selectedCategory.id === 0;
 
   const onSubmit = (data: IFormInputs) => {
-    alert(JSON.stringify(data));
+    const newData = { ...data, firstDate, secondDate, request };
+    alert(JSON.stringify(newData));
   };
 
   const formValues = {
@@ -84,6 +86,14 @@ export default function ManufactureForm() {
     setSecondDate,
   };
 
+  const formValues6 = {
+    title: '제품 이미지',
+    description:
+      '요청사항이나 유사 컨셉의 제품 혹은 이미지나 스케치를 첨부해주세요. 만들고자 하는 제품의 크기, 두께, 재질, 특징들을 상세하게 입력해주세요(e.g, 실리콘, 아크릴7mm, 가로세로 높이: ...mm 등, 상세한요청사항을 적어주시면 요청하신 부분을 잘 반영하여 제품을 제작할 확률이 높아집니다. 상세하게 작성 부탁드립니다)',
+    request,
+    setRequest,
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mx-3 mb-40">
       <One formValues1={formValues1} />
@@ -91,6 +101,7 @@ export default function ManufactureForm() {
       <Three formValues3={formValues3} />
       <Four formValues4={formValues4} />
       <Five formValues5={formValues5} />
+      <Six formValues6={formValues6} />
       <input
         type="submit"
         value={'제출하기'}

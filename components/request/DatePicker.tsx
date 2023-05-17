@@ -1,8 +1,8 @@
+import { useState } from 'react';
 import { Calendar } from 'react-date-range';
-import ko from 'date-fns/locale/ko';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import { useState } from 'react';
+import ko from 'date-fns/locale/ko';
 
 interface DatePickerProps {
   date: Date | undefined;
@@ -26,8 +26,6 @@ export default function DatePicker({ date, setDate, setShowCalendar }: DatePicke
   }
 
   const renderDayContent = (date: Date) => {
-    const today = new Date();
-    const isToday = date.toDateString() === today.toDateString();
     const isPastDay = isInThePast(date);
     const isSelected = date.toDateString() === selectedDay?.toDateString();
 
@@ -37,10 +35,6 @@ export default function DatePicker({ date, setDate, setShowCalendar }: DatePicke
         className={`${
           isPastDay
             ? 'text-neutral-400'
-            : isToday
-            ? isSelected
-              ? 'text-white font-bold rounded-full bg-main'
-              : 'text-main font-normal'
             : isSelected
             ? 'text-white font-bold rounded-full bg-main'
             : 'text-main font-normal'
