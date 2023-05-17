@@ -4,20 +4,18 @@ import { createPortal } from 'react-dom';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import axiosInstance from '@/apis/config';
-import CustomerDeleteModals from '../modals/CustomModal';
 
 interface Item {
   id: number;
   title: string;
   content: string;
-  isFixed: boolean;
+  isFixed: string;
   date: string;
 }
+
 interface ItemListProps {
   data: Item[];
 }
-
-
 
 // const fetchNotices = async (lastArticleId: number, size: number): Promise<Item[]> => {
 //         const response = await fetch(`api/notices?lastArticleId=${lastArticleId}&size=${size}`)
@@ -44,10 +42,14 @@ export default function NoticeList({ data }: ItemListProps) {
   };
 
   const onDeleteClick = async (index: number) => {
+    const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
+    if (!isConfirmed) {
+      return;
+    }
     try {
       const id = data[index].id;
-
       await deleteNoticeMutation.mutateAsync(id);
+      console.log(data);
     } catch (error) {
       console.log('삭제 실패', error);
     }

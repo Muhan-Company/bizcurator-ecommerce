@@ -3,6 +3,7 @@ import QuestionList from "./QuestionList";
 import { useQuery } from "@tanstack/react-query";
 import { atom, useRecoilValue } from "recoil";
 import axios from "axios";
+import { questionArticleIdState, questionizeState } from "@/atoms/questionAtom";
 
 interface Item {
     id: number;
@@ -11,42 +12,33 @@ interface Item {
     date: string;
 }
 
-const lastArticleIdState = atom<number>({
-    key: "lastArticleIdState",
-    default: 11,
-});
-
-const sizeState = atom<number>({
-    key: "size",
-    default: 10,
-})
-
-const axiosData = async (lastArticleId: number, size: number) => {
-    try {
-        const response = await axios.get<{
-            status: string;
-            code: number;
-            message: string;
-            result: {
-                notices: Item[];
-            }
-        }>(
-            `http://43.201.195.195:8080/api/faqs?lastArticleId=${lastArticleId}&size=${size}`
-        );
-        return response.data.result.notices;
-    } catch (error) {
-        throw new Error("fail data");
-    }
-}
-
 const Question: FC<{}> = () => {
 
-    const lastArticleId = useRecoilValue(lastArticleIdState);
-    const size = useRecoilValue(sizeState);
+    const questionArticleId = useRecoilValue(questionArticleIdState);
+    const questionSize = useRecoilValue(questionizeState);
+
+    const axiosData = async (questionArticleId: number, questionSize: number) => {
+        const path = "http://43.201.195.195:8080";
+        try {
+            const response = await axios.get<{
+                status: string;
+                code: number;
+                message: string;
+                result: {
+                    notices: Item[];
+                }
+            }>(
+                `${path}/api/faqs?lastArticleId=${questionArticleId}&size=${questionSize}`
+            );
+            return response.data.result.notices;
+        } catch (error) {
+            throw new Error("fail data");
+        }
+    }
 
     const { isLoading, isError, data, error } = useQuery<Item[], Error>(
-        [lastArticleId, size],
-        () => axiosData(lastArticleId, size)
+        [questionArticleId, questionSize],
+        () => axiosData(questionArticleId, questionSize)
     );
 
     if (isLoading) {

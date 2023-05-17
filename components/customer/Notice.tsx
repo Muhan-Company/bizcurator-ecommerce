@@ -3,42 +3,14 @@ import NoticeList from "./NoticeList";
 import { useQuery } from "@tanstack/react-query";
 import { atom, useRecoilValue } from "recoil";
 import axios from "axios";
-import axiosInstance from "@/apis/config";
+import { lastArticleIdState, sizeState } from "@/atoms/noticeAtom";
 
 interface Item {
     id: number;
     title: string;
     content: string;
     date: string;
-    is_fixed: boolean;
-}
-
-const lastArticleIdState = atom<number>({
-    key: "lastArticleIdState",
-    default: 9999,
-});
-
-const sizeState = atom<number>({
-    key: "size",
-    default: 20,
-})
-
-const axiosData = async (lastArticleId: number, size: number) => {
-    try {
-        const response = await axios.get<{
-            status: string;
-            code: number;
-            message: string;
-            result: {
-                notices: Item[];
-            }
-        }>(
-            `http://43.201.195.195:8080/api/notices?lastArticleId=${lastArticleId}&size=${size}&firstPage=true`
-        );
-        return response.data.result.notices;
-    } catch (error) {
-        throw new Error("fail data");
-    }
+    isFixed: string;
 }
 
 
@@ -48,6 +20,24 @@ const Notice: FC<{}> = () => {
     const lastArticleId = useRecoilValue(lastArticleIdState);
     const size = useRecoilValue(sizeState);
 
+    const axiosData = async (lastArticleId: number, size: number) => { //서버에서 공지사항을 받는 함수 (매개변수로 2가지를 받음)
+        const path = "http://43.201.195.195:8080";
+        try {
+            const response = await axios.get<{
+                status: string;
+                code: number;
+                message: string;
+                result: {
+                    notices: Item[];
+                }
+            }>(
+                `${path}/api/notices?lastArticleId=${lastArticleId}&size=${size}&firstPage=true`
+            );
+            return response.data.result.notices; // 결과값으로 notices 배열을 추출함
+        } catch (error) {
+            throw new Error("fail data");
+        }
+    }
     const { isLoading, isError, data, error } = useQuery<Item[], Error>(
         [lastArticleId, size],
         () => axiosData(lastArticleId, size)
