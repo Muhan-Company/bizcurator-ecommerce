@@ -37,11 +37,11 @@ type OrderItemInfoProps = {
   title?: string;
   value?: string | number;
 };
-function OrderItemInfo({ title, value }: OrderItemInfoProps) {
+export function OrderItemInfo({ title, value }: OrderItemInfoProps) {
   return (
     <div className="pl-6 pr-1.5 pb-1 center-between text-label-sm">
       <h3 className="text-gray_01">{title}</h3>
-      <span className={`${title === '주문상태' && 'font-bold'}`}>{value}</span>
+      <span className={`${title?.includes('상태') && 'font-bold'}`}>{value}</span>
     </div>
   );
 }
