@@ -4,8 +4,9 @@ import OrderDetailLayout from '../orders/[paymentId]/OrderDetailLayout';
 import { useRouter } from 'next/router';
 
 export default function CancelRefundDetailInfoContainer() {
-  const { pathname } = useRouter();
-  const title = pathname.includes('cancellations') ? '주문취소' : '환불';
+  const { query } = useRouter();
+  const title = query.detail?.includes('cancellations') ? '주문취소' : '환불';
+
   return (
     <div>
       {
