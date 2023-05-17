@@ -3,6 +3,8 @@ import useOnClickOutside from "@/hooks/UseOnClickOutSide"
 import { atom, useRecoilValue } from "recoil";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
+import CustomerDeleteModals from "./CustomModal";
+import { createPortal } from "react-dom";
 
 type Item = {
     id: number;
@@ -50,12 +52,13 @@ export default function CustomWriteModal({
     })
     const accessToken = useRecoilValue(accessTokenState);
     const [writeForm, setWriteForm] = useState<WriteFormType>(writeFormState);
+    const [confirmCheck, setConfirmCheck] = useState<boolean>(false);
 
     useEffect(() => { //item이 존재하면 writeForm에 저장되어있는 상태를 복사하고 item이 변경할때마다 업데이트
         if (item) {
-            setWriteForm((prevWriteForm) => {
+            setWriteForm((writeForm) => {
                 return {
-                    ...prevWriteForm,
+                    ...writeForm,
                     id: item.id,
                     title: item.title,
                     content: item.content,
@@ -127,14 +130,23 @@ export default function CustomWriteModal({
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const isConfirmed = window.confirm("정말 저장하시겠습니까?");
-        if (isConfirmed) {
-            const isEmpty = Object.values(writeForm).some((value) => value === '');
-            if (isEmpty) {
-                alert('내용을 입력하세요');
-                return;
-            }
+        {
+            confirmCheck &&
+            createPortal(
+                <CustomerDeleteModals.CustomeNoticeDeleteModal
+                    setConfirmCheck={setConfirmCheck}
+                />,
+                document.body
+            )
         }
+        // const isConfirmed = window.confirm("정말 저장하시겠습니까?");
+        // if (isConfirmed) {
+        //     const isEmpty = Object.values(writeForm).some((value) => value === '');
+        //     if (isEmpty) {
+        //         alert('내용을 입력하세요');
+        //         return;
+        //     }
+        // }
         mutation.mutate(writeForm);
     };
 
@@ -179,7 +191,7 @@ export default function CustomWriteModal({
                                             name="isFixed"
                                             className="mr-5"
                                             onChange={editHandleChange}
-                                            checked={writeForm.isFixed}
+                                            checked={writeForm.isFixed === true}
                                             type="radio"
                                         />
                                         <label htmlFor="notFixed">고정공지로 미등록</label>
@@ -188,7 +200,7 @@ export default function CustomWriteModal({
                                             name="isFixed"
                                             className="mr-5"
                                             onChange={editHandleChange}
-                                            checked={writeForm.isFixed}
+                                            checked={writeForm.isFixed === false}
                                             type="radio"
                                         />
                                     </div>
