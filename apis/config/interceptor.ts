@@ -6,7 +6,7 @@ axiosInstance.interceptors.request.use(
     // 요청 전에 수행할 작업을
 
     // todo: 토큰 추가 interceptor 작성하기
-    const token = null; /* 토큰 넣기 */
+    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpZDEyMyIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjgwNDU1Mzc1LCJleHAiOjE2ODA0NTcxNzV9.4ALQPPHNqnWtF2UVu35ql8Z_TK_txrPM3UmUfXTkfq8'; /* 토큰 넣기 */
     if (token) {
       // 토큰이 존재하는 경우 헤더에 토큰 추가
       config.headers['Authorization'] = `Bearer ${token}`;
