@@ -12,7 +12,7 @@ const fetchCancelList = async (activedTab: string, selectedDateFilter: number) =
     console.log(error);
   }
 };
-export const useGetCanceRefundlList = (activedTab: string, selectedDateFilter: number) => {
+export const useGetCancelRefundList = (activedTab: string, selectedDateFilter: number) => {
   return useQuery({
     queryKey: [activedTab, selectedDateFilter],
     queryFn: () => fetchCancelList(activedTab, selectedDateFilter),

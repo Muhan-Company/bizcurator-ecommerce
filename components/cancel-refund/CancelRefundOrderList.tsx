@@ -1,7 +1,7 @@
 import { cancelRefundTabState } from '@/atoms/cancel&refundAtoms';
 import { useRecoilState } from 'recoil';
 import CancelRefundOrderItemContainer from './CancelRefundOrderItemContainer';
-import { useGetCanceRefundlList } from '@/apis/cancel&refund';
+import { useGetCancelRefundList } from '@/apis/cancel&refund';
 import { selectedDateFilterState } from '@/atoms/selectedDateFilterAtom';
 
 export default function CancelRefundOrderList() {
@@ -15,7 +15,7 @@ export default function CancelRefundOrderList() {
   };
 
   // 메뉴 탭과 날짜 필터 누를떄마다 새로운 데이터 fetch
-  const { data } = useGetCanceRefundlList(activedTab, selectedDateFilter);
+  const { data } = useGetCancelRefundList(activedTab, selectedDateFilter);
   console.log(data);
 
   return (
