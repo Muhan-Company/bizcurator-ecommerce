@@ -83,7 +83,7 @@ export default function NoticeList({ data }: ItemListProps) {
               <div className="bg-[#fafafa] break-words py-9 px-5 text-xs">
                 <div>
                   <h3 className="md:block md:ml-8 md:mb-6">● {data.title}</h3>
-                  <span className="md:ml-5 inline-block py-7">{data.content}</span>
+                  <span className="md:ml-5 block py-7">{data.content}</span>
                   <span>감사합니다.</span>
                 </div>
                 <button
