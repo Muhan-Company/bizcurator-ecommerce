@@ -11,7 +11,7 @@ export default function Two({ formValues2 }: { formValues2: FormValues }) {
       </label>
       <input
         {...register('two')}
-        className="disabled:cursor-not-allowed bg-gray-100 px-4 font-normal text-main text-body-xs disabled:bg-gray_04 rounded-lg h-[50px] w-full outline-none"
+        className="bg-gray-100 px-4 font-normal text-main text-body-xs rounded-lg h-[50px] w-full outline-none"
       />
       {errors.two && <p className="text-red text-xs font-medium">{errors.two.message}</p>}
     </div>

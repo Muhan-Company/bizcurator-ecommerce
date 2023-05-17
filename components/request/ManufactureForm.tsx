@@ -7,12 +7,14 @@ import Three from './Numbers/Three';
 import { useState } from 'react';
 import { Category, IFormInputs } from './PurchaseForm';
 import Four from './Numbers/Four';
+import Five from './Numbers/Five';
 
 const SignupSchema = yup
   .object({
     one: yup.string().required('제품명을 입력하세요'),
     two: yup.string().required('제품에 대해 설명해주세요'),
     three: yup.string().required('수량을 입력하세요'),
+    four: yup.string().required('날짜를 입력하세요'),
   })
   .required();
 
@@ -32,6 +34,9 @@ export default function ManufactureForm() {
   ];
 
   const [selectedCategory, setSelectedCategory] = useState<Category>({ id: 0, name: '제작목적 선택' });
+  const [firstDate, setFirstDate] = useState<Date | undefined>(undefined);
+  const [secondDate, setSecondDate] = useState<Date | undefined>(undefined);
+
   const notSelected = selectedCategory.id === 0;
 
   const onSubmit = (data: IFormInputs) => {
@@ -65,8 +70,18 @@ export default function ManufactureForm() {
   };
 
   const formValues4 = {
+    ...formValues,
     title: '견적 수령 희망일',
     description: '신청 문의 후, 견적을 받아보고 싶은 날짜를 작성해주세요',
+    firstDate,
+    setFirstDate,
+  };
+
+  const formValues5 = {
+    title: '제품 배송 희망일',
+    description: '희망 납품(예상)일 혹은 기한을 작성해주세요. 견적에 따라 실제 납품일은 변경될 수 있습니다.',
+    secondDate,
+    setSecondDate,
   };
 
   return (
@@ -75,10 +90,11 @@ export default function ManufactureForm() {
       <Two formValues2={formValues2} />
       <Three formValues3={formValues3} />
       <Four formValues4={formValues4} />
+      <Five formValues5={formValues5} />
       <input
         type="submit"
         value={'제출하기'}
-        disabled={notSelected}
+        disabled={notSelected || !firstDate || !secondDate}
         className="mt-[60px] disabled:cursor-not-allowed disabled:opacity-70 bg-primary h-[60px] rounded-lg w-full text-white font-normal text-button-md"
       />
     </form>

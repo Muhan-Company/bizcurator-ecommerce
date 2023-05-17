@@ -11,7 +11,7 @@ export default function Three({ formValues3 }: { formValues3: FormValues }) {
       </label>
       <input
         {...register('three')}
-        className="disabled:cursor-not-allowed bg-gray-100 px-4 font-normal text-main text-body-xs disabled:bg-gray_04 rounded-lg h-[50px] w-full outline-none"
+        className="bg-gray-100 px-4 font-normal text-main text-body-xs rounded-lg h-[50px] w-full outline-none"
       />
       {errors.three && <p className="text-red text-xs font-medium">{errors.three.message}</p>}
     </div>

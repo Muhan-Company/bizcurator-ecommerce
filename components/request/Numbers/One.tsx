@@ -76,7 +76,7 @@ export default function One({ formValues1 }: { formValues1: FormValues1 }) {
         </ul>
 
         <input
-          disabled={selectedCategory.name === '카테고리 선택'}
+          disabled={selectedCategory.name === '카테고리 선택' || selectedCategory.name === '제작목적 선택'}
           {...register('one')}
           className="disabled:cursor-not-allowed bg-gray-100 px-4 font-normal text-main text-body-xs disabled:bg-gray_04 rounded-lg h-[50px] w-full outline-none"
         />

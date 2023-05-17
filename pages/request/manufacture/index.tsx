@@ -18,7 +18,6 @@ export default function Manufacture() {
       <ManufactureForm />
       <Footer />
       <NavBar />
-      <MyInfo />
     </Layout>
   );
 }
