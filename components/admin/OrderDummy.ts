@@ -6,9 +6,9 @@ type OrderDeliveryProps = {
     order_number: number; // 주문번호
     order_date: string; //주문일자
 
-    cancel_state?: string | number | undefined; //취소처리상태
+    cancel_state: number; //취소처리상태
 
-    process_state?: number | undefined; //처리상태
+    process_state: number; //처리상태
     order_count: number; // 주문갯수
     order_amount: number; //주문금액
     invoice_number: string; //송장번호
@@ -39,7 +39,7 @@ export const dummy: OrderDeliveryProps[] = [
         sales_type: '객실용품',
         order_number: 124123123,
         order_date: '230513',
-        cancel_state: 1,
+        cancel_state: 0,
         process_state: 1,
         order_count: 1000,
         order_amount: 1000000,
@@ -51,6 +51,7 @@ export const dummy: OrderDeliveryProps[] = [
         sales_type: '객실용품',
         order_number: 124123123,
         order_date: '230513',
+        cancel_state: 0,
         process_state: 2,
         order_count: 1000,
         order_amount: 4000,
@@ -62,6 +63,7 @@ export const dummy: OrderDeliveryProps[] = [
         sales_type: '객실용품',
         order_number: 124123123,
         order_date: '230513',
+        cancel_state: 0,
         process_state: 3,
         order_count: 1000,
         order_amount: 30000,

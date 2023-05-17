@@ -45,13 +45,13 @@ const SidebarItem = () => {
                                 <li className={`mt-5 py-1 w-[250px]
                                 ${router.pathname === '/admin/OrderCancel' ? 'bg-black' : ''}`}>
                                     <Link className='w-full block pl-10 py-1' href="/admin/OrderCancel">
-                                        주문 취소 환불
+                                        취소 관리
                                     </Link>
                                 </li>
                                 <li className={`mt-5 py-1 w-[250px]
                                 ${router.pathname === '/admin/OrderRefund' ? 'bg-black' : ''}`}>
                                     <Link className='w-full block pl-10 py-1' href="/admin/OrderRefund">
-                                        주문 취소 환불
+                                        환불 관리
                                     </Link>
                                 </li>
                             </ul>
