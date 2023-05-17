@@ -17,18 +17,25 @@
   }
 
   .btn-white {
-    @apply flex items-center justify-center border border-[#DDDDDD] rounded-[8px] bg-white box-border cursor-pointer font-normal;
+    @apply center border border-[#DDDDDD] rounded-[8px] bg-white box-border cursor-pointer font-normal;
   }
   .btn-primary {
-    @apply flex items-center justify-center rounded-[8px] bg-primary text-white cursor-pointer font-normal;
+    @apply center rounded-[8px] bg-primary text-white cursor-pointer font-normal;
   }
 
   .btn-mobile {
     @apply absolute bottom-[90px] w-full;
   }
+  .btn-large {
+    @apply w-full h-[42px] center rounded-[8px] bg-primary text-white cursor-pointer font-medium;
+  }
 
   .btn-order-detail {
-    @apply w-[65px] h-[32px] ml-[6px] flex items-center justify-center border border-[#DDDDDD] rounded-[8px] bg-white box-border cursor-pointer font-normal;
+    @apply w-[65px] h-[32px] ml-[6px] center border border-[#DDDDDD] rounded-[8px] bg-white box-border cursor-pointer font-normal;
+  }
+
+  .btn-disabled {
+    @apply disabled:border-[#DDD] disabled:text-gray_01 disabled:cursor-not-allowed;
   }
 
   .center {
@@ -57,6 +64,10 @@
 
   .modal-overlay {
     @apply fixed inset-0 bg-black/20 z-20;
+  }
+
+  .modal-background {
+    @apply h-screen fixed center inset-0 bg-black/20 z-20;
   }
 
   .swiper-button-next {
@@ -128,6 +139,14 @@
 
   .scrollbar-hidden::-webkit-scrollbar {
     @apply hidden;
+  }
+
+  .radio-custom {
+    @apply appearance-none w-[18px] h-[18px] mr-2 center text-white bg-white  border-[1px] border-gray_01 rounded-[50%] before:w-4 before:h-4 before:center before:rounded-[50%] checked:before:content-['✓'] checked:before:bg-primary;
+  }
+
+  .input {
+    @apply h-[44px] pl-[10px] py-[6.5px] grow rounded-[8px] border-[1px] border-gray_01 bg-white text-body-sm disabled:opacity-75 disabled:border-[#DDD] disabled:bg-gray_04;
   }
 
   .my-info {

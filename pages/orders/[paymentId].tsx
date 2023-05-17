@@ -13,7 +13,7 @@ export default function OrdersDetailPage() {
     <Layout>
       <div className="mx-3 pb-[64px]">
         <OrderInfo payment_id={router.query.paymentId} total_cost={10000000} />
-        <OrderItemInfo delivery_state={0} />
+        <OrderItemInfo order_id={987654321} delivery_state={0} />
         <PaymentInfo payment_method={'PG사, 부트페이'} total_cost={10000000} />
         <DeliveryInfo
           buyer="가나다"
