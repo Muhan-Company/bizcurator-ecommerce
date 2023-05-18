@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axiosInstance from './config';
 
 // 주문취소, 환불 신청내역 리스트 조회 get API
-const getCanceRefundlList = async (activedTab: string, selectedDateFilter: number) => {
+const getCancelRefundList = async (activedTab: string, selectedDateFilter: number) => {
   try {
     const { data } = await axiosInstance.get(
       `/api/mypages/orders/applications/${activedTab}?filter-month=${selectedDateFilter}`,
@@ -16,7 +16,7 @@ const getCanceRefundlList = async (activedTab: string, selectedDateFilter: numbe
 export const useGetCancelRefundList = (activedTab: string, selectedDateFilter: number) => {
   return useQuery({
     queryKey: [activedTab, selectedDateFilter],
-    queryFn: () => getCanceRefundlList(activedTab, selectedDateFilter),
+    queryFn: () => getCancelRefundList(activedTab, selectedDateFilter),
   });
 };
 
