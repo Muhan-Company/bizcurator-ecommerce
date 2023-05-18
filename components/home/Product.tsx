@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom';
 import { useRouter } from 'next/router';
 import { Trending } from '@/pages';
 
-export default function Product({ id, name, main_image_url, regular_price, sale_price }: Trending) {
+export default function Product({ id, category_id, name, main_image_url, regular_price, sale_price }: Trending) {
   const [showAddToCartModal, setShowAddToCartModal] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(100);
   const router = useRouter();
@@ -16,9 +16,12 @@ export default function Product({ id, name, main_image_url, regular_price, sale_
     setShowAddToCartModal(true);
     document.body.classList.add('modal-open');
   };
-
+  console.log(main_image_url);
   return (
-    <div onClick={() => router.push(`/products?itemId=${id}`)} className="w-full sm:space-y-3 lg:space-y-4">
+    <div
+      onClick={() => router.push(`/products/${category_id}?itemId=${id}`)}
+      className="w-full sm:space-y-3 lg:space-y-4"
+    >
       <div className="aspect-square relative rounded-lg overflow-hidden">
         <Image src={main_image_url} alt="Product" fill sizes="100%" className="object-cover" />
         <button
@@ -42,10 +45,10 @@ export default function Product({ id, name, main_image_url, regular_price, sale_
             setShowAddToCartModal={setShowAddToCartModal}
             quantity={quantity}
             setQuantity={setQuantity}
-            name={'두루마리 휴지 24롤'}
-            src={'/img/tissue.png'}
-            price={1000}
-            discount={10}
+            name={name}
+            main_image_url={main_image_url}
+            sale_price={sale_price}
+            regular_price={regular_price}
             min={100}
           />,
           document.body,

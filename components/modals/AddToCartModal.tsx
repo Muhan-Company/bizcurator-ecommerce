@@ -4,11 +4,11 @@ import AddCompleteModal from './AddCompleteModal';
 import { useRecoilState } from 'recoil';
 import { addCompleteModalState } from '@/atoms/modalAtoms';
 
-type AddToCartPropsType = {
+type AddToCartProps = {
   name: string;
-  src: string;
-  price: number;
-  discount: number;
+  main_image_url: string;
+  sale_price: number;
+  regular_price: number;
   min: number;
   setShowAddToCartModal: React.Dispatch<React.SetStateAction<boolean>>;
   quantity: number;
@@ -18,16 +18,17 @@ type AddToCartPropsType = {
 // todo: 클릭한 상품 data 가져와서 적용하기
 export default function AddToCartModal({
   name,
-  src,
-  price,
-  discount,
+  main_image_url,
+  sale_price,
+  regular_price,
   min,
   setShowAddToCartModal,
   quantity,
   setQuantity,
-}: AddToCartPropsType) {
-  const originalPrice = (price * quantity).toLocaleString('ko-KR');
-  const discountedPrice = ((price - discount) * quantity).toLocaleString('ko-KR');
+}: AddToCartProps) {
+  const originalPrice = (regular_price * quantity).toLocaleString('ko-KR');
+  const discountedPrice = (sale_price * quantity).toLocaleString('ko-KR');
+
   const [showAddCompleteModal, setShowAddCompleteModal] = useRecoilState(addCompleteModalState);
 
   const closeModal = (e: React.MouseEvent) => {
@@ -40,7 +41,7 @@ export default function AddToCartModal({
   const addToCart = () => {
     setShowAddCompleteModal(true);
   };
-
+  console.log(main_image_url);
   return (
     <>
       {showAddCompleteModal ? (
@@ -53,11 +54,17 @@ export default function AddToCartModal({
           >
             <div className="flex w-full space-x-[22px] py-[18px]">
               {/* 상품 썸네일 */}
-              <Image src={src} alt="Thumbnail" width={86} height={86} className="object-cover rounded-[10px]" />
+              <Image
+                src={main_image_url}
+                alt="Thumbnail"
+                width={86}
+                height={86}
+                className="object-cover aspect-square rounded-[10px]"
+              />
               {/* 상품 정보 */}
               <div>
                 <h3 className="font-normal">{name}</h3>
-                <span className="font-bold">{price - discount} 원</span>
+                <span className="font-bold">{sale_price.toLocaleString('ko-KR')}원</span>
               </div>
             </div>
             {/* 수량 계산 */}
