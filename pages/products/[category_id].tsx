@@ -1,23 +1,31 @@
+import { useProductInfo } from '@/apis/productApis';
 import Footer from '@/components/footer/Footer';
 import DownHeader from '@/components/header/DownHeader';
 import TopHeader from '@/components/header/TopHeader';
+import Loader from '@/components/products/Loader';
 import ProductCarousel from '@/components/products/ProductCarousel';
 import ProductInfo from '@/components/products/ProductInfo';
 import Purchase from '@/components/products/Purchase';
+import { useRouter } from 'next/router';
 
 export default function Item() {
-  let name = '야외 테이블과 의자 세트/화이트';
-  let min_quantity = 20;
-  let regular_price = 30000;
-  let sale_price = 20000;
+  const { query } = useRouter();
+
+  const productId = query.itemId;
+
+  const { productInfo, isLoading, error } = useProductInfo(productId as string);
+
+  if (isLoading) return <Loader />;
+
+  if (error) return <p className="text-center leading-[100vh]">Something went wrong.</p>;
 
   return (
     <>
       <TopHeader />
       <DownHeader />
-      <ProductCarousel />
-      <ProductInfo />
-      <Purchase name={name} min_quantity={min_quantity} regular_price={regular_price} sale_price={sale_price} />
+      <ProductCarousel {...productInfo} />
+      <ProductInfo {...productInfo} />
+      <Purchase {...productInfo} />
       <Footer />
     </>
   );

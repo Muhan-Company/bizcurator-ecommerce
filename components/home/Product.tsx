@@ -6,9 +6,17 @@ import { createPortal } from 'react-dom';
 import { useRouter } from 'next/router';
 import { Trending } from '@/pages';
 
-export default function Product({ id, category_id, name, main_image_url, regular_price, sale_price }: Trending) {
+export default function Product({
+  id,
+  category_id,
+  name,
+  main_image_url,
+  regular_price,
+  sale_price,
+  min_quantity,
+}: Trending) {
   const [showAddToCartModal, setShowAddToCartModal] = useState<boolean>(false);
-  const [quantity, setQuantity] = useState<number>(100);
+  const [quantity, setQuantity] = useState<number>(min_quantity);
   const router = useRouter();
 
   const openModal = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -16,7 +24,7 @@ export default function Product({ id, category_id, name, main_image_url, regular
     setShowAddToCartModal(true);
     document.body.classList.add('modal-open');
   };
-  console.log(main_image_url);
+
   return (
     <div
       onClick={() => router.push(`/products/${category_id}?itemId=${id}`)}
@@ -49,7 +57,7 @@ export default function Product({ id, category_id, name, main_image_url, regular
             main_image_url={main_image_url}
             sale_price={sale_price}
             regular_price={regular_price}
-            min={100}
+            min_quantity={min_quantity}
           />,
           document.body,
         )}

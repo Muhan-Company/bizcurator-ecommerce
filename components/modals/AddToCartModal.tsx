@@ -4,16 +4,16 @@ import AddCompleteModal from './AddCompleteModal';
 import { useRecoilState } from 'recoil';
 import { addCompleteModalState } from '@/atoms/modalAtoms';
 
-type AddToCartProps = {
+interface AddToCartProps {
   name: string;
   main_image_url: string;
   sale_price: number;
   regular_price: number;
-  min: number;
+  min_quantity: number;
   setShowAddToCartModal: React.Dispatch<React.SetStateAction<boolean>>;
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
-};
+}
 
 // todo: 클릭한 상품 data 가져와서 적용하기
 export default function AddToCartModal({
@@ -21,7 +21,7 @@ export default function AddToCartModal({
   main_image_url,
   sale_price,
   regular_price,
-  min,
+  min_quantity,
   setShowAddToCartModal,
   quantity,
   setQuantity,
@@ -35,13 +35,13 @@ export default function AddToCartModal({
     e.stopPropagation();
     setShowAddToCartModal(false);
     document.body.classList.remove('modal-open');
-    setQuantity(min);
+    setQuantity(min_quantity);
   };
 
   const addToCart = () => {
     setShowAddCompleteModal(true);
   };
-  console.log(main_image_url);
+
   return (
     <>
       {showAddCompleteModal ? (
@@ -69,7 +69,7 @@ export default function AddToCartModal({
             </div>
             {/* 수량 계산 */}
             <div className="w-full mb-10 px-2 py-[15px] flex items-center justify-between bg-gray_03">
-              <Counter min={min} quantity={quantity} setQuantity={setQuantity} />
+              <Counter min_quantity={min_quantity} quantity={quantity} setQuantity={setQuantity} />
               <h4 className="font-medium text-main text-body-sm">총 금액</h4>
               <div className="flex flex-col text-end">
                 {/* 할인적용 가격 */}

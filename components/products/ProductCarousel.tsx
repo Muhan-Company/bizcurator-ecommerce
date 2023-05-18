@@ -9,8 +9,9 @@ import { Pagination, Navigation } from 'swiper';
 
 // Import Swiper styles
 import 'swiper/css';
+import { Trending } from '@/pages';
 
-export default function ProductCarousel() {
+export default function ProductCarousel({ main_image_url, detail_image_url }: Trending) {
   return (
     <Swiper
       modules={[Navigation, Pagination]}
@@ -25,10 +26,10 @@ export default function ProductCarousel() {
         <ChevronLeft />
       </div>
       <SwiperSlide>
-        <Image src={'/img/main 1.jpg'} alt="Main Banner 1" fill priority className="object-cover" />
+        <Image src={main_image_url} alt="Main Banner 1" fill priority className="object-cover" />
       </SwiperSlide>
       <SwiperSlide>
-        <Image src={'/img/main 3.jpg'} alt="Main Banner 3" fill priority className="object-cover" />
+        <Image src={detail_image_url!} alt="Main Banner 3" fill priority className="object-cover" />
       </SwiperSlide>
       <div className="swiper-button-next-2">
         <ChevronRight />

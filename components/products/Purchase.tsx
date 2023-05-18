@@ -6,16 +6,10 @@ import { addCompleteModalState, buyCompleteModalState } from '@/atoms/modalAtoms
 import { createPortal } from 'react-dom';
 import AddCompleteModal from '../modals/AddCompleteModal';
 import BuyCompleteModal from '../modals/BuyCompleteModal';
+import { Trending } from '@/pages';
 
-interface PurchaseProps {
-  name: string;
-  min_quantity: number;
-  regular_price: number;
-  sale_price: number;
-}
-
-export default function Purchase({ name, min_quantity, regular_price, sale_price }: PurchaseProps) {
-  const [quantity, setQuantity] = useState<number>(20);
+export default function Purchase({ name, min_quantity, regular_price, sale_price }: Trending) {
+  const [quantity, setQuantity] = useState<number>(min_quantity);
   const [open, setOpen] = useState<boolean>(false);
   const [showAddCompleteModal, setShowAddCompleteModal] = useRecoilState(addCompleteModalState);
   const [showBuyCompleteModal, setShowBuyCompleteModal] = useRecoilState(buyCompleteModalState);
