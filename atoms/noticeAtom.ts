@@ -6,6 +6,6 @@ export const lastArticleIdState = atom<number>({
 });
 
 export const sizeState = atom<number>({
-    key: "size",
-    default: 20,
+    key: "sizeState",
+    default: 7,
 })

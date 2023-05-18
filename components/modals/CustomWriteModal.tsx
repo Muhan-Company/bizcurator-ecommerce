@@ -4,18 +4,11 @@ import { atom, useRecoilValue } from "recoil";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { createPortal } from "react-dom";
-
-type Item = {
-    id: number;
-    title: string;
-    content: string;
-    // date: string;
-    isFixed: string;
-}
+import { NoticePostType } from "@/utils/types/responseType";
 
 type CustomWritePropsType = {
     setWriteOpenModal: React.Dispatch<React.SetStateAction<boolean>> //useState를 통해 생성된 매개변수를 해당 상태로 변경하는 type
-    item: Item | undefined;
+    item: NoticePostType | undefined;
 }
 
 type WriteFormType = {
@@ -57,7 +50,7 @@ export default function CustomWriteModal({
             setWriteForm((writeForm) => {
                 return {
                     ...writeForm,
-                    id: item.id,
+                    id: item.itemId,
                     title: item.title,
                     content: item.content,
                     isFixed: item.isFixed,

@@ -1,32 +1,28 @@
 import React, { useState } from 'react';
 import CustomWriteModal from '../modals/CustomWriteModal';
 import { createPortal } from 'react-dom';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+import { useQuery, useMutation, useInfiniteQuery } from '@tanstack/react-query';
 import axiosInstance from '@/apis/config';
+import { atom, useRecoilValue } from "recoil";
+import axios from "axios";
+import { lastArticleIdState, sizeState } from "@/atoms/noticeAtom";
+import { useInView } from 'react-intersection-observer'
+import { ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID } from "@/utils/noticeApi";
+import { getInfiniteQuestionPostList } from "@/apis/config/questionPostsApi";
+import { useScrollYStore } from "@/atoms/scrollAtom";
+import { NoticePostType } from '@/utils/types/responseType';
 
-interface Item {
-  id: number;
-  title: string;
-  content: string;
-  isFixed: string;
-  date: string;
+type NoticeListProps = {
+  dataList: NoticePostType[]
 }
 
-interface ItemListProps {
-  data: Item[];
-}
+export default function NoticeList({ dataList }: NoticeListProps) {
 
-// const fetchNotices = async (lastArticleId: number, size: number): Promise<Item[]> => {
-//         const response = await fetch(`api/notices?lastArticleId=${lastArticleId}&size=${size}`)
-//         console.log(response);
-//         const data = await response.json();
-//         return data;
-//     }
-
-export default function NoticeList({ data }: ItemListProps) {
   const [selectIndex, setSelectIndex] = useState<number | null>(null);
   const [writeOpenModal, setWriteOpenModal] = useState<boolean>(false);
+
+
+  console.log(dataList);
 
   const listClick = (index: number) => {
     setSelectIndex(selectIndex === index ? null : index);
@@ -47,9 +43,8 @@ export default function NoticeList({ data }: ItemListProps) {
       return;
     }
     try {
-      const id = data[index].id;
+      const id = dataList[index].itemId;
       await deleteNoticeMutation.mutateAsync(id);
-      console.log(data);
     } catch (error) {
       console.log('삭제 실패', error);
     }
@@ -70,7 +65,7 @@ export default function NoticeList({ data }: ItemListProps) {
           <span>제목</span>
           <span>작성일</span>
         </div>
-        {data?.map((data, index) => (
+        {dataList?.map((data, index) => (
           <div key={index}>
             <div
               className="pt-5 pb-5 border-b cursor-pointer relative md:ml-auto mt-4"
@@ -112,7 +107,7 @@ export default function NoticeList({ data }: ItemListProps) {
         createPortal(
           <CustomWriteModal
             setWriteOpenModal={setWriteOpenModal}
-            item={selectIndex !== null ? data[selectIndex] : undefined} // 수정할 아이템 전달
+            item={selectIndex !== null ? dataList[selectIndex] : undefined} // 수정할 아이템 전달
           />,
           document.body,
         )}

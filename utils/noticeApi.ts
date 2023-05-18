@@ -1,14 +1,10 @@
-// import { ec2 } from "@/axios/api"
-// import { Item } from "./types/responseType"
-// import axios from "axios"
+import { atom } from "recoil";
 
-// /** 질문글 무한 스크롤 */
-// export const getInfiniteQuestionPostList = async (lastArticleId: number, size: number) => {
-//     const res = await axios.get<Item[]>(`http://43.201.195.195:8080/api/notices?lastArticleId=${lastArticleId}&size=${size}&firstPage=true`)
-//     const postList: Item[] = res.data
-//     return {
-//         postList,
-//         nextLastPostId: postList[postList.length - 1]?.itemId,
-//         isLast: postList.length < 20
-//     }
-// }
+export const ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID = atom<number>({
+    key: 'ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID',
+    default: 10,
+});
+export const INFINITE_SCROLL_LOAD_SIZE = atom<number>({
+    key: 'INFINITE_SCROLL_LOAD_SIZE',
+    default: 10,
+});

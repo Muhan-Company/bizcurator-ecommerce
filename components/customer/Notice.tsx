@@ -4,15 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { atom, useRecoilValue } from "recoil";
 import axios from "axios";
 import { lastArticleIdState, sizeState } from "@/atoms/noticeAtom";
-
-interface Item {
-    id: number;
-    title: string;
-    content: string;
-    date: string;
-    isFixed: string;
-}
-
+import { NoticePostType } from "@/utils/types/responseType";
 
 
 const Notice: FC<{}> = () => {
@@ -28,7 +20,7 @@ const Notice: FC<{}> = () => {
                 code: number;
                 message: string;
                 result: {
-                    notices: Item[];
+                    notices: NoticePostType[];
                 }
             }>(
                 `${path}/api/notices?lastArticleId=${lastArticleId}&size=${size}&firstPage=true`
@@ -38,7 +30,7 @@ const Notice: FC<{}> = () => {
             throw new Error("fail data");
         }
     }
-    const { isLoading, isError, data, error } = useQuery<Item[], Error>(
+    const { isLoading, isError, data, error } = useQuery<NoticePostType[], Error>(
         [lastArticleId, size],
         () => axiosData(lastArticleId, size)
     );
@@ -55,7 +47,7 @@ const Notice: FC<{}> = () => {
             <div className="md:absolute md:right-0 md:w-[800px]  md:mt-[88px]">
                 <h3 className="hidden md:inline-block md:text-2xl">공지사항</h3>
                 <span className="hidden md:inline-block md:text-slate-400 md:ml-4">비즈큐레이터의 소식과 정보를 알려드립니다.</span>
-                <NoticeList data={data} />
+                <NoticeList dataList={data} />
             </div>
         </Fragment>
     )
