@@ -1,4 +1,3 @@
-import React, { ReactNode } from 'react';
 import { RequestsState } from './RequestsState';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -27,7 +26,7 @@ export default function MyRequestsListTable({ data }: MyRequestsListTableData) {
           <tr
             key={row.requestId}
             className="text-label-sm hover:bg-gray-100 hover:cursor-pointer"
-            onClick={() => router.push(`/`)}
+            onClick={() => router.push(`/my-requests/purchase/${row.requestId}`)}
           >
             <TableData>{row.requestId}</TableData>
             <TableData>{row.createdAt}</TableData>
@@ -41,7 +40,11 @@ export default function MyRequestsListTable({ data }: MyRequestsListTableData) {
             <TableData>
               {row.state === '대기' && (
                 // todo: requestType에 따라 수정페이지 경로 다르게 지정
-                <Link href={`/`} className="text-gray_01 hover:text-main hover:underline">
+                <Link
+                  href={`/my-requests/edit/${row.requestType}/${row.requestId}`}
+                  className="text-gray_01 hover:text-main hover:underline"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   수정
                 </Link>
               )}
@@ -54,7 +57,7 @@ export default function MyRequestsListTable({ data }: MyRequestsListTableData) {
 }
 
 interface TableProps {
-  children?: ReactNode;
+  children?: React.ReactNode;
   className?: string;
 }
 function TableHeader({ children }: TableProps) {
