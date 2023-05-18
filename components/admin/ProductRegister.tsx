@@ -1,6 +1,9 @@
 import FileUpload from "./FileUpload";
 import ProductCategory from "./ProductCategory";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { atom, useRecoilState } from "recoil";
+import axios from "axios";
 
 type ProductInfo = {
     company: string;
@@ -10,11 +13,17 @@ type ProductInfo = {
     max_quantity: number;
     discount_rate: number;
     file: File | null;
+    detailPage: File | null;
 }
 type FileUploadProps = {
     handleFileChange: (file: File) => void;
 };
 
+//Recoil에서 사용할 atom 정의
+const productDataAtom = atom<ProductInfo | null>({
+    key: "productDataAtom",
+    default: null,
+})
 
 export default function ProductRegister() {
     const [productInfo, setProductInfo] = useState<ProductInfo>({
@@ -25,9 +34,16 @@ export default function ProductRegister() {
         max_quantity: 0,
         discount_rate: 0,
         file: null,
+        detailPage: null,
     })
 
     const [selectedCategory, setSelectedCategory] = useState<string>("")
+    const [productData, setProductData] = useRecoilState(productDataAtom);
+
+    // 상품 등록 API 호출을 위한 useMutation 훅 사용
+    const mutation = useMutation((newProductInfo: ProductInfo) =>
+        axios.post('http://43.201.195.195:8080/api/admins/products', newProductInfo)
+    );
 
     const handleSelectCategory = (category: string) => {
         setSelectedCategory(category);
@@ -43,24 +59,39 @@ export default function ProductRegister() {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+        let newValue: string | number = value;
+
+        if (name === "min_quantity" || name === "max_quantity") {
+            newValue = parseInt(value);
+            if (name === "min_quantity" && newValue < 20) { //최소 구매수량을 20으로 맞춰 놓아서 20이하이면 최소 20개가 나오도록
+                newValue = 20;
+            } else if (name === "max_quantity" && newValue > 100) { //최대구매수량을 100으로 맞춰놓아서 100이상이면 100으로 돌아가도록
+                newValue = 100;
+            }
+        } else if (name === "regular_price") {
+            // Remove commas from the value
+            const cleanedValue = value.replace(/,/g, '');
+
+            // Convert the cleaned value to a number
+            newValue = parseInt(cleanedValue);
+
+            // Add commas to display the amount
+            newValue = newValue.toLocaleString();
+        }
+
         setProductInfo((prev) => ({
             ...prev,
-            [name]: value
+            [name]: newValue
         }))
     }
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-
-
-        console.log(selectedCategory);
-        console.log(`카테고리, ${productInfo.company}`)
-        console.log(`상품명, ${productInfo.name}`)
-        console.log(`정가, ${productInfo.regular_price}`)
-        console.log(`최소구매, ${productInfo.min_quantity}`)
-        console.log(`최대구매, ${productInfo.max_quantity}`)
-        console.log(`할인율, ${productInfo.discount_rate}`)
-        console.log(`썸네일: ${productInfo.file ? productInfo.file.name : "파일이 선택되지 않았습니다."}`);
-
+        try {
+            await mutation.mutateAsync(productInfo);
+            console.log("상품등록");
+        } catch (error) {
+            console.log(`상품등록에러${error}`);
+        }
     }
 
     return (
@@ -85,6 +116,7 @@ export default function ProductRegister() {
                         <input
                             name="company"
                             onChange={handleChange}
+                            className="w-[1440px] block border border-black rounded-md h-10 pl-3"
                         />
                     </div>
                     <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
@@ -92,7 +124,7 @@ export default function ProductRegister() {
                         <input
                             name="name"
                             onChange={handleChange}
-                            className="w-[1440px] mx-auto block border border-black"
+                            className="w-[1440px] block border border-black rounded-md h-10 pl-3"
                             placeholder="최대 50글자"
                         />
                     </div>
@@ -116,7 +148,9 @@ export default function ProductRegister() {
                                 name="min_quantity"
                                 onChange={handleChange}
                                 className="border border-black p-2 rounded-lg"
-                                placeholder="숫자만 입력" />
+                                placeholder="20"
+                                value={productInfo.min_quantity}
+                            />
                             <div className="ml-1 inline-block bg-black text-[#fff] p-2 rounded-lg">개</div>
                         </div>
                         <div className="py-[30px] bg-[#fff]">
@@ -125,7 +159,9 @@ export default function ProductRegister() {
                                 name="max_quantity"
                                 onChange={handleChange}
                                 className="border border-black p-2 rounded-lg"
-                                placeholder="숫자만 입력" />
+                                placeholder="100"
+                                value={productInfo.max_quantity}
+                            />
                             <div className="ml-1 inline-block bg-black text-[#fff] p-2 rounded-lg">개</div>
 
                         </div>

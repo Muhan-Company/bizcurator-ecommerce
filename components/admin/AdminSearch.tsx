@@ -1,71 +1,58 @@
-import { useState } from "react"
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
-type ProductSearch = {
-    id: number;
-    product: string;
-}
+///api/admins/orders?page={page(정수형)}&search={search}
+const SearchForm: React.FC = () => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const path = "http://43.201.195.195:8080"
+    const router = useRouter();
+    const { data, isLoading, isError, error } = useQuery(
+        ['search', searchTerm],
+        async () => {
+            if (searchTerm) {
+                const response = await axios.post(`${path}/api/admins/orders?page=1&search=${searchTerm}`)
+                if (response.status != 200) {
+                    throw new Error("검색 실패");
+                }
+                return response.data;
+            }
+            return null;
+        }
+    )
 
-type SearchProps = {
-    queryKey: string;
-    searchUrl: string;
-}
-
-
-function AdminSearch({
-    queryKey,
-    searchUrl
-}:
-    SearchProps) {
-    // const [searchText, setSearchText] = useState("");
-    // const { isLoading, isError, data } = useQuery<ProductSearch[], Error>(queryKey, () => {
-    //     if (searchText.trim() === "") {
-    //         return Promise.resolve([]);
-    //     }
-    //     return fetch(`${searchUrl}?searchText=${searchText}`).then((res) => res.json());
-    // });
-
-    const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSearch = (event: React.FormEvent) => {
         event.preventDefault();
-        // 검색 API 호출
-    }
-    // const [searchTerm, setSearchTerm] = useState('');
+        // 검색을 수행하거나 다른 작업을 수행할 수 있습니다.
+        // 예를 들어, 검색 결과를 가져오는 API 호출을 여기에 추가할 수 있습니다.
+        router.push(`?search=${searchTerm}`);
+    };
 
-    // const { isLoading, isError, data } = useQuery<ProductSearch[]>(queryKey, async () => {
-    //     const response = await fetch(`${searchUrl}?q=${encodeURIComponent(searchTerm)}`);
-    //     const data = await response.json();
-    //     return data as ProductSearch[];
-    // });
-
-    // if (isLoading) {
-    //     return <div>Loading...</div>;
-    // }
-
-    // if (isError) {
-    //     return <div>Error</div>;
-    // }
 
     return (
-        <>
-            {/* <form onSubmit={handleSearch}>
-                <div className="w-[1500px] rounded-[10px] bg-[#fff] p-[30px] mt-[15px] mx-[60px]">
+        <div>
+            <form onSubmit={handleSearch}>
+                <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button type="submit">검색</button>
+                {isLoading && <div>검색 중...</div>}
+                {isError && <div>검색에 오류가 발생했습니다: {(error as Error)?.message}</div>}
+                {data && (
                     <div>
-                        <span className="mr-24">검색어</span>
-                        <input
-                            className="w-[1200px] border py-5 rounded-[10px] mr-3"
-                            value={searchText}
-                            onChange={(e) => setSearchText(e.target.value)}
-                        />
-                        <button className="p-5 border border-[#999]  rounded-[10px]">검색</button>
+                        검색 결과:
+                        <ul>
+                            {data.results.map((result: any) => (
+                                <li key={result.id}>{result.name}</li>
+                            ))}
+                        </ul>
                     </div>
-                </div>
+                )}
             </form>
-            {isLoading && <div>Loading...</div>}
-            {isError && <div>Error fetching data</div>}
-            {data && data.map((product) => (
-                <div key={product.id}>{product.product}</div>
-            ))} */}
-        </>
-    )
-}
-
-export default AdminSearch;
+        </div>
+    );
+};
+export default SearchForm;

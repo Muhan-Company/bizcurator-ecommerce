@@ -11,8 +11,8 @@ export default function OrderDelivery() {
     return (
         <>
             <div className="w-[1500px] rounded-[10px] mx-[60px] bg-[#fff] h-[600px] mt-[15px]">
-                <div className="w-[1300px] mx-auto">
-                    <table className="w-full">
+                <div className="w-[1500px] mx-auto">
+                    <table className="w-full mt-10">
                         <thead>
                             <tr className="border">
                                 <th className="px-10 py-5 border-r">상품명</th>
@@ -28,7 +28,7 @@ export default function OrderDelivery() {
                         </thead>
                         <tbody>
                             {dummyWithDeliveryState.map((list, index) => (
-                                <tr key={index} className="border">
+                                <tr key={index} className="border text-center h-20">
                                     <OrderDeliveryInfo value={list.product} />
                                     <OrderDeliveryInfo value={list.salesCompany} />
                                     <OrderDeliveryInfo value={list.sales_type} />
@@ -56,7 +56,7 @@ type OrderDeliveryInfoProps = {
 function OrderDeliveryInfo({ value }: OrderDeliveryInfoProps) {
     return (
         <>
-            <td>{value}</td>
+            <td className="border">{value}</td>
         </>
     )
 }

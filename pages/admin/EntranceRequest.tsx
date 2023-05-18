@@ -6,7 +6,7 @@ import AdminHeader from "@/components/admin/AdminHeader";
 
 export default function EntranceRequest() {
     return (
-        <div className="flex h-screen">
+        <div className="flex bg-[#ebedee]">
             <SidebarItem />
             <div className="ml-80 w-[1600px]">
                 <AdminHeader />

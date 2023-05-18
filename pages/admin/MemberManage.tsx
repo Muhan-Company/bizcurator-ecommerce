@@ -5,7 +5,7 @@ import AdminMemberManage from "@/components/admin/MemberManage";
 
 export default function MemberManage() {
     return (
-        <div className="flex h-screen">
+        <div className="flex bg-[#ebedee]">
             <SidebarItem />
             <div className="ml-80 w-[1600px]">
                 <AdminHeader />

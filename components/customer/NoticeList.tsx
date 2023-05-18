@@ -4,11 +4,11 @@ import { createPortal } from 'react-dom';
 // import { useQuery } from "react-query";
 
 interface Item {
-  itemId: number;
+  id: number;
   title: string;
   content: string;
   isFixed: string;
-  date: string;
+  // date: string;
 }
 
 interface ItemListProps {
@@ -43,7 +43,7 @@ export default function NoticeList({ data }: ItemListProps) {
   };
 
   const onDeleteClick = (index: number) => {
-    const updateData = data.filter((i) => i.itemId !== index + 1);
+    const updateData = data.filter((i) => i.id !== index + 1);
     console.log(updateData);
   };
 
@@ -62,7 +62,7 @@ export default function NoticeList({ data }: ItemListProps) {
               onClick={() => listClick(index)}
             >
               <span className="ml-3 text-sm md:text-base md:ml-12">{data.title}</span>
-              <span className="absolute top-5 right-2 text-[#999]">{data.date}</span>
+              {/* <span className="absolute top-5 right-2 text-[#999]">{data.date}</span> */}
             </div>
             {selectIndex === index && (
               <div className="bg-[#fafafa] break-words py-9 px-5 text-xs">

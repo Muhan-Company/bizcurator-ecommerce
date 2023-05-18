@@ -3,14 +3,14 @@ import NoticeList from "./NoticeList";
 import { useQuery } from "@tanstack/react-query";
 import { atom, useRecoilValue } from "recoil";
 import axios from "axios";
-import axiosInstance from "@/apis/config";
+
 
 interface Item {
     id: number;
     title: string;
     content: string;
-    date: string;
-    isFixed: boolean;
+    // date: string;
+    isFixed: string;
 }
 
 const lastArticleIdState = atom<number>({
