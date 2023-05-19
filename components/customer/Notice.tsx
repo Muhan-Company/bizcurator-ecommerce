@@ -26,12 +26,11 @@ const Notice: FC<{}> = () => {
             ["notices"],
             async ({ pageParam = 0 }) => {
                 if (!pageParam) {
-                    const res = await axios.get(`${path}/api/notices?lastArticleId=999&size=10&firstPage=true`);
+                    const res = await axios.get(`${path}/api/notices?size=10&firstPage=true`);
                     return res.data;
                 }
 
                 const res = await axios.get(`${path}/api/notices?lastArticleId=${pageParam}&size=10&firstPage=false`);
-                console.log(res.data);
                 return res.data;
             }
             ,

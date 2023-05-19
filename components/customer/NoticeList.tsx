@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
 import CustomWriteModal from '../modals/CustomWriteModal';
 import { createPortal } from 'react-dom';
-import { useQuery, useMutation, useInfiniteQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import axiosInstance from '@/apis/config';
-import { atom, useRecoilValue } from "recoil";
-import axios from "axios";
-import { lastArticleIdState, sizeState } from "@/atoms/noticeAtom";
-import { useInView } from 'react-intersection-observer'
-import { ARBITRARY_LARGEST_LAST_QUESTIONPOST_ID } from "@/utils/noticeApi";
-import { getInfiniteQuestionPostList } from "@/apis/config/questionPostsApi";
-import { useScrollYStore } from "@/atoms/scrollAtom";
 import { NoticePostType } from '@/utils/types/responseType';
 
 type NoticeListProps = {
@@ -43,7 +36,7 @@ export default function NoticeList({ dataList }: NoticeListProps) {
       return;
     }
     try {
-      const id = dataList[index].itemId;
+      const id = dataList[index].id;
       await deleteNoticeMutation.mutateAsync(id);
     } catch (error) {
       console.log('삭제 실패', error);
@@ -54,7 +47,7 @@ export default function NoticeList({ dataList }: NoticeListProps) {
   //토큰값을 임의로 저장해놓았음
   const deleteNoticeMutation = useMutation((id: number) =>
     axiosInstance.delete(`/api/notices/${id}`));
-  // console.log(dataList);
+  console.log(dataList);
 
 
   return (

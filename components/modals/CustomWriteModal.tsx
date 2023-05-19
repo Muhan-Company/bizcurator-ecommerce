@@ -50,7 +50,7 @@ export default function CustomWriteModal({
             setWriteForm((writeForm) => {
                 return {
                     ...writeForm,
-                    id: item.itemId,
+                    id: item.id,
                     title: item.title,
                     content: item.content,
                     isFixed: item.isFixed,
@@ -77,7 +77,8 @@ export default function CustomWriteModal({
             });
         }
     };
-
+    console.log(`item${item?.id}`);
+    console.log(`writeform${writeForm.id}`)
     ///api/notices/{id}
     const editHandleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
