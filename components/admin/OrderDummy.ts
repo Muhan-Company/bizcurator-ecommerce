@@ -6,9 +6,9 @@ type OrderDeliveryProps = {
     order_number: number; // 주문번호
     order_date: string; //주문일자
 
-    cancel_state?: string | number | undefined; //취소처리상태
+    cancel_state: number; //취소처리상태
 
-    process_state?: number | undefined; //처리상태
+    process_state: number; //처리상태
     order_count: number; // 주문갯수
     order_amount: number; //주문금액
     invoice_number: string; //송장번호
@@ -32,6 +32,7 @@ type DummyData = {
 //     ro
 // }
 
+
 export const dummy: OrderDeliveryProps[] = [
     {
         product: '상품1',
@@ -39,7 +40,7 @@ export const dummy: OrderDeliveryProps[] = [
         sales_type: '객실용품',
         order_number: 124123123,
         order_date: '230513',
-        cancel_state: 1,
+        cancel_state: 0,
         process_state: 1,
         order_count: 1000,
         order_amount: 1000000,
@@ -51,6 +52,7 @@ export const dummy: OrderDeliveryProps[] = [
         sales_type: '객실용품',
         order_number: 124123123,
         order_date: '230513',
+        cancel_state: 0,
         process_state: 2,
         order_count: 1000,
         order_amount: 4000,
@@ -62,6 +64,7 @@ export const dummy: OrderDeliveryProps[] = [
         sales_type: '객실용품',
         order_number: 124123123,
         order_date: '230513',
+        cancel_state: 0,
         process_state: 3,
         order_count: 1000,
         order_amount: 30000,
@@ -96,3 +99,47 @@ export const dummyData: DummyData[] = [
 //         productname: "상품명1",
 //     }
 // ]
+
+export type ModifyData = {
+    id: number,
+    category: string,
+    name: string,
+    regular_price: number,
+    discount_rate: number,
+    sale_price: number,
+    manufacturer: string
+    company: string; // 추가
+    min_quantity: number; // 추가
+    max_quantity: number; // 추가
+    // file?: File | null; // 추가
+    // detailPage?: File | null; // 추가
+}
+
+export const adminModify: ModifyData[] = [
+    {
+        id: 1,
+        category: "객실용품",
+        name: "상품1",
+        regular_price: 10000,
+        discount_rate: 10,
+        sale_price: 9000,
+        manufacturer: "제조사1",
+        company: "회사1",
+        min_quantity: 1,
+        max_quantity: 10,
+
+    },
+    {
+        id: 2,
+        category: "욕실용품",
+        name: "상품2",
+        regular_price: 20000,
+        discount_rate: 20,
+        sale_price: 16000,
+        manufacturer: "제조사2",
+        company: "회사1",
+        min_quantity: 1,
+        max_quantity: 10,
+
+    },
+]

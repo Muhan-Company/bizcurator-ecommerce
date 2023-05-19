@@ -22,7 +22,7 @@ export default function NoticeList({ dataList }: NoticeListProps) {
   const [writeOpenModal, setWriteOpenModal] = useState<boolean>(false);
 
 
-  console.log(dataList);
+  // console.log(dataList);
 
   const listClick = (index: number) => {
     setSelectIndex(selectIndex === index ? null : index);
@@ -54,7 +54,7 @@ export default function NoticeList({ dataList }: NoticeListProps) {
   //토큰값을 임의로 저장해놓았음
   const deleteNoticeMutation = useMutation((id: number) =>
     axiosInstance.delete(`/api/notices/${id}`));
-
+  // console.log(dataList);
 
 
   return (

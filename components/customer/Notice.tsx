@@ -1,56 +1,86 @@
-import React, { FC, Fragment } from "react";
+import React, { FC, useState, Fragment, useMemo } from "react";
 import NoticeList from "./NoticeList";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { atom, useRecoilValue } from "recoil";
+import { useInView } from 'react-intersection-observer'
 import axios from "axios";
 import { lastArticleIdState, sizeState } from "@/atoms/noticeAtom";
 import { NoticePostType } from "@/utils/types/responseType";
 
-
 const Notice: FC<{}> = () => {
-
     const lastArticleId = useRecoilValue(lastArticleIdState);
     const size = useRecoilValue(sizeState);
+    const fetchPreviousPageAsync = async () => {
+        await fetchPreviousPage();
+    };
 
-    const axiosData = async (lastArticleId: number, size: number) => { //서버에서 공지사항을 받는 함수 (매개변수로 2가지를 받음)
-        const path = "http://43.201.195.195:8080";
-        try {
-            const response = await axios.get<{
-                status: string;
-                code: number;
-                message: string;
-                result: {
-                    notices: NoticePostType[];
+    const fetchNextPageAsync = async () => {
+        await fetchNextPage();
+    };
+
+    const { ref, inView } = useInView()
+
+    const path = "http://43.201.195.195:8080";
+    const { data, isFetchingNextPage, isFetchingPreviousPage, fetchNextPage, fetchPreviousPage, hasPreviousPage } =
+        useInfiniteQuery<NoticePostType[], Error>(
+            ["notices"],
+            async ({ pageParam = 0 }) => {
+                if (!pageParam) {
+                    const res = await axios.get(`${path}/api/notices?lastArticleId=999&size=10&firstPage=true`);
+                    return res.data;
                 }
-            }>(
-                `${path}/api/notices?lastArticleId=${lastArticleId}&size=${size}&firstPage=true`
-            );
-            return response.data.result.notices; // 결과값으로 notices 배열을 추출함
-        } catch (error) {
-            throw new Error("fail data");
+
+                const res = await axios.get(`${path}/api/notices?lastArticleId=${pageParam}&size=10&firstPage=false`);
+                console.log(res.data);
+                return res.data;
+            }
+            ,
+            {
+                getNextPageParam: (lastPage) => {
+                    const notices = lastPage?.result?.notices ?? [];
+                    const lastArticleId = notices[notices.length - 1]?.id ?? undefined
+                    return lastArticleId;
+                },
+            }
+        );
+    const pages = useMemo(() => {
+        return data?.pages.flatMap((page) => page.result?.notices ?? []) ?? []; //2차원배열을 1차원배열로 변경해주는거
+    }, [data]);
+
+    console.log(pages);
+
+    React.useEffect(() => {
+        if (inView) {
+            fetchNextPage();
+            console.log(inView);
         }
-    }
-    const { isLoading, isError, data, error } = useQuery<NoticePostType[], Error>(
-        [lastArticleId, size],
-        () => axiosData(lastArticleId, size)
-    );
-    console.log(data);
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-    if (isError) {
-        return <div>Error: {error?.message}</div>
-    }
+    }, [inView]);
 
     return (
         <Fragment>
             <div className="md:absolute md:right-0 md:w-[800px]  md:mt-[88px]">
                 <h3 className="hidden md:inline-block md:text-2xl">공지사항</h3>
-                <span className="hidden md:inline-block md:text-slate-400 md:ml-4">비즈큐레이터의 소식과 정보를 알려드립니다.</span>
-                <NoticeList dataList={data} />
+                <span className="hidden md:inline-block md:text-slate-400 md:ml-4">
+                    비즈큐레이터의 소식과 정보를 알려드립니다.
+                </span>
+                {/* {pages.map((i, index) => ( */}
+                <NoticeList dataList={pages} />
+                {/* ))} */}
+                {/* <button
+                    onClick={() => fetchPreviousPage()}
+                    disabled={!hasPreviousPage || isFetchingPreviousPage}
+                >
+                    {isFetchingPreviousPage
+                        ? "Loading more..."
+                        : hasPreviousPage
+                            ? "Load Older"
+                            : "Nothing more to load"}
+                </button> */}
+                {/* {isFetchingNextPage ? <p>Loading...</p> } */}
+                <div ref={ref}></div>
             </div>
         </Fragment>
-    )
-}
+    );
+};
 
 export default Notice;
