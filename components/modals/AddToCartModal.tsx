@@ -1,10 +1,13 @@
 import Image from 'next/image';
 import Counter from '../cart/Counter';
 import AddCompleteModal from './AddCompleteModal';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { addCompleteModalState } from '@/atoms/modalAtoms';
+import { addToCart } from '@/apis/cartApis';
+import useCustomMutation from '@/apis/mutationAPi';
 
 interface AddToCartProps {
+  id: number;
   name: string;
   main_image_url: string;
   sale_price: number;
@@ -15,8 +18,14 @@ interface AddToCartProps {
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
 }
 
+type Variables = {
+  id: number;
+  quantity: number;
+};
+
 // todo: 클릭한 상품 data 가져와서 적용하기
 export default function AddToCartModal({
+  id,
   name,
   main_image_url,
   sale_price,
@@ -29,7 +38,7 @@ export default function AddToCartModal({
   const originalPrice = (regular_price * quantity).toLocaleString('ko-KR');
   const discountedPrice = (sale_price * quantity).toLocaleString('ko-KR');
 
-  const [showAddCompleteModal, setShowAddCompleteModal] = useRecoilState(addCompleteModalState);
+  const showAddCompleteModal = useRecoilValue(addCompleteModalState);
 
   const closeModal = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -38,9 +47,7 @@ export default function AddToCartModal({
     setQuantity(min_quantity);
   };
 
-  const addToCart = () => {
-    setShowAddCompleteModal(true);
-  };
+  const { mutate, isLoading, isError, isSuccess } = useCustomMutation(() => addToCart(id, quantity));
 
   return (
     <>
@@ -85,7 +92,7 @@ export default function AddToCartModal({
                 취소
               </button>
               {/* todo: 장바구니 담기 API 연결 및 장바구니 담기 성공 모달 연결 */}
-              <button className="btn-primary w-[156px] h-[42px] py-[19px]" onClick={addToCart}>
+              <button className="btn-primary w-[156px] h-[42px] py-[19px]" onClick={mutate}>
                 장바구니 담기
               </button>
             </div>

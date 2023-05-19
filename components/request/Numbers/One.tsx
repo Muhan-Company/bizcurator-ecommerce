@@ -44,36 +44,37 @@ export default function One({ formValues1 }: { formValues1: FormValues1 }) {
           1. {title} <span className="text-red">*</span>
           <p className="font-normal text-body-sm">{description}</p>
         </label>
-
-        <ul
-          ref={dropdownRef}
-          onClick={() => setOpen((prev) => !prev)}
-          className={`z-10 flex flex-col gap-y-2 px-4 py-2 font-medium text-main text-body-sm w-[150px] border-[1px] border-main rounded-lg transition-all duration-300 bg-white ${
-            open ? 'max-h-[435px]' : 'max-h-10 overflow-hidden'
-          }`}
-        >
-          <li className="flex category justify-between last:border-none">
-            {selectedCategory.name}
-            {open ? (
-              <ChevronUpIcon color="#1C1C1C" width="20" height="20" />
-            ) : (
-              <ChevronDownIcon color="#1C1C1C" width="20" height="20" />
-            )}
-          </li>
-          {categories.map((category) => (
-            <li
-              key={category.id}
-              className={`last:border-none category ${
-                category.id === selectedCategory.id && 'text-gray-400 font-bold'
-              }`}
-              onClick={() => {
-                setSelectedCategory(category);
-              }}
-            >
-              {category.name}
+        <section className="relative h-10">
+          <ul
+            ref={dropdownRef}
+            onClick={() => setOpen((prev) => !prev)}
+            className={`absolute z-10 flex flex-col gap-y-2 px-4 py-2 font-medium text-main text-body-sm w-[150px] border-[1px] border-main rounded-lg transition-all duration-150 bg-white ${
+              open ? 'max-h-[435px]' : 'max-h-10 overflow-hidden'
+            }`}
+          >
+            <li className="flex category justify-between last:border-none">
+              {selectedCategory.name}
+              {open ? (
+                <ChevronUpIcon color="#1C1C1C" width="20" height="20" />
+              ) : (
+                <ChevronDownIcon color="#1C1C1C" width="20" height="20" />
+              )}
             </li>
-          ))}
-        </ul>
+            {categories.map((category) => (
+              <li
+                key={category.id}
+                className={`last:border-none category ${
+                  category.id === selectedCategory.id && 'text-gray-400 font-bold'
+                }`}
+                onClick={() => {
+                  setSelectedCategory(category);
+                }}
+              >
+                {category.name}
+              </li>
+            ))}
+          </ul>
+        </section>
 
         <input
           disabled={selectedCategory.name === '카테고리 선택' || selectedCategory.name === '제작목적 선택'}

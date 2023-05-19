@@ -58,6 +58,7 @@ export default function Product({
             sale_price={sale_price}
             regular_price={regular_price}
             min_quantity={min_quantity}
+            id={id}
           />,
           document.body,
         )}
