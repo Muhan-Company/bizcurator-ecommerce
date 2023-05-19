@@ -4,37 +4,22 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { atom, useRecoilState } from "recoil";
 import axios from "axios";
-
-type ProductInfo = {
-    company: string;
-    name: string;
-    regular_price: number;
-    min_quantity: number;
-    max_quantity: number;
-    discount_rate: number;
-    file: File | null;
-    detailPage: File | null;
-}
-type FileUploadProps = {
-    handleFileChange: (file: File) => void;
-};
-
-//Recoil에서 사용할 atom 정의
-const productDataAtom = atom<ProductInfo | null>({
-    key: "productDataAtom",
-    default: null,
-})
+import { ProductInfo, FileUploadProps, DetailPageProps } from "@/utils/type/adminRegister";
+import { productDataAtom } from "@/atoms/adminAtoms";
+import { productToModifyState } from "@/atoms/adminAtoms";
 
 export default function ProductRegister() {
+
     const [productInfo, setProductInfo] = useState<ProductInfo>({
-        company: "",
-        name: "",
-        regular_price: 0,
-        min_quantity: 0,
-        max_quantity: 0,
-        discount_rate: 0,
-        file: null,
-        detailPage: null,
+
+        category_id: 1,
+        manufacturer_name: "1",
+        product_name: "2",
+        regular_price: 1,
+        min_quantity: 2,
+        max_quantity: 3,
+        discount_rate: 5,
+
     })
 
     const [selectedCategory, setSelectedCategory] = useState<string>("")
@@ -42,20 +27,26 @@ export default function ProductRegister() {
 
     // 상품 등록 API 호출을 위한 useMutation 훅 사용
     const mutation = useMutation((newProductInfo: ProductInfo) =>
-        axios.post('http://43.201.195.195:8080/api/admins/products', newProductInfo)
+        axios.post('http://43.201.195.195:8080/api/products', newProductInfo)
     );
 
     const handleSelectCategory = (category: string) => {
         setSelectedCategory(category);
     };
 
-    const onChangeFile = (file: File) => {
-        setProductInfo((prev) => ({ ...prev, file }));
+    const onChangeFile = (file: File, type: string) => {
+        if (type === "file") {
+            setProductInfo((prev) => ({ ...prev, file }));
+        } else if (type === "detailPage") {
+            setProductInfo((prev) => ({ ...prev, detailPage: file }));
+        }
     };
-
     const fileUploadProps: FileUploadProps = {
-        handleFileChange: onChangeFile
-    }
+        handleFileChange: (file) => onChangeFile(file, "file"),
+    };
+    const detailPageProps: DetailPageProps = {
+        handleFileChange: (file) => onChangeFile(file, "detailPage"),
+    };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -87,6 +78,7 @@ export default function ProductRegister() {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         try {
+            console.log(productInfo);
             await mutation.mutateAsync(productInfo);
             console.log("상품등록");
         } catch (error) {
@@ -111,23 +103,7 @@ export default function ProductRegister() {
                         <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={9} name="음료/식품" />
                         <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={10} name="기타" />
                     </div>
-                    <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
-                        <div className="py-[30px] bg-[#fff]">상품 카테고리</div>
-                        <input
-                            name="company"
-                            onChange={handleChange}
-                            className="w-[1440px] block border border-black rounded-md h-10 pl-3"
-                        />
-                    </div>
-                    <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
-                        <div className="py-[30px] bg-[#fff]">상품명</div>
-                        <input
-                            name="name"
-                            onChange={handleChange}
-                            className="w-[1440px] block border border-black rounded-md h-10 pl-3"
-                            placeholder="최대 50글자"
-                        />
-                    </div>
+
                     <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
                         <div className="py-[30px] bg-[#fff] border-b">
                             가격
@@ -176,8 +152,12 @@ export default function ProductRegister() {
                         </div>
                     </div>
                     <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
+                        <div className="py-[30px] bg-[#fff] border-b">
+                            썸네일
+                        </div>
                         <FileUpload {...fileUploadProps} />
                     </div>
+
                     <div className="py-[50px] relative">
                         <button
                             className="absolute right-0 top-0 w-[260px] bg-[#16133A] text-[#fff] h-[61px] rounded-xl

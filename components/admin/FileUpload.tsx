@@ -1,12 +1,18 @@
 import React, { ChangeEvent, useState, useEffect, useCallback, useRef } from "react";
 import Image from 'next/image';
+import { atom, useRecoilState } from "recoil";
+import axios from "axios";
 
 type FileUploadProps = {
     handleFileChange: (file: File) => void;
 };
+const mainImage = atom<string | null>({
+    key: 'mainImage', // key 값을 지정합니다.
+    default: null,
+});
 
 export default function FileUpload({ handleFileChange }: FileUploadProps) {
-    const [fileUrl, setFileUrl] = useState<string | null>(null);
+    const [fileUrl, setFileUrl] = useRecoilState(mainImage);
     const [file, setFile] = useState<File | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -14,16 +20,32 @@ export default function FileUpload({ handleFileChange }: FileUploadProps) {
         if (file) {
             setFileUrl(URL.createObjectURL(file));
         }
-    }, [file]);
+    }, [file, setFileUrl]);
 
     const handleFileUpload = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        const fileList = event.target.files;
-        if (fileList && fileList.length > 0) {
-            const selectedFile = fileList[0];
-            setFile(selectedFile);
-            handleFileChange(selectedFile);
+        if (!event.target.files) {
+            return;
         }
-    }, [setFile, handleFileChange]);
+        const formData = new FormData();
+        formData.append('image', event.target.files[0]);
+
+        axios({
+            baseURL: 'http://43.201.195.195:8080',
+            url: '/api/admins/products',
+            method: 'POST',
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        // console.log(event.target.files[0].name);
+    }, []);
 
     const onUploadImageButtonClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();

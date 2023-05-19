@@ -32,6 +32,7 @@ type DummyData = {
 //     ro
 // }
 
+
 export const dummy: OrderDeliveryProps[] = [
     {
         product: '상품1',
@@ -98,3 +99,47 @@ export const dummyData: DummyData[] = [
 //         productname: "상품명1",
 //     }
 // ]
+
+export type ModifyData = {
+    id: number,
+    category: string,
+    name: string,
+    regular_price: number,
+    discount_rate: number,
+    sale_price: number,
+    manufacturer: string
+    company: string; // 추가
+    min_quantity: number; // 추가
+    max_quantity: number; // 추가
+    file?: File | null; // 추가
+    detailPage?: File | null; // 추가
+}
+
+export const adminModify: ModifyData[] = [
+    {
+        id: 1,
+        category: "객실용품",
+        name: "상품1",
+        regular_price: 10000,
+        discount_rate: 10,
+        sale_price: 9000,
+        manufacturer: "제조사1",
+        company: "회사1",
+        min_quantity: 1,
+        max_quantity: 10,
+
+    },
+    {
+        id: 2,
+        category: "욕실용품",
+        name: "상품2",
+        regular_price: 20000,
+        discount_rate: 20,
+        sale_price: 16000,
+        manufacturer: "제조사2",
+        company: "회사1",
+        min_quantity: 1,
+        max_quantity: 10,
+
+    },
+]
