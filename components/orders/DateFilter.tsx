@@ -1,41 +1,44 @@
-import { useState } from 'react';
+import { selectedDateFilterState } from '@/atoms/selectedDateFilterAtom';
+import { SetterOrUpdater, useRecoilState } from 'recoil';
 
-const PERIOD_RANGE = {
-  // todo: api 요청값 형식에 따라 수정
-  오늘: 0,
-  '1개월': 30,
-  '3개월': 90,
-  '6개월': 120,
-  '1년': 365,
-};
-
+const PERIOD = [
+  { period: '오늘', value: 0 },
+  { period: '1개월', value: 30 },
+  { period: '3개월', value: 30 * 3 },
+  { period: '6개월', value: 30 * 6 },
+  { period: '1년', value: 30 * 12 },
+];
 export default function DateFilter() {
-  const [active, setActive] = useState('3개월');
+  const [active, setActive] = useRecoilState(selectedDateFilterState);
+
   return (
     <div className="pb-4 center gap-2 border-b-[1px] border-gray_02">
-      {Object.keys(PERIOD_RANGE).map((period: string, index: number) => (
-        <DateFilterButton key={index} period={period} active={active} setActive={setActive} />
+      {PERIOD.map((obj, index: number) => (
+        <DateFilterButton key={index} obj={obj} active={active} setActive={setActive} />
       ))}
     </div>
   );
 }
 
 type DateFilterButton = {
-  period: string;
+  obj: {
+    period: string;
+    value: number;
+  };
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
-  active: string;
-  setActive: (active: string) => void;
+  active: number;
+  setActive: SetterOrUpdater<number>;
 };
 
-function DateFilterButton({ period, active, setActive }: DateFilterButton) {
+function DateFilterButton({ obj, active, setActive }: DateFilterButton) {
   return (
     <div
       className={`w-[54px] h-[25px] border-gray_04 box-border ${
-        active === period ? 'btn-primary' : 'btn-white'
+        active === obj.value ? 'btn-primary' : 'btn-white'
       } text-label-sm shadow-[0_0px_20px_0px_rgba(0,0,0,0.02)]`}
-      onClick={(e) => setActive((e.target as HTMLElement).innerText)}
+      onClick={() => setActive(obj.value)}
     >
-      {period}
+      {obj.period}
     </div>
   );
 }

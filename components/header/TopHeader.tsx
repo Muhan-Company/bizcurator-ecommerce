@@ -6,19 +6,14 @@ import LogInModal from '../modals/LogInModal';
 import SearchModal from '../modals/SearchModal';
 import { logInModalState, searchModalState } from '@/atoms/modalAtoms';
 import searchBarState from '@/atoms/seachBarAtom';
+import { useRouter } from 'next/router';
 
 export default function TopHeader() {
   const [showSearchModal, setShowSearchModal] = useRecoilState(searchModalState);
   const [showLogInModal, setShowLogInModal] = useRecoilState(logInModalState);
   const setShowSearchBar = useSetRecoilState(searchBarState);
 
-  const isMobileScreen = () => {
-    if (typeof window !== 'undefined') {
-      const screenWidth = window.innerWidth;
-      return screenWidth >= 375 && screenWidth <= 430;
-    }
-    return false; // Default to false if window is undefined (e.g., server-side rendering)
-  };
+  const router = useRouter();
 
   const openLogInModal = () => {
     setShowLogInModal(true);
@@ -26,7 +21,7 @@ export default function TopHeader() {
   };
 
   const showSearch = () => {
-    if (isMobileScreen()) {
+    if (router.asPath.includes('/products/categories')) {
       setShowSearchBar((prev) => !prev);
     } else {
       setShowSearchModal(true);
@@ -35,7 +30,7 @@ export default function TopHeader() {
   };
 
   return (
-    <header className="px-6 flex justify-between items-center z-10 bg-white pt-2 lg:pt-5 lg:px-24 xl:px-48 top-0 sticky">
+    <header className="px-6 flex justify-between items-center z-20 bg-white pt-2 lg:pt-5 lg:px-24 xl:px-48 top-0 sticky">
       <Link href={'/'} className="flex items-center">
         <h1 className="text-[20px] lg:text-head-xl font-bold">BIZ CURATOR</h1>
         <LogoIcon />
