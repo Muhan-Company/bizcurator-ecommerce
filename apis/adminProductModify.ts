@@ -1,7 +1,7 @@
 import axiosInstance from "./config";
 import { useQuery } from "@tanstack/react-query";
 
-type ProductInfo = {
+export type ProductInfo = {
     category_id: number;
     manufacturer_name: string;
     product_name: string;
@@ -11,13 +11,13 @@ type ProductInfo = {
     max_quantity: number;
 }
 
-
+export interface ProductProps {
+    list: ProductInfo[];
+}
 
 const getCancelRefundDetail = async () => {
     try {
         const { data } = await axiosInstance.get(`/api/admins/products`);
-        console.log(data);
-
         return data.result as
             {
                 products: ProductInfo[]

@@ -9,17 +9,18 @@ import { productDataAtom } from "@/atoms/adminAtoms";
 import { productToModifyState } from "@/atoms/adminAtoms";
 
 export default function ProductRegister() {
+    const [productToModify, setProductToModify] = useRecoilState(productToModifyState);
 
     const [productInfo, setProductInfo] = useState<ProductInfo>({
-
-        category_id: 1,
-        manufacturer_name: "1",
-        product_name: "2",
-        regular_price: 1,
-        min_quantity: 2,
-        max_quantity: 3,
-        discount_rate: 5,
-
+        category_id: 0,
+        manufacturer_name: "",
+        product_name: "",
+        regular_price: 0,
+        discount_rate: 0,
+        min_quantity: 0,
+        max_quantity: 0,
+        mainImage: null,
+        detailImage: null,
     })
 
     const [selectedCategory, setSelectedCategory] = useState<string>("")
@@ -35,17 +36,21 @@ export default function ProductRegister() {
     };
 
     const onChangeFile = (file: File, type: string) => {
-        if (type === "file") {
+        if (!file) {
+            return;
+        }
+
+        if (type === "mainImage") {
             setProductInfo((prev) => ({ ...prev, file }));
-        } else if (type === "detailPage") {
+        } else if (type === "detailImage") {
             setProductInfo((prev) => ({ ...prev, detailPage: file }));
         }
     };
     const fileUploadProps: FileUploadProps = {
-        handleFileChange: (file) => onChangeFile(file, "file"),
+        handleFileChange: (file) => onChangeFile(file, "mainImage"),
     };
     const detailPageProps: DetailPageProps = {
-        handleFileChange: (file) => onChangeFile(file, "detailPage"),
+        handleFileChange: (file) => onChangeFile(file, "detailImage"),
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -79,6 +84,11 @@ export default function ProductRegister() {
         e.preventDefault();
         try {
             console.log(productInfo);
+            console.log("여기서 에러");
+            const formData = new FormData();
+            formData.append("productRequest", JSON.stringify(productInfo)); // 수정: productRequest key를 가지는 JSON 데이터 추가
+            formData.append("mainImage", mainImage); // 수정: mainImage 파일 추가
+            formData.append("detailImage", detailImage); // 수정: detailImage 파일 추가
             await mutation.mutateAsync(productInfo);
             console.log("상품등록");
         } catch (error) {
@@ -103,7 +113,23 @@ export default function ProductRegister() {
                         <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={9} name="음료/식품" />
                         <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={10} name="기타" />
                     </div>
-
+                    <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
+                        <div className="py-[30px] bg-[#fff]">제조사 명</div>
+                        <input
+                            name="manufacturer_name"
+                            onChange={handleChange}
+                            className="w-[1440px] block border border-black rounded-md h-10 pl-3 mb-3"
+                        />
+                    </div>
+                    <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
+                        <div className="py-[30px] bg-[#fff]">상품명</div>
+                        <input
+                            name="product_name"
+                            onChange={handleChange}
+                            className="w-[1440px] block border border-black rounded-md h-10 pl-3 mb-3"
+                            placeholder="최대 50글자"
+                        />
+                    </div>
                     <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
                         <div className="py-[30px] bg-[#fff] border-b">
                             가격
@@ -155,9 +181,14 @@ export default function ProductRegister() {
                         <div className="py-[30px] bg-[#fff] border-b">
                             썸네일
                         </div>
-                        <FileUpload {...fileUploadProps} />
+                        <FileUpload {...fileUploadProps} handleFileChange={onChangeFile} />
                     </div>
-
+                    <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
+                        <div className="py-[30px] bg-[#fff] border-b">
+                            상세페이지
+                        </div>
+                        <FileUpload {...detailPageProps} handleFileChange={onChangeFile} />
+                    </div>
                     <div className="py-[50px] relative">
                         <button
                             className="absolute right-0 top-0 w-[260px] bg-[#16133A] text-[#fff] h-[61px] rounded-xl

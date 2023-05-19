@@ -2,32 +2,18 @@ import { useQuery } from '@tanstack/react-query';
 import { atom, useRecoilState } from 'recoil';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { useGetOrderCancelDetail, OrderCancelItemProps } from '@/apis/adminOrderCancel';
 
 // Recoil atom 정의
 const selectedItemsState = atom<any[]>({
     key: 'selectedItemsState',
     default: [] // 선택된 항목을 저장하는 배열
 });
-type Item = {
-    product: string;
-    salesCompany: string;
-    sales_type: string;
-    order_number: string;
-    order_date: string;
-    cancel_state: string;
-    order_count: number;
-    order_amount: number;
-    cancel_reason: string;
-}
-export default function OrderCancel() {
+export default function OrderCancel({ list }: OrderCancelItemProps) {
+    console.log(list);
+    const { data, isLoading, error } = useGetOrderCancelDetail();
 
-    const test = async () => {
-        return await axios.get('http://43.201.195.195:8080/api/admins/applications/cancellations')
-    }
-
-    const { data, isLoading } = useQuery(["cancelTest"], test);
-    console.log(data)
-
+    console.log(data);
     // React Query의 useQuery 훅을 사용하여 데이터를 가져옴
 
     // Recoil 상태와 업데이트 함수 가져오기
@@ -42,7 +28,13 @@ export default function OrderCancel() {
         // 필요에 따라 실제 취소 처리 상태 문자열로 변환해주세요.
         return cancelState;
     };
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
+    if (error) {
+        return <div>Error: </div>;
+    }
     // 주문 취소 정보 컴포넌트
     const OrderCanceInfo: React.FC<{ value: string | number }> = ({ value }) => (
         <td className="px-5 py-5 border-r">{value}</td>
@@ -69,7 +61,6 @@ export default function OrderCancel() {
                             </tr>
                         </thead>
                         <tbody>
-
                             <tr className="border text-center h-20">
                                 <td>
                                     <input

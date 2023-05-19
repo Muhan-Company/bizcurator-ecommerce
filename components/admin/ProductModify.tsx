@@ -1,47 +1,71 @@
 import AdminSearch from "./AdminSearch";
 import { useState } from "react";
-import { atom, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { selectedProductState, productToModifyState } from "@/atoms/adminAtoms";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import axiosInstance from "@/apis/config";
-import { useGetCancelRefundDetail } from "@/apis/test";
+import { useGetCancelRefundDetail, ProductInfo, ProductProps } from "@/apis/adminProductModify";
 
-type ProductInfo = {
-    category_id: number;
-    manufacturer_name: string;
-    product_name: string;
-    regular_price: number;
-    discount_rate: number;
-    min_quantity: number;
-    max_quantity: number;
-}
 
-interface ProductProps {
-    list: ProductInfo[];
-}
 
 export default function ProductModify({ list }: ProductProps) {
-
-
+    const [radioCheck, setRadioCheck] = useState<number | null>(null); //체크한 물품의 id를 저장하는상태
     const { data, isLoading, error } = useGetCancelRefundDetail();
+    const [selectedProductId, setSelectedProductId] = useRecoilState(selectedProductState);
+    const [, setProductToModify] = useRecoilState(productToModifyState);
+
+    const handleRadioChange = (id: number) => {
+        setSelectedProductId(id);
+        // setProductToModify(selectedProduct);
+
+        const selectedProduct = data?.products.find((product: ProductInfo) => product.category_id === id);
+        console.log(selectedProduct);
+        if (selectedProduct) {
+            setProductToModify(selectedProduct);
+            console.log(selectedProduct);
+        }
+
+        setRadioCheck(id);
+    };
+
+
+
+    const handleModifyButtonClick = () => {
+        console.log("123");
+        if (radioCheck !== null) {
+            const selectedProduct = list.find(item => item.category_id === radioCheck);
+            if (selectedProduct) {
+                // 선택한 물품 정보를 API로 전송하는 로직을 작성합니다.
+                // axios 또는 fetch 등을 사용하여 API 호출을 수행할 수 있습니다.
+                axios.post("/api/product/modify", selectedProduct)
+                    .then(response => {
+                        console.log("API response:", response.data);
+                        // 필요한 처리를 수행합니다.
+                    })
+                    .catch(error => {
+                        console.error("API error:", error);
+                        // 에러 처리를 수행합니다.
+                    });
+            }
+        }
+    };
     console.log(data);
     if (isLoading) {
         return <div>Loading...</div>;
     }
-    console.log(list);
 
     if (error) {
         return <div>Error: </div>;
     }
 
+
     return (
         <>
             <AdminSearch />
-            <div className="w-[1500px] mx-[60px] mt-[15px] bg-white">
-                <div className="w-[1300px] mx-auto">
+            <div className="w-[1500px] mx-[60px] my-[15px] bg-white">
+                <div className="w-[1300px] mx-auto py-[15px]">
                     <div>
-                        <button
+                        <button type="button"
+                            onClick={handleModifyButtonClick}
                             className="w-[140px] h-[40px] border mt-10"
                         >물품 수정
                         </button>
@@ -56,10 +80,22 @@ export default function ProductModify({ list }: ProductProps) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data?.products?.map((i: ProductInfo) => ( //값이 없는경우
-                                    <div key={i.category_id}>
-                                        <span>{i.discount_rate}</span>
-                                    </div>
+                                {data?.products?.map((i: ProductInfo, index) => ( //값이 없는경우
+                                    <tr key={index}>
+                                        <td className="py-3 border">
+                                            <input
+                                                className="border"
+                                                type="radio"
+                                                name="productRadio"
+                                                checked={radioCheck === i.category_id}
+                                                onChange={() => handleRadioChange(i.category_id)}
+                                            />
+                                        </td>
+                                        <ProductModifyInfo value={i.product_name} />
+                                        <ProductModifyInfo value={i.manufacturer_name} />
+                                        <ProductModifyInfo value={i.regular_price} />
+                                        <ProductModifyInfo value={i.discount_rate} />
+                                    </tr>
                                 ))}
                             </tbody>
                         </table>

@@ -10,7 +10,7 @@ export default function OrderCancel() {
             <div className="ml-80 w-[1600px]">
                 <AdminHeader />
                 <SearchForm />
-                <AdminOrderCancel />
+                <AdminOrderCancel list={[]} />
             </div>
         </div>
     )
