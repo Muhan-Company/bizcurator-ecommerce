@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { EyeOffIcon, EyeOnIcon } from '../Icons';
 import { FieldError, Path, UseFormRegister, ValidationRule } from 'react-hook-form';
-import { UsersFormValues } from './type';
+import { LoginFormValues } from './types';
 
 interface LabeledInput {
-  label: Path<UsersFormValues>;
+  label: Path<LoginFormValues>;
   title: string;
   required?: string | ValidationRule<boolean>;
   placeholder: string;
   children?: React.ReactNode;
   inputProps?: object;
-  register: UseFormRegister<UsersFormValues>;
+  register: UseFormRegister<LoginFormValues>;
   invalid?: FieldError;
   errorMessage?: string;
   pattern?: ValidationRule<RegExp>;
