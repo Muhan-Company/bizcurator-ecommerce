@@ -1,3 +1,5 @@
+import LoginForm from '../users/LoginForm';
+
 export default function LogInModal({
   setShowLogInModal,
 }: {
@@ -10,7 +12,9 @@ export default function LogInModal({
 
   return (
     <div>
-      <div className="modal-contents w-[350px] h-[426px] modal-box-shadow"></div>
+      <div className="modal-contents w-[350px] modal-box-shadow">
+        <LoginForm />
+      </div>
       <div onClick={closeModal} className="modal-overlay"></div>
     </div>
   );
