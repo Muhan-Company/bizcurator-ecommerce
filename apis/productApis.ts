@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import axiosInstance from './config';
 
-const getProductInfo = (productId: string) => axiosInstance.get(`/api/products/${productId}`).then((res) => res.data);
+const getProductInfo = (product_id: string) => axiosInstance.get(`/api/products/${product_id}`).then((res) => res.data);
 
-const useProductInfo = (productId: string) => {
+const useProductInfo = (product_id: string) => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['products', productId],
-    queryFn: () => getProductInfo(productId),
+    queryKey: ['products', product_id],
+    queryFn: () => getProductInfo(product_id),
   });
 
   return { productInfo: data?.result.productDetail, isLoading, error };

@@ -4,11 +4,15 @@ import AddCompleteModal from './AddCompleteModal';
 import { useRecoilValue } from 'recoil';
 import { addCompleteModalState } from '@/atoms/modalAtoms';
 import { addToCart } from '@/apis/cartApis';
-import useCustomMutation from '@/apis/mutationAPi';
+import { AxiosResponse } from 'axios';
+import { AddToCartVariables } from '../products/Purchase';
+import useInvalidation from '@/hooks/useInvalidation';
+import useCustomMutation from '@/hooks/useCustomMutation';
+import useAddCompleteModal from '@/hooks/useAddCompleteModal';
 
 interface AddToCartProps {
   id: number;
-  name: string;
+  product_name: string;
   main_image_url: string;
   sale_price: number;
   regular_price: number;
@@ -18,15 +22,10 @@ interface AddToCartProps {
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
 }
 
-type Variables = {
-  id: number;
-  quantity: number;
-};
-
 // todo: 클릭한 상품 data 가져와서 적용하기
 export default function AddToCartModal({
   id,
-  name,
+  product_name,
   main_image_url,
   sale_price,
   regular_price,
@@ -47,7 +46,15 @@ export default function AddToCartModal({
     setQuantity(min_quantity);
   };
 
-  const { mutate, isLoading, isError, isSuccess } = useCustomMutation(() => addToCart(id, quantity));
+  const invalidateQueries = useInvalidation();
+  const showModal = useAddCompleteModal();
+
+  const handleSuccess = () => {
+    showModal();
+    invalidateQueries(['carts']);
+  };
+
+  const { mutate, isLoading, isError } = useCustomMutation<AxiosResponse, AddToCartVariables>(addToCart, handleSuccess);
 
   return (
     <>
@@ -70,12 +77,12 @@ export default function AddToCartModal({
               />
               {/* 상품 정보 */}
               <div>
-                <h3 className="font-normal">{name}</h3>
+                <h3 className="font-normal">{product_name}</h3>
                 <span className="font-bold">{sale_price.toLocaleString('ko-KR')}원</span>
               </div>
             </div>
             {/* 수량 계산 */}
-            <div className="w-full mb-10 px-2 py-[15px] flex items-center justify-between bg-gray_03">
+            <div className="w-full mb-5 px-2 py-[15px] flex items-center justify-between bg-gray_03">
               <Counter min_quantity={min_quantity} quantity={quantity} setQuantity={setQuantity} />
               <h4 className="font-medium text-main text-body-sm">총 금액</h4>
               <div className="flex flex-col text-end">
@@ -86,14 +93,20 @@ export default function AddToCartModal({
               </div>
             </div>
 
+            <p className="text-red text-sm font-bold h-5">{isError && '장바구니 담기 실패'}</p>
+            {/* <p className="text-red text-sm font-bold"></p> */}
             <div className="center gap-2 py-6">
               {/* todo: 모달 닫기 기능 연결 */}
               <button className="btn-white w-[156px] h-[42px] py-[19px]" onClick={closeModal}>
                 취소
               </button>
               {/* todo: 장바구니 담기 API 연결 및 장바구니 담기 성공 모달 연결 */}
-              <button className="btn-primary w-[156px] h-[42px] py-[19px]" onClick={mutate}>
-                장바구니 담기
+              <button
+                disabled={isLoading}
+                className="btn-primary w-[156px] h-[42px] py-[19px] disabled:opacity-50 disabled:cursor-pointer"
+                onClick={() => mutate({ product_id: id, quantity })}
+              >
+                {isLoading ? '장바구니 담는 중...' : '장바구니 담기'}
               </button>
             </div>
           </div>

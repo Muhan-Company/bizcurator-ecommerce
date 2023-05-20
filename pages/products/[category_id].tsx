@@ -11,13 +11,13 @@ import { useRouter } from 'next/router';
 export default function Item() {
   const { query } = useRouter();
 
-  const productId = query.itemId;
+  const id = query.itemId;
 
-  const { productInfo, isLoading, error } = useProductInfo(productId as string);
+  const { productInfo, isLoading, error } = useProductInfo(id as string);
 
   if (isLoading) return <Loader />;
 
-  if (error) return <p className="text-center leading-[100vh]">Something went wrong.</p>;
+  if (error) return <p className="text-center leading-[100vh] text-red font-bold text-lg">상품 상세 정보 조회 실패</p>;
 
   return (
     <>
@@ -25,7 +25,7 @@ export default function Item() {
       <DownHeader />
       <ProductCarousel {...productInfo} />
       <ProductInfo {...productInfo} />
-      <Purchase {...productInfo} />
+      <Purchase {...productInfo} id={Number(id)} />
       <Footer />
     </>
   );

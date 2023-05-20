@@ -9,7 +9,7 @@ import { Trending } from '@/pages';
 export default function Product({
   id,
   category_id,
-  name,
+  product_name,
   main_image_url,
   regular_price,
   sale_price,
@@ -41,7 +41,7 @@ export default function Product({
       </div>
 
       <div className="space-y-1">
-        <h3 className="font-medium text-title-xs lg:text-title-md text-main">{name}</h3>
+        <h3 className="font-medium text-title-xs lg:text-title-md text-main">{product_name}</h3>
         <h3 className="font-noraml text-title-xs lg:text-title-md text-main">
           {sale_price?.toLocaleString('ko-KR')}원
         </h3>
@@ -53,7 +53,7 @@ export default function Product({
             setShowAddToCartModal={setShowAddToCartModal}
             quantity={quantity}
             setQuantity={setQuantity}
-            name={name}
+            product_name={product_name}
             main_image_url={main_image_url}
             sale_price={sale_price}
             regular_price={regular_price}

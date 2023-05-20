@@ -1,17 +1,28 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import Counter from '../cart/Counter';
 import { ChevronDown } from '../Icons';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { addCompleteModalState, buyCompleteModalState } from '@/atoms/modalAtoms';
-import { createPortal } from 'react-dom';
 import AddCompleteModal from '../modals/AddCompleteModal';
 import BuyCompleteModal from '../modals/BuyCompleteModal';
 import { Trending } from '@/pages';
+import { addToCart } from '@/apis/cartApis';
+import { AxiosResponse } from 'axios';
+import useInvalidation from '@/hooks/useInvalidation';
+import useCustomMutation from '@/hooks/useCustomMutation';
+import useToast from '@/hooks/useToast';
+import useAddCompleteModal from '@/hooks/useAddCompleteModal';
 
-export default function Purchase({ name, min_quantity, regular_price, sale_price }: Trending) {
+export interface AddToCartVariables {
+  product_id: number;
+  quantity: number;
+}
+
+export default function Purchase({ product_name, id, min_quantity, regular_price, sale_price }: Trending) {
   const [quantity, setQuantity] = useState<number>(min_quantity);
   const [open, setOpen] = useState<boolean>(false);
-  const [showAddCompleteModal, setShowAddCompleteModal] = useRecoilState(addCompleteModalState);
+  const showAddCompleteModal = useRecoilValue(addCompleteModalState);
   const [showBuyCompleteModal, setShowBuyCompleteModal] = useRecoilState(buyCompleteModalState);
 
   const closeAccordion = () => {
@@ -19,14 +30,33 @@ export default function Purchase({ name, min_quantity, regular_price, sale_price
     setQuantity(min_quantity);
   };
 
-  const addToCart = () => {
-    setShowAddCompleteModal(true);
-    document.body.classList.add('modal-open');
+  const invalidateQueries = useInvalidation();
+  const showModal = useAddCompleteModal();
+
+  const handleSuccess = () => {
+    showModal();
+    invalidateQueries(['cart']);
   };
 
-  const handleClick = () => {
+  const handleError = () => {
+    showToast('장바구니 담기 실패', true);
+  };
+
+  const { mutate, isLoading } = useCustomMutation<AxiosResponse, AddToCartVariables>(
+    addToCart,
+    handleSuccess,
+    handleError,
+  );
+  const showToast = useToast();
+
+  const handleAddToCart = () => {
+    const variables = {
+      product_id: id,
+      quantity,
+    };
+
     if (open) {
-      addToCart();
+      mutate(variables);
     } else {
       setOpen(true);
     }
@@ -51,10 +81,10 @@ export default function Purchase({ name, min_quantity, regular_price, sale_price
         </div>
 
         <div className="px-3">
-          <h3 className="px-[9px] font-normal text-title-xs">{name}</h3>
+          <h3 className="px-[9px] font-normal text-title-xs">{product_name}</h3>
 
           <div className="px-2 py-[15px] center-between bg-gray_03">
-            <Counter min={min_quantity} quantity={quantity} setQuantity={setQuantity} />
+            <Counter min_quantity={min_quantity} quantity={quantity} setQuantity={setQuantity} />
             <h4 className="font-medium text-main text-body-sm">총 금액</h4>
             <div className="flex flex-col text-end">
               <span className="font-bold text-main text-label-md">
@@ -70,8 +100,12 @@ export default function Purchase({ name, min_quantity, regular_price, sale_price
 
       <div className="py-2 space-y-6">
         <div className="center gap-x-2">
-          <button onClick={handleClick} className="btn-white w-[172px] h-[42px] py-[19px]">
-            장바구니
+          <button
+            onClick={handleAddToCart}
+            disabled={isLoading}
+            className="disabled:opacity-50 disabled:cursor-not-allowed btn-white w-[172px] h-[42px] py-[19px]"
+          >
+            {isLoading ? '장바구니 담는 중...' : '장바구니'}
           </button>
 
           <button onClick={buyItem} className="btn-primary w-[172px] h-[42px] py-[19px]">

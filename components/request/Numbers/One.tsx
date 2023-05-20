@@ -48,7 +48,7 @@ export default function One({ formValues1 }: { formValues1: FormValues1 }) {
           <ul
             ref={dropdownRef}
             onClick={() => setOpen((prev) => !prev)}
-            className={`absolute z-10 flex flex-col gap-y-2 px-4 py-2 font-medium text-main text-body-sm w-[150px] border-[1px] border-main rounded-lg transition-all duration-150 bg-white ${
+            className={`absolute z-10 flex flex-col gap-y-2 px-4 py-2 font-medium text-main text-body-sm w-[150px] border-[1px] border-main rounded-lg transition-all duration-100 bg-white ${
               open ? 'max-h-[435px]' : 'max-h-10 overflow-hidden'
             }`}
           >

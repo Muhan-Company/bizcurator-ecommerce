@@ -14,7 +14,7 @@ import { getMonthlyTrending, getWeeklyTrending } from '@/apis/trendingApi';
 export interface Trending {
   id: number;
   category_id: number;
-  name: string;
+  product_name: string;
   main_image_url: string;
   detail_image_url?: string;
   regular_price: number;

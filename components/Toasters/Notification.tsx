@@ -3,9 +3,7 @@ import { Toaster } from 'react-hot-toast';
 export default function Notification() {
   return (
     <Toaster
-      containerStyle={{
-        top: 500,
-      }}
+      position="top-center"
       toastOptions={{
         duration: 3000,
         style: {
@@ -17,6 +15,9 @@ export default function Notification() {
           color: '#1C1C1C',
           fontWeight: '400',
           fontSize: '16px',
+        },
+        error: {
+          style: { color: '#D30B0B' },
         },
       }}
     />

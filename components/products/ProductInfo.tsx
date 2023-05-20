@@ -1,6 +1,6 @@
 import { Trending } from '@/pages';
 
-export default function ProductInfo({ product_name, regular_price, sale_price, min_quantity }: any) {
+export default function ProductInfo({ product_name, regular_price, sale_price, min_quantity }: Trending) {
   return (
     <div className="px-3 mt-6 space-y-4 mb-10">
       <section>
