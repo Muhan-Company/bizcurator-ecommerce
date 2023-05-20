@@ -8,7 +8,7 @@ import BuyCompleteModal from '../modals/BuyCompleteModal';
 import { Trending } from '@/pages';
 import { addToCart } from '@/apis/cartApis';
 import { AxiosResponse } from 'axios';
-import useInvalidation from '@/hooks/useInvalidation';
+import useInvalidation from '@/hooks/useInvalidateQueries';
 import useCustomMutation from '@/hooks/useCustomMutation';
 import useAddCompleteModal from '@/hooks/useAddCompleteModal';
 import useToast from '@/hooks/useToast';
@@ -32,6 +32,7 @@ export default function Purchase({ product_name, id, min_quantity, regular_price
 
   const invalidateQueries = useInvalidation();
   const showModal = useAddCompleteModal();
+  const showToast = useToast();
 
   const handleSuccess = () => {
     showModal();
@@ -47,7 +48,6 @@ export default function Purchase({ product_name, id, min_quantity, regular_price
     handleSuccess,
     handleError,
   );
-  const showToast = useToast();
 
   const handleAddToCart = () => {
     const variables = {

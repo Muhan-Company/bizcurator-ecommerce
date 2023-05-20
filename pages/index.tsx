@@ -15,17 +15,6 @@ export interface Trending {
   category_id: number;
   product_name: string;
   main_image_url: string;
-  detail_image_url?: string;
-  regular_price: number;
-  sale_price: number;
-  min_quantity: number;
-}
-
-export interface Trending {
-  id: number;
-  category_id: number;
-  product_name: string;
-  main_image_url: string;
   regular_price: number;
   sale_price: number;
   min_quantity: number;

@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 
-const useInvalidation = () => {
+const useInvalidateQueries = () => {
   const queryClient = useQueryClient();
 
   const invalidateQueries = (queryKey: string[]) => {
@@ -10,4 +10,4 @@ const useInvalidation = () => {
   return invalidateQueries;
 };
 
-export default useInvalidation;
+export default useInvalidateQueries;
