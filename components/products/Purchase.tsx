@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { createPortal } from 'react-dom';
 import Counter from '../cart/Counter';
 import { ChevronDown } from '../Icons';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { addCompleteModalState, buyCompleteModalState } from '@/atoms/modalAtoms';
+import { createPortal } from 'react-dom';
 import AddCompleteModal from '../modals/AddCompleteModal';
 import BuyCompleteModal from '../modals/BuyCompleteModal';
 import { Trending } from '@/pages';
@@ -13,6 +12,7 @@ import useInvalidation from '@/hooks/useInvalidation';
 import useCustomMutation from '@/hooks/useCustomMutation';
 import useAddCompleteModal from '@/hooks/useAddCompleteModal';
 import useToast from '@/hooks/useToast';
+import { addCompleteModalState, buyCompleteModalState } from '@/atoms/modalAtoms';
 
 export interface AddToCartVariables {
   product_id: number;

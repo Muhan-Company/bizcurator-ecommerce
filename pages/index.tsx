@@ -3,7 +3,6 @@ import PromoBanner from '@/components/home/PromoBanner';
 import ProductCategoryList from '@/components/home/ProductCategoryList';
 import WeeklyTrending from '@/components/home/WeeklyTrending';
 import MonthlyTrending from '@/components/home/MonthlyTrending';
-import Recommendation from '@/components/home/Recommendation';
 import NavBar from '@/components/footer/NavBar';
 import RequestBanner from '@/components/home/RequestBanner';
 import DownHeader from '@/components/header/DownHeader';
@@ -17,6 +16,16 @@ export interface Trending {
   product_name: string;
   main_image_url: string;
   detail_image_url?: string;
+  regular_price: number;
+  sale_price: number;
+  min_quantity: number;
+}
+
+export interface Trending {
+  id: number;
+  category_id: number;
+  product_name: string;
+  main_image_url: string;
   regular_price: number;
   sale_price: number;
   min_quantity: number;
@@ -37,7 +46,6 @@ export default function Home({ weeklyTrending, monthlyTrending }: TrendingProps)
         <PromoBanner />
         <WeeklyTrending weeklyTrending={weeklyTrending} />
         <MonthlyTrending monthlyTrending={monthlyTrending} />
-        <Recommendation />
         <RequestBanner />
         <Footer />
         <NavBar />
