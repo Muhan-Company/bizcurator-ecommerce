@@ -1,4 +1,5 @@
-import searchBarState from '@/atoms/seachBarAtom';
+import { useRecoilValue } from 'recoil';
+import searchBarState from '@/atoms/searchBarAtom';
 import Footer from '@/components/footer/Footer';
 import NavBar from '@/components/footer/NavBar';
 import DownHeader from '@/components/header/DownHeader';
@@ -7,7 +8,6 @@ import CategoryFilter from '@/components/products/CategoryFilter';
 import ProductList from '@/components/products/ProductList';
 import SearchBar from '@/components/products/SearchBar';
 import Sort from '@/components/products/Sort';
-import { useRecoilValue } from 'recoil';
 
 export default function Products() {
   const showSearchBar = useRecoilValue(searchBarState);
