@@ -1,19 +1,18 @@
 import { useState } from 'react';
 import { EyeOffIcon, EyeOnIcon } from '../Icons';
-import { FieldError, Path, UseFormRegister, ValidationRule } from 'react-hook-form';
-import { LoginFormValues } from './types';
+import { FieldError, ValidationRule } from 'react-hook-form';
 
 interface LabeledInput {
-  label: Path<LoginFormValues>;
+  label: string;
   title: string;
   required?: string | ValidationRule<boolean>;
   placeholder: string;
   children?: React.ReactNode;
   inputProps?: object;
-  register: UseFormRegister<LoginFormValues>;
   invalid?: FieldError;
   errorMessage?: string;
   pattern?: ValidationRule<RegExp>;
+  multiple?: boolean;
 }
 
 export default function LabeledInput({
@@ -23,18 +22,19 @@ export default function LabeledInput({
   placeholder,
   children,
   inputProps,
-  register,
   invalid,
   errorMessage,
-  pattern,
+  multiple,
 }: LabeledInput) {
   const [isShowPW, setIsShowPW] = useState(false);
 
   return (
     <div className="flex flex-col mt-6">
-      <label htmlFor={label} className="pb-[10px] text-title-xs font-bold">
+      <label
+        htmlFor={label}
+        className={`pb-[10px] text-title-xs font-bold ${required && "after:content-['*'] after:ml-0.5 after:text-red"}`}
+      >
         {title}
-        {required && <span className="text-red">*</span>}
       </label>
       {title !== '비밀번호' ? (
         <input
@@ -43,7 +43,7 @@ export default function LabeledInput({
           placeholder={placeholder}
           className={`input ${invalid && 'border-red'}`}
           {...inputProps}
-          {...register(label, { required, pattern })}
+          multiple={multiple}
         />
       ) : (
         <div className="relative center-between">
@@ -53,10 +53,14 @@ export default function LabeledInput({
             placeholder={placeholder}
             className={`input relative ${invalid && 'border-red'}`}
             {...inputProps}
-            {...register(label, { required, pattern })}
+            multiple={multiple}
           />
           <div className="absolute right-8 cursor-pointer" onClick={() => setIsShowPW(!isShowPW)}>
-            {isShowPW ? <EyeOnIcon width="20" height="20" /> : <EyeOffIcon width="20" height="20" />}
+            {isShowPW ? (
+              <EyeOnIcon width="20" height="20" color={invalid && '#D30B0B'} />
+            ) : (
+              <EyeOffIcon width="20" height="20" color={invalid && '#D30B0B'} />
+            )}
           </div>
         </div>
       )}
