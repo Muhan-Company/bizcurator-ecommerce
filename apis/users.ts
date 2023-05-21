@@ -1,3 +1,4 @@
+import { SignupFormValues } from '@/components/users/types';
 import axiosInstance from './config';
 
 interface LoginData {
@@ -46,5 +47,19 @@ export const postRefreshToken = async (token: string) => {
   } catch (error) {
     console.log(error);
     return error;
+  }
+};
+
+// 회원가입 API
+export const postSignup = async (formData: SignupFormValues) => {
+  try {
+    const { data } = await axiosInstance.post('/api/users/signup', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log(data);
+  } catch (error) {
+    console.log(error);
   }
 };
