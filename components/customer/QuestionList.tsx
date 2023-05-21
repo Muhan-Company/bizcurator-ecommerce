@@ -13,8 +13,8 @@ interface ItemListProps {
 export default function QuestionList({ item }: ItemListProps) {
     return (
         <div>
-            {item?.map(item => (
-                <div key={item.id}>
+            {item?.map((item, index) => (
+                <div key={index}>
                     <span>{item.title}</span>
                     <span>{item.content}</span>
                     <span>{item.date}</span>

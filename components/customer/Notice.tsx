@@ -4,8 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { atom, useRecoilValue } from "recoil";
 import { useInView } from 'react-intersection-observer'
 import axios from "axios";
-// import { lastArticleIdState, sizeState } from "@/atoms/noticeAtom";
-import { lastArticleIdState, sizeState } from "@/atoms/notice";
+import { lastArticleIdState, sizeState } from "@/atoms/noticeAtom";
 import { NoticePostType } from "@/utils/types/responseType";
 
 const Notice: FC<{}> = () => {

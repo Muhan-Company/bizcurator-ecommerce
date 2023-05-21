@@ -20,4 +20,9 @@ const buyCompleteModalState = atom<boolean>({
   default: false,
 });
 
-export { logInModalState, searchModalState, addCompleteModalState, buyCompleteModalState };
+const ConfirmModalState = atom<boolean>({
+  key: 'ConfirmModalState',
+  default: false,
+})
+
+export { logInModalState, searchModalState, addCompleteModalState, buyCompleteModalState, ConfirmModalState };
