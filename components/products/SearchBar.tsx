@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { CloseIcon } from '../Icons';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
-import searchBarState from '@/atoms/seachBarAtom';
+import searchBarState from '@/atoms/searchBarAtom';
 
 export default function SearchBar() {
   const [query, setQuery] = useState<string>('');
