@@ -12,7 +12,7 @@ export default function SearchModal({
   const router = useRouter();
   const search = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/products/search?q=${encodeURIComponent(query)}`);
+    router.push(`/results?search_query=${encodeURIComponent(query)}&sort=newest`);
   };
 
   const closeModal = () => {

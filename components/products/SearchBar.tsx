@@ -11,7 +11,7 @@ export default function SearchBar() {
 
   const search = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/search?q=${encodeURIComponent(query)}`);
+    router.push(`/results?search_query=${encodeURIComponent(query)}&sort=newest`);
   };
 
   return (
@@ -27,7 +27,7 @@ export default function SearchBar() {
           className="text-body-sm font-medium text-main outline-none flex-1 bg-transparent"
           autoFocus
         />
-        <button onClick={() => setShowSearchBar(false)}>
+        <button type="button" onClick={() => setShowSearchBar(false)}>
           <CloseIcon color="#1c1c1c" width="16" height="16" />
         </button>
         <button hidden type="submit"></button>

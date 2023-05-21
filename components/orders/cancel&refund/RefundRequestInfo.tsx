@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import OrderDetailLayout from '../[paymentId]/OrderDetailLayout';
-import SingleButtonModal from '@/components/modal/SingleButtonModal';
+import SingleButtonModal from '@/components/modals/SingleButtonModal';
 import RefundInfo from './RefundInfo';
 import RefundReason from './RefundReason';
 import HowToReturn from './HowToReturn';
