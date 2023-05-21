@@ -13,7 +13,7 @@ export default function LogInModal({
   return (
     <div>
       <div className="modal-contents w-[350px] modal-box-shadow">
-        <LoginForm />
+        <LoginForm closeModal={closeModal} />
       </div>
       <div onClick={closeModal} className="modal-overlay"></div>
     </div>

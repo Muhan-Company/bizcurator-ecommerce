@@ -2,16 +2,18 @@ import Link from 'next/link';
 import LabeledInput from './LabeledInput';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { LoginFormValues } from './types';
-import { ERROR_MESSAGES, REG_EXP } from '@/utils/constants';
 import { postLogin } from '@/apis/users';
+import { loginFormSchema } from './formSchma';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-export default function LoginForm() {
+export default function LoginForm({ closeModal }: { closeModal: () => void }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormValues>({
-    mode: 'onBlur',
+    mode: 'onChange',
+    resolver: yupResolver(loginFormSchema),
   });
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
@@ -26,21 +28,20 @@ export default function LoginForm() {
         <LabeledInput
           label="username"
           title="아이디"
-          required={'아이디를 입력해주세요.'}
+          required
           placeholder="아이디 입력"
-          register={register}
+          inputProps={register('username')}
           invalid={errors.username}
           errorMessage={errors.username?.message}
-          pattern={{ value: REG_EXP.SIGN_UP.EMAIL, message: ERROR_MESSAGES.SIGN_UP.ID }}
         />
         <LabeledInput
           label="password"
           title="비밀번호"
           required
           placeholder="비밀번호 입력"
-          register={register}
+          inputProps={register('password')}
           invalid={errors.password}
-          errorMessage="비밀번호를 입력해주세요."
+          errorMessage={errors.password?.message}
         />
 
         <div className="text-end text-label-sm font-medium text-gray_01">
@@ -48,7 +49,7 @@ export default function LoginForm() {
         </div>
 
         <input type="submit" value="로그인" className="mt-10 btn-large text-button-xs" />
-        <Link href={'/signup'} className="h-[42px] mt-[10px] btn-white text-button-xs">
+        <Link href={'/signup'} className="h-[42px] mt-[10px] btn-white text-button-xs" onClick={closeModal}>
           회원가입
         </Link>
       </form>
