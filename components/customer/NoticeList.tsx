@@ -2,31 +2,20 @@ import React, { useState } from 'react';
 import CustomWriteModal from '../modals/CustomWriteModal';
 import { createPortal } from 'react-dom';
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 import axiosInstance from '@/apis/config';
+import { NoticePostType } from '@/utils/types/responseType';
 
-interface Item {
-  id: number;
-  title: string;
-  content: string;
-  isFixed: boolean;
-  date: string;
+type NoticeListProps = {
+  dataList: NoticePostType[]
 }
 
-interface ItemListProps {
-  data: Item[];
-}
+export default function NoticeList({ dataList }: NoticeListProps) {
 
-// const fetchNotices = async (lastArticleId: number, size: number): Promise<Item[]> => {
-//         const response = await fetch(`api/notices?lastArticleId=${lastArticleId}&size=${size}`)
-//         console.log(response);
-//         const data = await response.json();
-//         return data;
-//     }
-
-export default function NoticeList({ data }: ItemListProps) {
   const [selectIndex, setSelectIndex] = useState<number | null>(null);
   const [writeOpenModal, setWriteOpenModal] = useState<boolean>(false);
+
+
+  // console.log(dataList);
 
   const listClick = (index: number) => {
     setSelectIndex(selectIndex === index ? null : index);
@@ -42,8 +31,12 @@ export default function NoticeList({ data }: ItemListProps) {
   };
 
   const onDeleteClick = async (index: number) => {
+    const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
+    if (!isConfirmed) {
+      return;
+    }
     try {
-      const id = data[index].id;
+      const id = dataList[index].id;
       await deleteNoticeMutation.mutateAsync(id);
     } catch (error) {
       console.log('삭제 실패', error);
@@ -54,7 +47,7 @@ export default function NoticeList({ data }: ItemListProps) {
   //토큰값을 임의로 저장해놓았음
   const deleteNoticeMutation = useMutation((id: number) =>
     axiosInstance.delete(`/api/notices/${id}`));
-
+  console.log(dataList);
 
 
   return (
@@ -65,7 +58,7 @@ export default function NoticeList({ data }: ItemListProps) {
           <span>제목</span>
           <span>작성일</span>
         </div>
-        {data?.map((data, index) => (
+        {dataList?.map((data, index) => (
           <div key={index}>
             <div
               className="pt-5 pb-5 border-b cursor-pointer relative md:ml-auto mt-4"
@@ -78,7 +71,7 @@ export default function NoticeList({ data }: ItemListProps) {
               <div className="bg-[#fafafa] break-words py-9 px-5 text-xs">
                 <div>
                   <h3 className="md:block md:ml-8 md:mb-6">● {data.title}</h3>
-                  <span className="md:ml-5 inline-block py-7">{data.content}</span>
+                  <span className="md:ml-5 block py-7">{data.content}</span>
                   <span>감사합니다.</span>
                 </div>
                 <button
@@ -107,7 +100,7 @@ export default function NoticeList({ data }: ItemListProps) {
         createPortal(
           <CustomWriteModal
             setWriteOpenModal={setWriteOpenModal}
-            item={selectIndex !== null ? data[selectIndex] : undefined} // 수정할 아이템 전달
+            item={selectIndex !== null ? dataList[selectIndex] : undefined} // 수정할 아이템 전달
           />,
           document.body,
         )}

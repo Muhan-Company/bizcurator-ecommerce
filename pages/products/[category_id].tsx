@@ -1,4 +1,3 @@
-import { useProductInfo } from '@/apis/productApis';
 import Footer from '@/components/footer/Footer';
 import DownHeader from '@/components/header/DownHeader';
 import TopHeader from '@/components/header/TopHeader';
@@ -6,6 +5,7 @@ import Loader from '@/components/products/Loader';
 import ProductImage from '@/components/products/ProductImage';
 import ProductInfo from '@/components/products/ProductInfo';
 import Purchase from '@/components/products/Purchase';
+import { useProductInfo } from '@/hooks/useProductInfo';
 import { useRouter } from 'next/router';
 
 export default function Item() {
@@ -13,7 +13,7 @@ export default function Item() {
 
   const id = query.itemId;
 
-  const { productInfo, isLoading, error } = useProductInfo(id as string);
+  const { productInfo, isLoading, error } = useProductInfo(Number(id));
 
   if (isLoading) return <Loader />;
 

@@ -13,7 +13,7 @@ export default function TopHeader() {
   const [showLogInModal, setShowLogInModal] = useRecoilState(logInModalState);
   const setShowSearchBar = useSetRecoilState(searchBarState);
 
-  const router = useRouter();
+  const { asPath } = useRouter();
 
   const openLogInModal = () => {
     setShowLogInModal(true);
@@ -21,7 +21,7 @@ export default function TopHeader() {
   };
 
   const showSearch = () => {
-    if (router.asPath.includes('/products/categories')) {
+    if (asPath.includes('/products/categories') || asPath.includes('/results')) {
       setShowSearchBar((prev) => !prev);
     } else {
       setShowSearchModal(true);

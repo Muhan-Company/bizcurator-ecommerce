@@ -8,6 +8,7 @@ export default function Dashboard() {
             <div>
                 {/* <AdminSearch /> */}
                 <DashBoardContent />
+                ㄴㄴ
             </div>
         </>
     )

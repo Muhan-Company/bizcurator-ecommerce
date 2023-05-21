@@ -1,5 +1,7 @@
+import { sortByState } from '@/atoms/sortByAtom';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useRecoilValue } from 'recoil';
 
 export interface CategoryLinkProps {
   id: number;
@@ -7,14 +9,17 @@ export interface CategoryLinkProps {
 }
 
 export default function CategoryLink({ id, name }: CategoryLinkProps) {
-  const router = useRouter();
-  const isActive = router.query.category_id === id.toString();
+  const sortBy = useRecoilValue(sortByState);
+
+  const { query } = useRouter();
+
+  const active = query.category_id === id.toString();
 
   return (
     <Link
-      href={`/products/categories/${id}?sort=newest`}
+      href={`/products/categories/${id}?sort=${sortBy.english}`}
       className={`${
-        isActive ? 'text-main' : 'text-gray_01'
+        active ? 'text-main' : 'text-gray_01'
       } font-medium text-label-sm inline-block min-w-fit text-center`}
     >
       {name}

@@ -1,23 +1,29 @@
 import { useState } from 'react';
 import { MagnifyingGlassIcon } from '../Icons';
 import { useRouter } from 'next/router';
+import { sortByState } from '@/atoms/sortByAtom';
+import { useRecoilValue } from 'recoil';
 
 export default function SearchModal({
   setShowSearchModal,
 }: {
   setShowSearchModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [query, setQuery] = useState<string>('');
-
-  const router = useRouter();
-  const search = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    router.push(`/products/search?q=${encodeURIComponent(query)}`);
-  };
-
   const closeModal = () => {
     setShowSearchModal(false);
     document.body.classList.remove('modal-open');
+  };
+
+  const [query, setQuery] = useState<string>('');
+
+  const router = useRouter();
+
+  const sortBy = useRecoilValue(sortByState);
+
+  const search = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    router.push(`/products/results?search_query=${encodeURIComponent(query)}&sort=${sortBy}`);
+    closeModal();
   };
 
   return (
