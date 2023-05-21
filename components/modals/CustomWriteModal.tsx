@@ -1,10 +1,8 @@
 import React, { useRef, useState, ChangeEvent, useEffect } from "react"
 import useOnClickOutside from "@/hooks/UseOnClickOutSide"
-import { atom, useRecoilValue } from "recoil";
-import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { createPortal } from "react-dom";
 import { NoticePostType } from "@/utils/types/responseType";
+import axiosInstance from "@/apis/config";
 
 type CustomWritePropsType = {
     setWriteOpenModal: React.Dispatch<React.SetStateAction<boolean>> //useState를 통해 생성된 매개변수를 해당 상태로 변경하는 type
@@ -27,10 +25,6 @@ const writeFormState: WriteFormType = { //WriteFormType의 기본값
     // date: '',
 }
 
-const accessTokenState = atom<string>({
-    key: "accessTokenState",
-    default: "", // 초기값은 빈 문자열이며, 실제로는 로그인 후 얻은 액세스 토큰 값으로 설정해야 합니다.
-});
 
 
 export default function CustomWriteModal({
@@ -42,7 +36,6 @@ export default function CustomWriteModal({
     useOnClickOutside(ref, () => {
         setWriteOpenModal(false)
     })
-    const accessToken = useRecoilValue(accessTokenState);
     const [writeForm, setWriteForm] = useState<WriteFormType>(writeFormState);
 
     useEffect(() => { //item이 존재하면 writeForm에 저장되어있는 상태를 복사하고 item이 변경할때마다 업데이트
@@ -77,9 +70,8 @@ export default function CustomWriteModal({
             });
         }
     };
-    console.log(`item${item?.id}`);
-    console.log(`writeform${writeForm.id}`)
-    ///api/notices/{id}
+
+
     const editHandleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const isConfirmed = window.confirm("정말 수정하시겠습니까?");
@@ -89,10 +81,8 @@ export default function CustomWriteModal({
 
         try {
             const id = writeForm.id;
-            const response = await axios.put(`http://43.201.195.195:8080/api/notices/${id}`, writeForm, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
+            const response = await axiosInstance.put(`/api/notices/${id}`, writeForm, {
+
             });
             console.log(response.data);
             // 성공적으로 수정되었을 때의 동작 추가
@@ -100,6 +90,7 @@ export default function CustomWriteModal({
             console.log('수정 실패', error);
             // 수정 실패 시의 처리 추가
         }
+        setWriteOpenModal(false);
     };
 
 
@@ -115,10 +106,8 @@ export default function CustomWriteModal({
     };
 
     const createNotice = async (data: WriteFormType) => {
-        const response = await axios.post("http://43.201.195.195:8080/api/notices", data, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
+        const response = await axiosInstance.post("/api/notices", data, {
+
         });
         return response.data;
     };
@@ -145,8 +134,8 @@ export default function CustomWriteModal({
                 return;
             }
         }
-        console.log(writeForm);
         mutation.mutate(writeForm);
+        setWriteOpenModal(false); //저장완료시 모달창 닫기
     };
 
 
