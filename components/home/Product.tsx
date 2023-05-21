@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import AddToCartModal from '../modals/AddToCartModal';
 import { createPortal } from 'react-dom';
 import { useRouter } from 'next/router';
-import { Trending } from '@/pages';
+import { ProductDetail } from '@/pages';
 
 export default function Product({
   id,
@@ -14,7 +14,7 @@ export default function Product({
   regular_price,
   sale_price,
   min_quantity,
-}: Trending) {
+}: ProductDetail) {
   const [showAddToCartModal, setShowAddToCartModal] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(min_quantity);
   const router = useRouter();

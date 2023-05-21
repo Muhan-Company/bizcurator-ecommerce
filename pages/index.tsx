@@ -10,7 +10,7 @@ import Layout from '@/components/layout/Layout';
 import Footer from '@/components/footer/Footer';
 import { getMonthlyTrending, getWeeklyTrending } from '@/apis/trendingApi';
 
-export interface Trending {
+export interface ProductDetail {
   id: number;
   category_id: number;
   product_name: string;
@@ -21,8 +21,8 @@ export interface Trending {
 }
 
 type TrendingProps = {
-  weeklyTrending: Trending[];
-  monthlyTrending: Trending[];
+  weeklyTrending: ProductDetail[];
+  monthlyTrending: ProductDetail[];
 };
 
 export default function Home({ weeklyTrending, monthlyTrending }: TrendingProps) {

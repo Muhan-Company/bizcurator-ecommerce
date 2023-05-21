@@ -15,6 +15,30 @@ const nextConfig = {
         port: '',
         pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.lge.co.kr',
+        port: '',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'gdimg.gmarket.co.kr',
+        port: '',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'm.ylshop.co.kr',
+        port: '',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'sitem.ssgcdn.com',
+        port: '',
+        pathname: '**',
+      },
     ],
   },
 };

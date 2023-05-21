@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import OrderDetailLayout from '../[paymentId]/OrderDetailLayout';
 import CancelReason from './CancelReason';
 import RefundInfo from './RefundInfo';
-import SingleButtonModal from '@/components/modal/SingleButtonModal';
+import SingleButtonModal from '@/components/modals/SingleButtonModal';
 
 export default function CancelInfo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
