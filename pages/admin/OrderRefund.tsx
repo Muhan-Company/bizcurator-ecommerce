@@ -5,7 +5,7 @@ import AdminOrderRefund from "@/components/admin/OrderRefund";
 
 export default function OrderRefund() {
     return (
-        <div className="flex h-screen">
+        <div className="flex bg-[#ebedee]">
             <SidebarItem />
             <div className="ml-80 w-[1600px]">
                 <AdminHeader />

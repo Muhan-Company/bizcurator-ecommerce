@@ -5,7 +5,7 @@ import AdminVendorList from "@/components/admin/VendorList";
 
 export default function VendorList() {
     return (
-        <div className="flex h-screen">
+        <div className="flex bg-[#ebedee]">
             <SidebarItem />
             <div className="ml-80 w-[1600px]">
                 <AdminHeader />
