@@ -26,7 +26,7 @@ export default function DownHeader() {
         <ActiveLink href={'/'} className="hidden lg:inline lg:header-link">
           홈
         </ActiveLink>
-        <ActiveLink href={'/products/categories/1?sort=newest'}>바로구매</ActiveLink>
+        <ActiveLink href={'/products/categories/0?sort=newest'}>바로구매</ActiveLink>
         <ActiveLink href={'/request/purchase'} className="mx-3">
           제품구매 의뢰
         </ActiveLink>

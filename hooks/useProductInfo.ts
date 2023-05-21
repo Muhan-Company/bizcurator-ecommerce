@@ -1,4 +1,4 @@
-import getProductInfo from '@/apis/productApis';
+import { getProductInfo } from '@/apis/productApis';
 import { useQuery } from '@tanstack/react-query';
 
 const useProductInfo = (product_id: number) => {

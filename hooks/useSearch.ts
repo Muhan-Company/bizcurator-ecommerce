@@ -1,10 +1,10 @@
 import search, { SearchType } from '@/apis/searchApi';
 import { useQuery } from '@tanstack/react-query';
 
-const useSearch = ({ searchQuery, sort }: SearchType) => {
+const useSearch = ({ searchQuery, sortBy }: SearchType) => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['search', searchQuery, sort],
-    queryFn: () => search({ searchQuery, sort }),
+    queryKey: ['search', searchQuery, sortBy],
+    queryFn: () => search({ searchQuery, sortBy }),
   });
 
   return { searchResults: data?.result.products, isLoading, error };

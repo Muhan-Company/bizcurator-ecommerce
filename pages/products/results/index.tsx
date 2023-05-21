@@ -8,19 +8,25 @@ import SearchBar from '@/components/products/SearchBar';
 import Sort from '@/components/products/Sort';
 import NavBar from '@/components/footer/NavBar';
 import Footer from '@/components/footer/Footer';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import searchBarState from '@/atoms/searchBarAtom';
-import { sortByState } from '@/atoms/sortByAtom';
+import { sortByList, sortByState } from '@/atoms/sortByAtom';
+import Loader from '@/components/products/Loader';
+import { useEffect } from 'react';
 
 export default function SearchResults() {
-  const sortBy = useRecoilValue(sortByState);
+  const [sortBy, setSortBy] = useRecoilState(sortByState);
   const showSearchBar = useRecoilValue(searchBarState);
 
   const { query } = useRouter();
   const { searchResults, isLoading, error } = useSearch({
     searchQuery: query.search_query as string,
-    sort: sortBy.sortName,
+    sortBy: sortBy.english,
   });
+
+  useEffect(() => {
+    setSortBy(sortByList[0]);
+  }, [setSortBy]);
 
   return (
     <>
@@ -28,10 +34,16 @@ export default function SearchResults() {
         <DownHeader />
         <CategoryFilter />
         {showSearchBar ? <SearchBar /> : <div className="h-[55px]"></div>}
-        <div className="relative">
-          <Sort />
-          <ProductList searchResults={searchResults} />
-        </div>
+        <Sort />
+        {isLoading && (
+          <div className="my-10">
+            <Loader height="[50px]" />
+          </div>
+        )}
+
+        {error instanceof Error && <p className="text-red font-bold text-center my-10">상품 검색 실패</p>}
+
+        {!isLoading && !error && <ProductList products={searchResults} />}
         <NavBar />
         <Footer />
       </Layout>

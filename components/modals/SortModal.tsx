@@ -23,7 +23,7 @@ export default function SortModal({
     }
 
     if (searchQuery) {
-      router.push(`/results?search_query=${searchQuery}&sort=${encodeURIComponent(sortBy.english)}`);
+      router.push(`/products/results?search_query=${searchQuery}&sort=${encodeURIComponent(sortBy.english)}`);
     }
   };
 

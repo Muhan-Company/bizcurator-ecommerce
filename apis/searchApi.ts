@@ -2,10 +2,10 @@ import axiosInstance from './config';
 
 export interface SearchType {
   searchQuery: string;
-  sort: string;
+  sortBy: string;
 }
 
-const search = ({ searchQuery, sort }: SearchType) =>
-  axiosInstance.get(`/api/products/search?keyword=${searchQuery}&sort=${sort}`).then((res) => res.data);
+const search = ({ searchQuery, sortBy }: SearchType) =>
+  axiosInstance.get(`/api/products/search?keyword=${searchQuery}&sort=${sortBy}`).then((res) => res.data);
 
 export default search;
