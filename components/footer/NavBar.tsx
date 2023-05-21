@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { HomeIcon, MagnifyingGlassIcon, UserIcon } from '../Icons';
 import { useRecoilState } from 'recoil';
-import { searchModalState } from '@/atoms/modalAtoms';
 import { createPortal } from 'react-dom';
 import SearchModal from '../modals/SearchModal';
+import { searchModalState } from '@/atoms/modalAtoms';
 
 export default function NavBar() {
   const [showSearchModal, setShowSearchModal] = useRecoilState(searchModalState);

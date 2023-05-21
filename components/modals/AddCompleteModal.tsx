@@ -4,7 +4,7 @@ import { useSetRecoilState } from 'recoil';
 
 interface AddCompleteModalPropsType {
   setShowAddToCartModal?: React.Dispatch<React.SetStateAction<boolean>>;
-  closeAccordion: () => void;
+  closeAccordion?: () => void;
 }
 
 export default function AddCompleteModal({ setShowAddToCartModal, closeAccordion }: AddCompleteModalPropsType) {
@@ -14,7 +14,10 @@ export default function AddCompleteModal({ setShowAddToCartModal, closeAccordion
     e.stopPropagation();
     setShowAddCompleteModal(false);
     document.body.classList.remove('modal-open');
-    closeAccordion();
+
+    if (closeAccordion) {
+      closeAccordion();
+    }
 
     if (setShowAddToCartModal) {
       setShowAddToCartModal(false);
@@ -25,7 +28,7 @@ export default function AddCompleteModal({ setShowAddToCartModal, closeAccordion
     <>
       <div
         onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
-        className="w-[351px] h-auto pt-[30px] px-3 modal-shape z-20 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex-col gap-0.5"
+        className="w-[351px] h-auto pt-[30px] px-3 center modal-box-shadow modal-contents flex-col gap-0.5"
       >
         장바구니에 담았습니다.
         <div className="center gap-2 py-6">
@@ -43,7 +46,7 @@ export default function AddCompleteModal({ setShowAddToCartModal, closeAccordion
           </Link>
         </div>
       </div>
-      <div className="modal-box-shadow fixed inset-0 bg-black/70 z-10" onClick={closeModal}></div>
+      <div className="modal-overlay" onClick={closeModal}></div>
     </>
   );
 }

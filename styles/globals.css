@@ -51,14 +51,27 @@
   }
 
   .modal-shape {
-    @apply w-[351px] h-[156px] center bg-white rounded-[8px] modal-box-shadow font-medium;
+    @apply w-[351px] h-[156px] center bg-white rounded-lg modal-box-shadow font-medium;
   }
+
+  .modal-open {
+    overflow: hidden;
+  }
+
+  .modal-contents {
+    @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 rounded-lg bg-white;
+  }
+
+  .modal-overlay {
+    @apply fixed inset-0 bg-black/20 z-20;
+  }
+
   .modal-background {
     @apply h-screen fixed center inset-0 bg-black/20 z-20;
   }
 
   .swiper-button-next {
-    @apply absolute top-1/2 -translate-y-1/2 right-3 z-10 cursor-pointer bg-black/80 w-6 h-6 md:w-12 md:h-12 rounded-full;
+    @apply center absolute top-1/2 -translate-y-1/2 right-3 z-10 cursor-pointer w-6 h-6 md:w-12 md:h-12 rounded-full;
     background: rgba(28, 28, 28, 0.2);
   }
 
@@ -67,7 +80,7 @@
   }
 
   .swiper-button-prev {
-    @apply absolute top-1/2 -translate-y-1/2 left-3 z-10 cursor-pointer bg-black/80 w-6 h-6 md:w-12 md:h-12 rounded-full;
+    @apply center absolute top-1/2 -translate-y-1/2 left-3 z-10 cursor-pointer w-6 h-6 md:w-12 md:h-12 rounded-full;
     background: rgba(28, 28, 28, 0.2);
   }
 
@@ -100,10 +113,6 @@
       linear-gradient(88.55deg, rgba(210, 224, 236, 0.2) 3.21%, rgba(169, 214, 255, 0.2) 98.77%), #ffffff;
   }
 
-  .modal-open {
-    overflow: hidden;
-  }
-
   .seperator {
     border: 1px solid #d9d9d9;
   }
@@ -133,10 +142,30 @@
   }
 
   .radio-custom {
-    @apply appearance-none w-[18px] h-[18px] mr-2 center text-white bg-white  border-[1px] border-gray_01 rounded-[50%] before:w-4 before:h-4 before:center before:rounded-[50%] checked:before:content-['✓'] checked:before:bg-primary;
+    @apply appearance-none w-[18px] h-[18px] mr-2 center text-white bg-white border-[1px] border-gray_01 rounded-[50%] before:w-4 before:h-4 before:center before:rounded-[50%] checked:before:content-['✓'] checked:before:bg-primary;
   }
 
   .input {
     @apply h-[44px] pl-[10px] py-[6.5px] grow rounded-[8px] border-[1px] border-gray_01 bg-white text-body-sm disabled:opacity-75 disabled:border-[#DDD] disabled:bg-gray_04;
+  }
+
+  .my-info {
+    @apply h-[50px] bg-gray_04 rounded-lg font-normal text-gray_01 text-body-sm px-4 leading-[50px];
+  }
+
+  .category {
+    @apply border-b-[1px] border-gray_01 pb-2.5;
+  }
+
+  .rdrDayPassive > span > div {
+    @apply text-neutral-400 !important;
+  }
+
+  .loader {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #f0f3fc;
+    border-top: 4px solid #16133a;
+    border-radius: 50%;
   }
 }

@@ -4,10 +4,19 @@ import React, { useState } from 'react';
 import AddToCartModal from '../modals/AddToCartModal';
 import { createPortal } from 'react-dom';
 import { useRouter } from 'next/router';
+import { Trending } from '@/pages';
 
-export default function Product() {
+export default function Product({
+  id,
+  category_id,
+  product_name,
+  main_image_url,
+  regular_price,
+  sale_price,
+  min_quantity,
+}: Trending) {
   const [showAddToCartModal, setShowAddToCartModal] = useState<boolean>(false);
-  const [quantity, setQuantity] = useState<number>(100);
+  const [quantity, setQuantity] = useState<number>(min_quantity);
   const router = useRouter();
 
   const openModal = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -16,16 +25,13 @@ export default function Product() {
     document.body.classList.add('modal-open');
   };
 
-  let category_id = 1;
-  let item_id = 1234;
-
   return (
     <div
-      onClick={() => router.push(`/products/${category_id}?itemId=${item_id}`)}
+      onClick={() => router.push(`/products/${category_id}?itemId=${id}`)}
       className="w-full sm:space-y-3 lg:space-y-4"
     >
-      <div className="aspect-square relative">
-        <Image src={'/img/tissue.png'} alt="Product" fill sizes="100%" className="object-cover" />
+      <div className="aspect-square relative rounded-lg overflow-hidden">
+        <Image src={main_image_url} alt="Product" fill sizes="100%" className="object-cover" />
         <button
           onClick={openModal}
           className="w-7 h-7 lg:w-11 lg:h-11 bg-white/50 rounded-full absolute center bottom-[10px] right-[10px]"
@@ -35,10 +41,10 @@ export default function Product() {
       </div>
 
       <div className="space-y-1">
-        <h3 className="font-medium text-title-xs lg:text-title-md text-main">
-          두루마리 휴지 <br /> 24롤
+        <h3 className="font-medium text-title-xs lg:text-title-md text-main">{product_name}</h3>
+        <h3 className="font-noraml text-title-xs lg:text-title-md text-main">
+          {sale_price?.toLocaleString('ko-KR')}원
         </h3>
-        <h3 className="font-noraml text-title-xs lg:text-title-md text-main">가격비공개</h3>
       </div>
 
       {showAddToCartModal &&
@@ -47,11 +53,12 @@ export default function Product() {
             setShowAddToCartModal={setShowAddToCartModal}
             quantity={quantity}
             setQuantity={setQuantity}
-            name={'두루마리 휴지 24롤'}
-            src={'/img/tissue.png'}
-            price={1000}
-            discount={10}
-            min={100}
+            product_name={product_name}
+            main_image_url={main_image_url}
+            sale_price={sale_price}
+            regular_price={regular_price}
+            min_quantity={min_quantity}
+            id={id}
           />,
           document.body,
         )}

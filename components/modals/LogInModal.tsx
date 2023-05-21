@@ -10,8 +10,8 @@ export default function LogInModal({
 
   return (
     <div>
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 rounded-lg w-[350px] h-[426px] bg-white"></div>
-      <div onClick={closeModal} className="fixed inset-0 bg-black/70 z-20"></div>
+      <div className="modal-contents w-[350px] h-[426px] modal-box-shadow"></div>
+      <div onClick={closeModal} className="modal-overlay"></div>
     </div>
   );
 }

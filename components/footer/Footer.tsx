@@ -11,7 +11,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-main pt-5 pb-20 lg:py-10 lg:px-24 xl:px-48">
+    <footer className="bg-main pt-5 pb-24 lg:py-10 lg:px-24 xl:px-48">
       <div className="flex flex-col lg:flex-row items-center gap-y-5 lg:gap-x-5 pb-5">
         <button onClick={openModal} className="footer-btn">
           로그인

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 export default function Search() {
-  const router = useRouter();
+  const { query } = useRouter();
 
-  return <div>{router.query.q}</div>;
+  return <div>{query.q}</div>;
 }

@@ -102,111 +102,112 @@ export default function ProductRegister() {
             }
             await mutation.mutateAsync(formData);
         } catch (error) {
+
         }
-    }
 
-    return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <div className="w-[1500px] mx-[60px] mt-[15px]">
-                    <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
-                        <div className="py-[30px] bg-[#fff]  rounded-t-xl">상품 카테고리</div>
-                        <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={1} name="객실용품" />
-                        <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={2} name="욕실용품" />
-                        <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={3} name="위생용품" />
-                        <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={4} name="침구류" />
-                        <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={5} name="가전/전자제품" />
-                        <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={6} name="청소/시설관리" />
-                        <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={7} name="소방/안전설비" />
-                        <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={8} name="사무용품" />
-                        <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={9} name="음료/식품" />
-                        <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={10} name="기타" />
-                    </div>
-                    <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
-                        <div className="py-[30px] bg-[#fff]">제조사 명</div>
-                        <input
-                            name="manufacturer_name"
-                            onChange={handleChange}
-                            className="w-[1440px] block border border-black rounded-md h-10 pl-3 mb-3"
-                        />
-                    </div>
-                    <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
-                        <div className="py-[30px] bg-[#fff]">상품명</div>
-                        <input
-                            name="product_name"
-                            onChange={handleChange}
-                            className="w-[1440px] block border border-black rounded-md h-10 pl-3 mb-3"
-                            placeholder="최대 50글자"
-                        />
-                    </div>
-                    <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
-                        <div className="py-[30px] bg-[#fff] border-b">
-                            가격
+        return (
+            <>
+                <form onSubmit={handleSubmit}>
+                    <div className="w-[1500px] mx-[60px] mt-[15px]">
+                        <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
+                            <div className="py-[30px] bg-[#fff]  rounded-t-xl">상품 카테고리</div>
+                            <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={1} name="객실용품" />
+                            <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={2} name="욕실용품" />
+                            <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={3} name="위생용품" />
+                            <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={4} name="침구류" />
+                            <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={5} name="가전/전자제품" />
+                            <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={6} name="청소/시설관리" />
+                            <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={7} name="소방/안전설비" />
+                            <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={8} name="사무용품" />
+                            <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={9} name="음료/식품" />
+                            <ProductCategory selectedCategory={selectedCategory} onSelectCategory={handleSelectCategory} id={10} name="기타" />
                         </div>
-                        <div className="py-[30px] bg-[#fff]">
-                            <span className="inline-block w-[200px]">정가</span>
+                        <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
+                            <div className="py-[30px] bg-[#fff]">제조사 명</div>
                             <input
-                                name="regular_price"
+                                name="manufacturer_name"
                                 onChange={handleChange}
-                                className="border border-black p-2 rounded-lg"
-                                placeholder="숫자만 입력"
+                                className="w-[1440px] block border border-black rounded-md h-10 pl-3 mb-3"
                             />
-                            <div className="ml-1 inline-block bg-black text-[#fff] p-2 rounded-lg">원</div>
                         </div>
-                        <div className="py-[30px] bg-[#fff]">
-                            <span className="inline-block w-[200px]">최소구매수량</span>
+                        <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
+                            <div className="py-[30px] bg-[#fff]">상품명</div>
                             <input
-                                name="min_quantity"
+                                name="product_name"
                                 onChange={handleChange}
-                                className="border border-black p-2 rounded-lg"
-                                placeholder="20"
-                                value={productInfo.min_quantity}
+                                className="w-[1440px] block border border-black rounded-md h-10 pl-3 mb-3"
+                                placeholder="최대 50글자"
                             />
-                            <div className="ml-1 inline-block bg-black text-[#fff] p-2 rounded-lg">개</div>
                         </div>
-                        <div className="py-[30px] bg-[#fff]">
-                            <span className="inline-block w-[200px]">최대구매수량</span>
-                            <input
-                                name="max_quantity"
-                                onChange={handleChange}
-                                className="border border-black p-2 rounded-lg"
-                                placeholder="100"
-                                value={productInfo.max_quantity}
-                            />
-                            <div className="ml-1 inline-block bg-black text-[#fff] p-2 rounded-lg">개</div>
+                        <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
+                            <div className="py-[30px] bg-[#fff] border-b">
+                                가격
+                            </div>
+                            <div className="py-[30px] bg-[#fff]">
+                                <span className="inline-block w-[200px]">정가</span>
+                                <input
+                                    name="regular_price"
+                                    onChange={handleChange}
+                                    className="border border-black p-2 rounded-lg"
+                                    placeholder="숫자만 입력"
+                                />
+                                <div className="ml-1 inline-block bg-black text-[#fff] p-2 rounded-lg">원</div>
+                            </div>
+                            <div className="py-[30px] bg-[#fff]">
+                                <span className="inline-block w-[200px]">최소구매수량</span>
+                                <input
+                                    name="min_quantity"
+                                    onChange={handleChange}
+                                    className="border border-black p-2 rounded-lg"
+                                    placeholder="20"
+                                    value={productInfo.min_quantity}
+                                />
+                                <div className="ml-1 inline-block bg-black text-[#fff] p-2 rounded-lg">개</div>
+                            </div>
+                            <div className="py-[30px] bg-[#fff]">
+                                <span className="inline-block w-[200px]">최대구매수량</span>
+                                <input
+                                    name="max_quantity"
+                                    onChange={handleChange}
+                                    className="border border-black p-2 rounded-lg"
+                                    placeholder="100"
+                                    value={productInfo.max_quantity}
+                                />
+                                <div className="ml-1 inline-block bg-black text-[#fff] p-2 rounded-lg">개</div>
 
+                            </div>
+                            <div className="py-[30px] bg-[#fff]">
+                                <span className="inline-block w-[200px]">할인율</span>
+                                <input
+                                    name="discount_rate"
+                                    onChange={handleChange}
+                                    className="border border-black p-2 rounded-lg"
+                                    placeholder="숫자만 입력" />
+                                <div className="ml-1 inline-block bg-black text-[#fff] p-2 rounded-lg">%</div>
+                            </div>
                         </div>
-                        <div className="py-[30px] bg-[#fff]">
-                            <span className="inline-block w-[200px]">할인율</span>
-                            <input
-                                name="discount_rate"
-                                onChange={handleChange}
-                                className="border border-black p-2 rounded-lg"
-                                placeholder="숫자만 입력" />
-                            <div className="ml-1 inline-block bg-black text-[#fff] p-2 rounded-lg">%</div>
+                        <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
+                            <div className="py-[30px] bg-[#fff] border-b">
+                                썸네일
+                            </div>
+                            <FileUpload imageChange={"mainImage"} {...fileUploadProps} handleFileChange={onChangeFile} />
                         </div>
-                    </div>
-                    <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
-                        <div className="py-[30px] bg-[#fff] border-b">
-                            썸네일
+                        <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
+                            <div className="py-[30px] bg-[#fff] border-b">
+                                상세페이지
+                            </div>
+                            <FileUpload imageChange={"detailImage"} {...detailPageProps} handleFileChange={onChangeFile} />
                         </div>
-                        <FileUpload imageChange={"mainImage"} {...fileUploadProps} handleFileChange={onChangeFile} />
-                    </div>
-                    <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
-                        <div className="py-[30px] bg-[#fff] border-b">
-                            상세페이지
-                        </div>
-                        <FileUpload imageChange={"detailImage"} {...detailPageProps} handleFileChange={onChangeFile} />
-                    </div>
-                    <div className="py-[50px] relative">
-                        <button
-                            className="absolute right-0 top-0 w-[260px] bg-[#16133A] text-[#fff] h-[61px] rounded-xl
+                        <div className="py-[50px] relative">
+                            <button
+                                className="absolute right-0 top-0 w-[260px] bg-[#16133A] text-[#fff] h-[61px] rounded-xl
                             hover:bg-[#c5c5c5] hover:text-[black] transition-all duration-300
                             "
-                            type="submit">제출</button>
+                                type="submit">제출</button>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </>
-    )
+                </form>
+            </>
+        )
+    }
 }

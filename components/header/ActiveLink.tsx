@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-interface ActiveLinkProps {
+export interface ActiveLinkProps {
   href: string;
   children: string;
   className?: string;
@@ -9,7 +9,8 @@ interface ActiveLinkProps {
 
 export default function ActiveLink({ href, children, className }: ActiveLinkProps) {
   const router = useRouter();
-  const isActive = router.pathname.slice(0, 9) === href.slice(0, 9);
+
+  const isActive = router.asPath.split('/')[1] === href.split('/')[1];
 
   return (
     <Link href={href} className={`${isActive && 'text-main border-b-[1px] border-main'} ${className} header-link`}>
