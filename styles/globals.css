@@ -35,7 +35,7 @@
   }
 
   .btn-disabled {
-    @apply disabled:border-[#DDD] disabled:text-gray_01 disabled:cursor-not-allowed;
+    @apply disabled:border-[#DDD] disabled:text-gray_01 disabled:cursor-not-allowed disabled:bg-gray_03 disabled:border;
   }
 
   .center {
