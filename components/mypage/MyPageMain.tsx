@@ -1,12 +1,15 @@
 import Link from 'next/link';
 import { ChevronRightIcon, SettingIcon } from '../Icons';
+import { useGetMyPageMain } from '@/apis/mypage';
 
 export default function MyPageMain() {
+  const { data } = useGetMyPageMain();
+
   return (
     <div className="pt-[52px]">
       <section className="flex items-center justify-between">
         {/* 로그인 회원 이름 */}
-        <div className="font-medium">{'name'}님</div>
+        <div className="font-medium">{'회원'}님</div>
         <Link href="/mypage/edit">
           <SettingIcon />
         </Link>
@@ -16,14 +19,14 @@ export default function MyPageMain() {
           주문/배송/픽업 현황<span className="pl-[6px] text-label-sm font-normal text-gray_01">(최근 3개월 기준)</span>
         </h3>
         <div className="py-5 center gap-2.5">
-          <OrderStateLink path="/orders/payment-confirmed" state="결제완료" />
-          <OrderStateLink path="/orders/shipping-in-progress" state="배송중" />
-          <OrderStateLink path="/orders/delivered" state="배송완료" />
-          <OrderStateLink path="/orders/purchase-confirmed" state="구매확정" />
+          <OrderStateLink path="/orders/paid" state="결제완료" count={data?.payDoneCount} />
+          <OrderStateLink path="/orders/delivering" state="배송중" count={data?.deliveringCount} />
+          <OrderStateLink path="/orders/deliver_done" state="배송완료" count={data?.deliverDoneCount} />
+          <OrderStateLink path="/orders/finish" state="구매확정" count={data?.paymentConfirmedCount} />
         </div>
       </section>
       <section className="pt-2">
-        <NavLink path="/cancel-refund/cancel" nav="주문취소/환불 내역" />
+        <NavLink path="/cancel-refund/" nav="주문취소/환불 내역" />
         <NavLink path="/my-requests" nav="내 의뢰 내역" />
         <NavLink path="/customer" nav="고객센터" />
         {/* todo: 로그아웃 api 연결 */}
