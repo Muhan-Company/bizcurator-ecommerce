@@ -1,71 +1,51 @@
-import { useState } from "react"
-
-type ProductSearch = {
-    id: number;
-    product: string;
-}
-
-type SearchProps = {
-    queryKey: string;
-    searchUrl: string;
-}
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
 
-function AdminSearch({
-    queryKey,
-    searchUrl
-}:
-    SearchProps) {
-    // const [searchText, setSearchText] = useState("");
-    // const { isLoading, isError, data } = useQuery<ProductSearch[], Error>(queryKey, () => {
-    //     if (searchText.trim() === "") {
-    //         return Promise.resolve([]);
-    //     }
-    //     return fetch(`${searchUrl}?searchText=${searchText}`).then((res) => res.json());
-    // });
+type SearchFormProps = {
+    onSearch: (data: any) => void;
+    api: (searchTerm: string) => Promise<any>; // 새로운 `api` prop
+};
 
-    const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        // 검색 API 호출
-    }
-    // const [searchTerm, setSearchTerm] = useState('');
 
-    // const { isLoading, isError, data } = useQuery<ProductSearch[]>(queryKey, async () => {
-    //     const response = await fetch(`${searchUrl}?q=${encodeURIComponent(searchTerm)}`);
-    //     const data = await response.json();
-    //     return data as ProductSearch[];
-    // });
+const SearchForm = ({ onSearch, api }: SearchFormProps) => {
+    const [searchTerm, setSearchTerm] = useState('');
 
-    // if (isLoading) {
-    //     return <div>Loading...</div>;
-    // }
+    const handleSearch = useMutation(async () => {
+        const data = await api(searchTerm);
+        console.log(data);
+        return data;
+    }, {
+        onSuccess: (data) => {
+            onSearch(data);
+            console.log(data);
+        }
+    });
 
-    // if (isError) {
-    //     return <div>Error</div>;
-    // }
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        handleSearch.mutate();
+    };
 
     return (
-        <>
-            {/* <form onSubmit={handleSearch}>
-                <div className="w-[1500px] rounded-[10px] bg-[#fff] p-[30px] mt-[15px] mx-[60px]">
-                    <div>
-                        <span className="mr-24">검색어</span>
-                        <input
-                            className="w-[1200px] border py-5 rounded-[10px] mr-3"
-                            value={searchText}
-                            onChange={(e) => setSearchText(e.target.value)}
-                        />
-                        <button className="p-5 border border-[#999]  rounded-[10px]">검색</button>
-                    </div>
-                </div>
+        <div className='w-[1500px] bg-[#fff] mx-[60px] p-[30px] rounded-xl mt-5'>
+            <form
+                className='flex items-center justify-around'
+                onSubmit={handleSubmit}>
+                <h1>검색어</h1>
+                <input
+                    type="text"
+                    placeholder="상품명으로 검색"
+                    value={searchTerm}
+                    className='border h-[50px] w-[1200px] text-[18px]'
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button
+                    className='w-[70px] h-[50px] rounded-md border bg-[#f7f8f8] border-[#2f20d3]'
+                    type="submit">검색</button>
             </form>
-            {isLoading && <div>Loading...</div>}
-            {isError && <div>Error fetching data</div>}
-            {data && data.map((product) => (
-                <div key={product.id}>{product.product}</div>
-            ))} */}
-        </>
-    )
-}
+        </div>
+    );
+};
 
-export default AdminSearch;
+export default SearchForm;

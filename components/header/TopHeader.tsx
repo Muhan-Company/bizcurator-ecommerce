@@ -1,19 +1,19 @@
-import Link from 'next/link';
-import { Cart, LogoIcon, MagnifyingGlassIcon, UserIcon } from '../Icons';
-import { useSetRecoilState, useRecoilState } from 'recoil';
 import { createPortal } from 'react-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useSetRecoilState, useRecoilState } from 'recoil';
 import LogInModal from '../modals/LogInModal';
 import SearchModal from '../modals/SearchModal';
 import { logInModalState, searchModalState } from '@/atoms/modalAtoms';
-import searchBarState from '@/atoms/seachBarAtom';
-import { useRouter } from 'next/router';
+import searchBarState from '@/atoms/searchBarAtom';
+import { Cart, LogoIcon, MagnifyingGlassIcon, UserIcon } from '../Icons';
 
 export default function TopHeader() {
   const [showSearchModal, setShowSearchModal] = useRecoilState(searchModalState);
   const [showLogInModal, setShowLogInModal] = useRecoilState(logInModalState);
   const setShowSearchBar = useSetRecoilState(searchBarState);
 
-  const router = useRouter();
+  const { asPath } = useRouter();
 
   const openLogInModal = () => {
     setShowLogInModal(true);
@@ -21,7 +21,7 @@ export default function TopHeader() {
   };
 
   const showSearch = () => {
-    if (router.asPath.includes('/products/categories')) {
+    if (asPath.includes('/products/categories') || asPath.includes('/results')) {
       setShowSearchBar((prev) => !prev);
     } else {
       setShowSearchModal(true);

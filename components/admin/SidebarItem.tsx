@@ -11,9 +11,9 @@ const SidebarItem = () => {
     const toggleSubMenu1 = (submenu: string) => {
         setShowSubmenu1(showSubmenu1 === submenu ? "" : submenu);
     }
-
+    console.log(router);
     return (
-        <div className="fixed h-full bg-gray-100 w-[320px]">
+        <div className="fixed h-full bg-gray-100 w-[320px] z-10">
             <nav className="fixed w-80 bg-[#313C52] h-full inline-block float-left">
                 <h1 className="py-10 pl-6 text-[22px] text-[#93CEFA]">
                     Biz Curator Manager
@@ -43,15 +43,15 @@ const SidebarItem = () => {
                         {showSubmenu1 === 'uses' && (
                             <ul>
                                 <li className={`mt-5 py-1 w-[250px]
-                                ${router.pathname === '/admin/OrderCancel' ? 'bg-black' : ''}`}>
+                                ${router.pathname === '/admin/OrderCancel' ? 'bg-gray-800 rounded-xl' : ''}`}>
                                     <Link className='w-full block pl-10 py-1' href="/admin/OrderCancel">
-                                        주문 취소 환불
+                                        취소 관리
                                     </Link>
                                 </li>
                                 <li className={`mt-5 py-1 w-[250px]
-                                ${router.pathname === '/admin/OrderRefund' ? 'bg-black' : ''}`}>
+                                ${router.pathname === '/admin/OrderRefund' ? 'bg-gray-800 rounded-xl' : ''}`}>
                                     <Link className='w-full block pl-10 py-1' href="/admin/OrderRefund">
-                                        주문 취소 환불
+                                        환불 관리
                                     </Link>
                                 </li>
                             </ul>
@@ -82,20 +82,20 @@ const SidebarItem = () => {
                         의뢰서
                         {showSubmenu1 === 'request' && (
                             <ul>
-                                <li className={`mt-5 py-3 w-[250px]
-                                ${router.pathname === '/admin/PurchaseRequest' ? 'bg-black' : ''}`}>
+                                <li className={`mt-5 py-1 w-[250px]
+                                ${router.pathname === '/admin/PurchaseRequest' ? 'bg-gray-800 rounded-xl' : ''}`}>
                                     <Link className='w-full block pl-10 py-1' href="/admin/PurchaseRequest">
                                         제품 구매 의뢰
                                     </Link>
                                 </li>
-                                <li className={`mt-5 py-3 w-[250px]
-                                ${router.pathname === '/admin/SalesRequest' ? 'bg-black' : ''}`}>
+                                <li className={`mt-5 py-1 w-[250px]
+                                ${router.pathname === '/admin/SalesRequest' ? 'bg-gray-800 rounded-xl' : ''}`}>
                                     <Link className='w-full block pl-10 py-1' href="/admin/SalesRequest">
                                         제품 제작 의뢰
                                     </Link>
                                 </li>
-                                <li className={`mt-5 py-3 w-[250px]
-                                ${router.pathname === '/admin/EntranceRequest' ? 'bg-black' : ''}`}>
+                                <li className={`mt-5 py-1 w-[250px]
+                                ${router.pathname === '/admin/EntranceRequest' ? 'bg-gray-800 rounded-xl' : ''}`}>
                                     <Link className='w-full block pl-10 py-1' href="/admin/EntranceRequest">
                                         판매자 입점의뢰
                                     </Link>
@@ -110,14 +110,14 @@ const SidebarItem = () => {
                         상품 관리
                         {showSubmenu1 === 'manage' && (
                             <ul>
-                                <li className={`mt-5 py-3 w-[250px]
-                                ${router.pathname === '/admin/ProductRegister' ? 'bg-black' : ''}`}>
+                                <li className={`mt-5 py-1 w-[250px]
+                                ${router.pathname === '/admin/ProductRegister' ? 'bg-gray-800 rounded-xl' : ''}`}>
                                     <Link className='w-full block pl-10 py-1' href="/admin/ProductRegister">
                                         상품 등록
                                     </Link>
                                 </li>
-                                <li className={`mt-5 py-3 w-[250px]
-                                ${router.pathname === '/admin/ProductModify' ? 'bg-black' : ''}`}>
+                                <li className={`mt-5 py-1 w-[250px]
+                                ${router.pathname === '/admin/ProductModify' ? 'bg-gray-800 rounded-xl' : ''}`}>
                                     <Link className='w-full block pl-10 py-1' href="/admin/ProductModify">
                                         상품 수정
                                     </Link>

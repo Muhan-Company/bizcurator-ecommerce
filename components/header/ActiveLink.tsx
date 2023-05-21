@@ -8,9 +8,9 @@ export interface ActiveLinkProps {
 }
 
 export default function ActiveLink({ href, children, className }: ActiveLinkProps) {
-  const router = useRouter();
+  const { asPath } = useRouter();
 
-  const isActive = router.asPath.split('/')[1] === href.split('/')[1];
+  const isActive = asPath.split('/')[1] === href.split('/')[1];
 
   return (
     <Link href={href} className={`${isActive && 'text-main border-b-[1px] border-main'} ${className} header-link`}>

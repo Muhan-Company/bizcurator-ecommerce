@@ -1,23 +1,30 @@
 import { useRouter } from 'next/router';
 import { CheckIcon } from '../Icons';
-import { SortByElment } from '../products/Sort';
+import { sortByList, sortByState } from '@/atoms/sortByAtom';
+import { useRecoilState } from 'recoil';
 
-interface SortModalProps {
-  sortByList: SortByElment[];
+export default function SortModal({
+  setShowSortModal,
+}: {
   setShowSortModal: React.Dispatch<React.SetStateAction<boolean>>;
-  sortBy: SortByElment;
-  setSortBy: React.Dispatch<React.SetStateAction<SortByElment>>;
-}
+}) {
+  const [sortBy, setSortBy] = useRecoilState(sortByState);
 
-export default function SortModal({ sortByList, setShowSortModal, sortBy, setSortBy }: SortModalProps) {
   const router = useRouter();
   const categoryId = router.query.category_id;
+  const searchQuery = router.query.search_query;
 
   const closeModal = () => {
     setShowSortModal(false);
     document.body.classList.remove('modal-open');
 
-    router.push(`/products/categories/${categoryId}?sort=${encodeURIComponent(sortBy.english)}`);
+    if (categoryId) {
+      router.push(`/products/categories/${categoryId}?sort=${encodeURIComponent(sortBy.english)}`);
+    }
+
+    if (searchQuery) {
+      router.push(`/products/results?search_query=${searchQuery}&sort=${encodeURIComponent(sortBy.english)}`);
+    }
   };
 
   return (
