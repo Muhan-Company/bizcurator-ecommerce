@@ -33,10 +33,6 @@ export default function OrderDelivery() {
             searchResult.slice(startIndex, endIndex)
             :
             data?.histories.slice(startIndex, endIndex);
-    console.log(PageEndIndex);
-    console.log(startIndex);
-    console.log(endIndex);
-    console.log(displayData);
     return (
         <>
             <SearchForm onSearch={handleSearch} api={deliveryApi} />

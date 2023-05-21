@@ -1,8 +1,15 @@
 import { useMemberManageDetail } from "@/apis/adminMemberManage";
+import SearchForm from "./AdminSearch";
+import { useState } from "react";
+import { deliveryApi } from "@/apis/deliveryApi";
 
 
 
 export default function AdminMemberManage() {
+    const [searchResult, setSearchResult] = useState([]); // 검색 결과를 저장할 상태
+    const handleSearch = (data: any) => {
+        setSearchResult(data.histories); // 검색 결과를 저장
+    }
 
     const { data, isLoading, error } = useMemberManageDetail();
 
@@ -13,10 +20,10 @@ export default function AdminMemberManage() {
     if (error) {
         return <div>Error: </div>;
     }
-
+    const displayData = searchResult.length > 0 ? searchResult : data?.histories;
     return (
         <>
-            {/* <SearchForm onSearch={handleSearch} api={deliveryApi} /> */}
+            <SearchForm onSearch={handleSearch} api={deliveryApi} />
             <div className="w-[1500px] rounded-[10px] h-[630px] relative mx-[60px] bg-[#fff] mt-[15px]">
                 <div className="w-[1400px] mx-auto pt-[1px]">
                     <table className="w-full">
@@ -32,9 +39,9 @@ export default function AdminMemberManage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {data?.histories?.map((i, index) => (
+                            {displayData?.map((i, index) => (
                                 <tr
-                                    className="border text-center"
+                                    className="border text-center h-[85px]"
                                     key={index}>
                                     {/* <OrderCanceInfo value={i.} /> */}
                                     <MemberManageInfo value={i.userName} />
@@ -60,7 +67,7 @@ type MemberManageInfoProps = {
 function MemberManageInfo({ value }: MemberManageInfoProps) {
     return (
         <>
-            <td>{value}</td>
+            <td className="border">{value}</td>
         </>
     )
 }

@@ -89,14 +89,11 @@ export default function ProductRegister() {
 
         e.preventDefault();
         try {
-            console.log(productInfo);
             const { mainImage, detailImage, ...info } = productInfo;
-            console.log("여기서 에러");
             const formData = new FormData(); //string파일만 들어감(객체 저장x , 문자열만)
             // formData.append("productRequest", JSON.stringify(info)); // 수정: productRequest key를 가지는 JSON 데이터 추가
             const uploaderString = JSON.stringify(info);
             formData.append('productRequest', new Blob([uploaderString], { type: 'application/json' }));
-            console.log(formData);
             if (mainImage) {
                 formData.append('mainImage', mainImage)
             }
@@ -104,9 +101,7 @@ export default function ProductRegister() {
                 formData.append('detailImage', detailImage)
             }
             await mutation.mutateAsync(formData);
-            console.log("상품등록");
         } catch (error) {
-            console.log(`상품등록에러${error}`);
         }
     }
 

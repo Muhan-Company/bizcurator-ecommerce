@@ -13,7 +13,6 @@ import {
 import React from 'react'
 
 export default function TableComponent({ data, displayData }: any) {
-    console.log(data);
     const columns = React.useMemo<ColumnDef<any>[]>(
         () => [
             {

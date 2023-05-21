@@ -68,7 +68,7 @@ export default function AdminEntranceRequest() {
                         <tbody>
                             {data?.histories.map((i, index) => (
                                 <tr
-                                    className="border text-center"
+                                    className="border text-center h-[85px]"
                                     key={index}>
                                     <EntrnaceInfo value={i.id} />
                                     <EntrnaceInfo value={i.category} />

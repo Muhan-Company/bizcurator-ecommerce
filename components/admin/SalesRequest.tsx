@@ -1,9 +1,9 @@
-import { useGetPurchaseDetail } from "@/apis/adminPurchase"
+import { useGetSalesDetail } from "@/apis/adminSales";
 import { useState, useEffect } from "react";
 import axiosInstance from "@/apis/config";
 
 export default function AdminSalesRequest() {
-    const { data, isLoading, error } = useGetPurchaseDetail();
+    const { data, isLoading, error } = useGetSalesDetail();
     const [selectedRow, setSelectedRow] = useState<number | null>(null);
     const [action, setAction] = useState<string>(""); // 추가: 액션 변수
     console.log(data);
