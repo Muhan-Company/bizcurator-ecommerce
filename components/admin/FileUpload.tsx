@@ -6,15 +6,16 @@ type FileUploadProps = {
     handleFileChange: (file: File, type: string) => void;
     imageChange: ("mainImage" | "detailImage")
 };
+
 const mainImage = atom<string | null>({
     key: 'mainImage', // key 값을 지정합니다.
     default: null,
 });
 
-
 export default function FileUpload({ imageChange, handleFileChange }: FileUploadProps) {
 
-    const [fileUrl, setFileUrl] = useRecoilState(mainImage);
+    // const [fileUrl, setFileUrl] = useRecoilState(mainImage);
+    const [fileUrl, setFileUrl] = useState<string | null>(null);
     const [file, setFile] = useState<File | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -32,6 +33,7 @@ export default function FileUpload({ imageChange, handleFileChange }: FileUpload
         //@ts-ignore
         handleFileChange(event.target.files[0], imageChange);
         // console.log(event.target.files[0].name);
+        setFile(event.target.files[0]);
     }, [imageChange]);
 
     const onUploadImageButtonClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
@@ -45,6 +47,7 @@ export default function FileUpload({ imageChange, handleFileChange }: FileUpload
     const closeImageClick = () => {
         setFileUrl("");
     }
+    console.log(fileUrl);
     return (
         <div>
             <div className="py-[30px] bg-[#fff]">

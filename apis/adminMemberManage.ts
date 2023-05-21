@@ -1,6 +1,7 @@
 import axiosInstance from "./config";
 import { useQuery } from "@tanstack/react-query";
 
+
 export type MemberManageProps = {
     userName: string;           //아이디
     businessName: string;       //상호명

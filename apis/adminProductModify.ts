@@ -2,7 +2,7 @@ import axiosInstance from "./config";
 import { useQuery } from "@tanstack/react-query";
 
 export type ProductModifyInfo = {
-    category_id: number;
+    id: number;
     manufacturer_name: string;
     product_name: string;
     regular_price: number;

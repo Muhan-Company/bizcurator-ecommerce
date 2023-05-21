@@ -26,9 +26,9 @@ export const productDataAtom = atom<ProductInfo | null>({
 
 
 
-export const selectedProductState = atom<ProductModifyInfo | null>({
+export const selectedProductState = atom<ProductModifyInfo[]>({
     key: "selectedProductState",
-    default: null,
+    default: [],
 });
 
 export const productToModifyState = atom<ProductInfo | null>({

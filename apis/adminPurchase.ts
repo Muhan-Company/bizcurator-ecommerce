@@ -20,7 +20,6 @@ export type TableComponentProps = {
 const getPurchase = async () => {
     try {
         const { data } = await axiosInstance.get(`/api/admins/purchases`);
-        console.log(data);
         return data.result as
             {
                 histories: PurchaseProps[]
