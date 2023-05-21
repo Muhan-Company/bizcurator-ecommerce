@@ -1,7 +1,7 @@
 import axiosInstance from "./config";
 import { useQuery } from "@tanstack/react-query";
 
-export type ProductInfo = {
+export type ProductModifyInfo = {
     category_id: number;
     manufacturer_name: string;
     product_name: string;
@@ -11,16 +11,16 @@ export type ProductInfo = {
     max_quantity: number;
 }
 
-export interface ProductProps {
-    list: ProductInfo[];
+export interface ProductModifyProps {
+    list: ProductModifyInfo[];
 }
 
-const getCancelRefundDetail = async () => {
+const getModifyDetail = async () => {
     try {
         const { data } = await axiosInstance.get(`/api/admins/products`);
         return data.result as
             {
-                products: ProductInfo[]
+                products: ProductModifyInfo[]
             };
 
     } catch (error) {
@@ -28,6 +28,6 @@ const getCancelRefundDetail = async () => {
     }
 };
 
-export const useGetCancelRefundDetail = () => {
-    return useQuery(['productRequest'], getCancelRefundDetail); // 객체 형태를 제거하고 각각의 인수로 전달
+export const useGetModifyDetail = () => {
+    return useQuery(['modify'], getModifyDetail); // 객체 형태를 제거하고 각각의 인수로 전달
 };

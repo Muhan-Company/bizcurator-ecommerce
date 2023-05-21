@@ -5,14 +5,13 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { atom, useRecoilState } from "recoil";
 import axios from "axios";
 import { ProductInfo, FileUploadProps, DetailPageProps } from "@/utils/type/adminRegister";
-import { productDataAtom } from "@/atoms/adminAtoms";
 import { productToModifyState } from "@/atoms/adminAtoms";
 
 export default function ProductRegister() {
     const [productToModify, setProductToModify] = useRecoilState(productToModifyState);
 
     const [productInfo, setProductInfo] = useState<ProductInfo>({
-        category_id: 0,
+        category_id: 1,
         manufacturer_name: "",
         product_name: "",
         regular_price: 0,
@@ -24,11 +23,14 @@ export default function ProductRegister() {
     })
 
     const [selectedCategory, setSelectedCategory] = useState<string>("")
-    const [productData, setProductData] = useRecoilState(productDataAtom);
 
     // 상품 등록 API 호출을 위한 useMutation 훅 사용
-    const mutation = useMutation((newProductInfo: ProductInfo) =>
-        axios.post('http://43.201.195.195:8080/api/products', newProductInfo)
+    const mutation = useMutation((formData: FormData) =>
+        axios.post('http://43.201.195.195:8080/api/products', formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            }
+        })
     );
 
     const handleSelectCategory = (category: string) => {
@@ -36,21 +38,24 @@ export default function ProductRegister() {
     };
 
     const onChangeFile = (file: File, type: string) => {
+        console.log(file, type);
         if (!file) {
             return;
         }
 
         if (type === "mainImage") {
-            setProductInfo((prev) => ({ ...prev, file }));
+            setProductInfo((prev) => ({ ...prev, mainImage: file }));
+            console.log(`mainImage ${file}`);
         } else if (type === "detailImage") {
-            setProductInfo((prev) => ({ ...prev, detailPage: file }));
+            setProductInfo((prev) => ({ ...prev, detailImage: file }));
+            console.log(`detailImage ${file}`);
         }
     };
     const fileUploadProps: FileUploadProps = {
         handleFileChange: (file) => onChangeFile(file, "mainImage"),
     };
     const detailPageProps: DetailPageProps = {
-        handleFileChange: (file) => onChangeFile(file, "detailImage"),
+        handleFilesChange: (file) => onChangeFile(file, "detailImage"),
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -81,15 +86,24 @@ export default function ProductRegister() {
         }))
     }
     const handleSubmit = async (e: FormEvent) => {
+
         e.preventDefault();
         try {
             console.log(productInfo);
+            const { mainImage, detailImage, ...info } = productInfo;
             console.log("여기서 에러");
-            const formData = new FormData();
-            formData.append("productRequest", JSON.stringify(productInfo)); // 수정: productRequest key를 가지는 JSON 데이터 추가
-            formData.append("mainImage", mainImage); // 수정: mainImage 파일 추가
-            formData.append("detailImage", detailImage); // 수정: detailImage 파일 추가
-            await mutation.mutateAsync(productInfo);
+            const formData = new FormData(); //string파일만 들어감(객체 저장x , 문자열만)
+            // formData.append("productRequest", JSON.stringify(info)); // 수정: productRequest key를 가지는 JSON 데이터 추가
+            const uploaderString = JSON.stringify(info);
+            formData.append('productRequest', new Blob([uploaderString], { type: 'application/json' }));
+            console.log(formData);
+            if (mainImage) {
+                formData.append('mainImage', mainImage)
+            }
+            if (detailImage) {
+                formData.append('detailImage', detailImage)
+            }
+            await mutation.mutateAsync(formData);
             console.log("상품등록");
         } catch (error) {
             console.log(`상품등록에러${error}`);
@@ -181,13 +195,13 @@ export default function ProductRegister() {
                         <div className="py-[30px] bg-[#fff] border-b">
                             썸네일
                         </div>
-                        <FileUpload {...fileUploadProps} handleFileChange={onChangeFile} />
+                        <FileUpload imageChange={"mainImage"} {...fileUploadProps} handleFileChange={onChangeFile} />
                     </div>
                     <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
                         <div className="py-[30px] bg-[#fff] border-b">
                             상세페이지
                         </div>
-                        <FileUpload {...detailPageProps} handleFileChange={onChangeFile} />
+                        <FileUpload imageChange={"detailImage"} {...detailPageProps} handleFileChange={onChangeFile} />
                     </div>
                     <div className="py-[50px] relative">
                         <button

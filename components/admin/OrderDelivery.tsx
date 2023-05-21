@@ -1,16 +1,15 @@
 import { useGetOrderDeliveryDetail } from '@/apis/adminOrderDelivery';
-import getDelivreryStateToString from '@/utils/getDelivreryStateToString';
-
-
-// const dummyWithDeliveryState = dummy.map((order) => ({
-//     ...order,
-//     process_state: getDelivreryStateToString(order.process_state),
-// }));
+import SearchForm from './AdminSearch';
+import { useState } from 'react';
+import { deliveryApi } from '@/apis/deliveryApi';
+import TableComponent from './TableComponent';
 
 export default function OrderDelivery() {
+    const [searchResult, setSearchResult] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태 변수를 추가합니다.
 
     const { data, isLoading, error } = useGetOrderDeliveryDetail();
-    console.log(data);
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -19,56 +18,33 @@ export default function OrderDelivery() {
         return <div>Error: </div>;
     }
 
+    const handleSearch = (data: any) => {
+        setSearchResult(data.histories);
+        setCurrentPage(1); // 검색 시 현재 페이지를 1로 초기화합니다.
+    };
 
+
+    const PageEndIndex = data?.histories.length ?? 0;
+    const startIndex = (currentPage - 1) * PageEndIndex;
+    const endIndex = startIndex + PageEndIndex;
+
+    const displayData =
+        searchResult.length > 0 ?
+            searchResult.slice(startIndex, endIndex)
+            :
+            data?.histories.slice(startIndex, endIndex);
+    console.log(PageEndIndex);
+    console.log(startIndex);
+    console.log(endIndex);
+    console.log(displayData);
     return (
         <>
-            <div className="w-[1500px] rounded-[10px] mx-[60px] bg-[#fff] h-[600px] mt-[15px]">
-                <div className="w-[1400px] mx-auto">
-                    <table className="w-full mt-10">
-                        <thead>
-                            <tr className="border">
-                                <th className="px-10 py-5 border-r">상품명</th>
-                                <th className="px-10 py-5 border-r">제조사</th>
-                                <th className="px-10 py-5 border-r">판매종류(대분류)</th>
-                                <th className="px-10 py-5 border-r">주문번호</th>
-                                <th className="px-10 py-5 border-r">주문일자</th>
-                                <th className="px-10 py-5 border-r">처리상태</th>
-                                <th className="px-10 py-5 border-r">주문갯수</th>
-                                <th className="px-10 py-5 border-r">주문금액</th>
-                                <th className="px-10 py-5 border-r">송장번호</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data?.histories?.map((list, index) => (
-                                <tr key={index} className="border text-center h-20 text-sm">
-                                    <OrderDeliveryInfo value={list.productName} />
-                                    <OrderDeliveryInfo value={list.manufacturerName} />
-                                    <OrderDeliveryInfo value={list.productCategory} />
-                                    <OrderDeliveryInfo value={list.orderId} />
-                                    <OrderDeliveryInfo value={list.deliveryTime} />
-                                    <OrderDeliveryInfo value={list.deliveryState} />
-                                    <OrderDeliveryInfo value={list.quantity} />
-                                    <OrderDeliveryInfo value={list.cost} />
-                                    <OrderDeliveryInfo value={list.orderId} />
-                                </tr>
-                            ))}
-
-                        </tbody>
-                    </table>
+            <SearchForm onSearch={handleSearch} api={deliveryApi} />
+            <div className="w-[1500px] rounded-[10px] h-[630px] relative mx-[60px] bg-[#fff] mt-[15px]">
+                <div className="w-[1400px] mx-auto pt-[1px]">
+                    <TableComponent data={data} displayData={displayData} />
                 </div>
             </div>
         </>
-    )
-}
-
-type OrderDeliveryInfoProps = {
-    value?: string | number;
-}
-
-function OrderDeliveryInfo({ value }: OrderDeliveryInfoProps) {
-    return (
-        <>
-            <td className="border">{value}</td>
-        </>
-    )
+    );
 }

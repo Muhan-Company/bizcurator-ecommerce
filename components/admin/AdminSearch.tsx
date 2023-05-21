@@ -1,58 +1,51 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
-///api/admins/orders?page={page(정수형)}&search={search}
-const SearchForm: React.FC = () => {
+
+type SearchFormProps = {
+    onSearch: (data: any) => void;
+    api: (searchTerm: string) => Promise<any>; // 새로운 `api` prop
+};
+
+
+const SearchForm = ({ onSearch, api }: SearchFormProps) => {
     const [searchTerm, setSearchTerm] = useState('');
-    const path = "http://43.201.195.195:8080"
-    const router = useRouter();
-    const { data, isLoading, isError, error } = useQuery(
-        ['search', searchTerm],
-        async () => {
-            if (searchTerm) {
-                const response = await axios.post(`${path}/api/admins/orders?page=1&search=${searchTerm}`)
-                if (response.status != 200) {
-                    throw new Error("검색 실패");
-                }
-                return response.data;
-            }
-            return null;
-        }
-    )
 
-    const handleSearch = (event: React.FormEvent) => {
-        event.preventDefault();
-        // 검색을 수행하거나 다른 작업을 수행할 수 있습니다.
-        // 예를 들어, 검색 결과를 가져오는 API 호출을 여기에 추가할 수 있습니다.
-        router.push(`?search=${searchTerm}`);
+    const handleSearch = useMutation(async () => {
+        const data = await api(searchTerm);
+        console.log(data);
+        return data;
+    }, {
+        onSuccess: (data) => {
+            onSearch(data);
+            console.log(data);
+        }
+    });
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        handleSearch.mutate();
     };
 
-
     return (
-        <div>
-            <form onSubmit={handleSearch}>
+        <div className='w-[1500px] bg-[#fff] mx-[60px] p-[30px] rounded-xl mt-5'>
+            <form
+                className='flex items-center justify-around'
+                onSubmit={handleSubmit}>
+                <h1>검색어</h1>
                 <input
                     type="text"
+                    placeholder="상품명으로 검색"
                     value={searchTerm}
+                    className='border h-[50px] w-[1200px] text-[18px]'
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button type="submit">검색</button>
-                {isLoading && <div>검색 중...</div>}
-                {isError && <div>검색에 오류가 발생했습니다: {(error as Error)?.message}</div>}
-                {data && (
-                    <div>
-                        검색 결과:
-                        <ul>
-                            {data.results.map((result: any) => (
-                                <li key={result.id}>{result.name}</li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
+                <button
+                    className='w-[70px] h-[50px] rounded-md border bg-[#f7f8f8] border-[#2f20d3]'
+                    type="submit">검색</button>
             </form>
         </div>
     );
 };
+
 export default SearchForm;

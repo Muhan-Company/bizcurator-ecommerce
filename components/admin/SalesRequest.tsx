@@ -1,6 +1,6 @@
 import { useGetPurchaseDetail } from "@/apis/adminPurchase"
 
-export default function AdminPurchaseRequest() {
+export default function AdminSalesRequest() {
     const { data, isLoading, error } = useGetPurchaseDetail();
 
     if (isLoading) {
@@ -18,29 +18,29 @@ export default function AdminPurchaseRequest() {
                         <thead>
                             <tr className="border">
                                 <th className="px-5 py-3 border-r">의뢰번호</th>
-                                <th className="px-10 py-5 border-r">구매희망품목</th>
-                                <th className="px-10 py-5 border-r">제품성분명</th>
+                                <th className="px-5 py-3 border-r">제작목적</th>
+                                <th className="px-10 py-5 border-r">제품설명</th>
                                 <th className="px-10 py-5 border-r">제품수량</th>
                                 <th className="px-10 py-5 border-r">견적수량희망일</th>
                                 <th className="px-10 py-5 border-r">제품배송희망일</th>
                                 <th className="px-10 py-5 border-r">직통번호</th>
-                                <th className="px-10 py-5 border-r">승인여부</th>
+                                <th className="px-10 py-5 border-r">승인여부상태</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {data?.histories.map((i, index) => (
+                            {data?.histories?.map((i, index) => (
                                 <tr
                                     className="border text-center"
                                     key={index}>
-                                    <PurchaseInfo value={i.id} />
-                                    <PurchaseInfo value={i.category} />
-                                    <PurchaseInfo value={i.productDetail} />
-                                    <PurchaseInfo value={i.quantity} />
-                                    <PurchaseInfo value={i.desiredEstimateDate} />
-                                    <PurchaseInfo value={i.desiredDeliveryDate} />
-                                    <PurchaseInfo value={i.directPhoneNumber} />
-                                    <PurchaseInfo value={i.state} />
-
+                                    {/* <OrderCanceInfo value={i.} /> */}
+                                    <SalesInfo value={i.id} />
+                                    <SalesInfo value={i.category} />
+                                    <SalesInfo value={i.productDetail} />
+                                    <SalesInfo value={i.quantity} />
+                                    <SalesInfo value={i.desiredEstimateDate} />
+                                    <SalesInfo value={i.desiredDeliveryDate} />
+                                    <SalesInfo value={i.directPhoneNumber} />
+                                    <SalesInfo value={i.state} />
                                 </tr>
                             ))}
                         </tbody>
@@ -51,11 +51,11 @@ export default function AdminPurchaseRequest() {
     )
 }
 
-type PurchaseInfoProps = {
+type SalesInfoProps = {
     value?: string | number;
 }
 
-function PurchaseInfo({ value }: PurchaseInfoProps) {
+function SalesInfo({ value }: SalesInfoProps) {
     return (
         <>
             <td className="border">{value}</td>

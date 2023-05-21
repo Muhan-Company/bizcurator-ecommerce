@@ -1,8 +1,10 @@
 import { atom } from "recoil";
 import { ProductInfo } from "@/utils/type/adminRegister";
+import { ProductModifyInfo } from "@/apis/adminProductModify";
+
 
 export const dataAtom = atom<null>({
-    key: 'dataAtom',
+    key: 'dataAtom', //atom의 이름
     default: null,
 });
 
@@ -22,8 +24,10 @@ export const productDataAtom = atom<ProductInfo | null>({
     default: null,
 })
 
-export const selectedProductState = atom<number | null>({
-    key: 'selectedProductState',
+
+
+export const selectedProductState = atom<ProductModifyInfo | null>({
+    key: "selectedProductState",
     default: null,
 });
 

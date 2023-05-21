@@ -1,17 +1,18 @@
 import React, { ChangeEvent, useState, useEffect, useCallback, useRef } from "react";
 import Image from 'next/image';
 import { atom, useRecoilState } from "recoil";
-import axios from "axios";
 
 type FileUploadProps = {
     handleFileChange: (file: File, type: string) => void;
+    imageChange: ("mainImage" | "detailImage")
 };
 const mainImage = atom<string | null>({
     key: 'mainImage', // key 값을 지정합니다.
     default: null,
 });
 
-export default function FileUpload({ handleFileChange }: FileUploadProps) {
+
+export default function FileUpload({ imageChange, handleFileChange }: FileUploadProps) {
 
     const [fileUrl, setFileUrl] = useRecoilState(mainImage);
     const [file, setFile] = useState<File | null>(null);
@@ -24,16 +25,18 @@ export default function FileUpload({ handleFileChange }: FileUploadProps) {
     }, [file, setFileUrl]);
 
     const handleFileUpload = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+        console.log(event.target.files)
         if (!event.target.files) {
             return;
         }
         //@ts-ignore
-        handleFileChange(event.target.files[0])
+        handleFileChange(event.target.files[0], imageChange);
         // console.log(event.target.files[0].name);
-    }, []);
+    }, [imageChange]);
 
     const onUploadImageButtonClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        console.log(inputRef)
         if (inputRef.current) {
             inputRef.current.click();
         }

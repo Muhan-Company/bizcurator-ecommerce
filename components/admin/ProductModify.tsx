@@ -3,21 +3,23 @@ import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { selectedProductState, productToModifyState } from "@/atoms/adminAtoms";
 import axios from "axios";
-import { useGetCancelRefundDetail, ProductInfo, ProductProps } from "@/apis/adminProductModify";
+import { useGetModifyDetail, ProductModifyInfo, ProductModifyProps } from "@/apis/adminProductModify";
 
 
 
-export default function ProductModify({ list }: ProductProps) {
+export default function ProductModify({ list }: ProductModifyProps) {
     const [radioCheck, setRadioCheck] = useState<number | null>(null); //체크한 물품의 id를 저장하는상태
-    const { data, isLoading, error } = useGetCancelRefundDetail();
-    const [selectedProductId, setSelectedProductId] = useRecoilState(selectedProductState);
+    const { data, isLoading, error } = useGetModifyDetail();
+    const [selectedProductId, setSelectedProductId] = useRecoilState<ProductModifyInfo | null>(selectedProductState);
     const [, setProductToModify] = useRecoilState(productToModifyState);
 
     const handleRadioChange = (id: number) => {
         setSelectedProductId(id);
+        console.log(id);
+        console.log(selectedProductId);
         // setProductToModify(selectedProduct);
 
-        const selectedProduct = data?.products.find((product: ProductInfo) => product.category_id === id);
+        const selectedProduct = data?.products.find((product: ProductModifyInfo) => product.category_id === id);
         console.log(selectedProduct);
         if (selectedProduct) {
             setProductToModify(selectedProduct);
@@ -52,6 +54,7 @@ export default function ProductModify({ list }: ProductProps) {
     if (isLoading) {
         return <div>Loading...</div>;
     }
+    console.log(list);
 
     if (error) {
         return <div>Error: </div>;
@@ -80,7 +83,7 @@ export default function ProductModify({ list }: ProductProps) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data?.products?.map((i: ProductInfo, index) => ( //값이 없는경우
+                                {data?.products?.map((i: ProductModifyInfo, index) => ( //값이 없는경우
                                     <tr key={index}>
                                         <td className="py-3 border">
                                             <input

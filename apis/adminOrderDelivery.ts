@@ -15,19 +15,11 @@ export type OrderDeliveryProps = {
     paymentId: number; //송장번호              -- 주문번호
     cancel_reason?: string; //사유
 }
-// paymentId(주문 번호, 정수형),
-// orderInfo:
-// [
-// {
-// orderId(주문한 물건의 고유번호, 정수형)
-// image(물품 이미지 경로, 문자열),
-// costPerOne(제품 하나 가격),
-// deliveryState (배송상태, 문자열)
-// orderTime(주문한 날짜 - 문자열)
-// name(물품명, 문자열),
-// quantity(수량, 정수형),
-// cost(결제금액, 정수형),
 
+export type TableComponentProps = {
+    displayData: OrderDeliveryProps[] | undefined;
+    onSearch: (searchTerm: string) => void;
+};
 
 export interface OrderDeliveryItemProps {
     list: OrderDeliveryProps[];
@@ -36,7 +28,7 @@ export interface OrderDeliveryItemProps {
 const getOrderDelivery = async () => {
     try {
         const { data } = await axiosInstance.get(`/api/admins/orders`);
-        console.log(data.result.histories);
+        console.log(data);
         return data.result as
             {
                 histories: OrderDeliveryProps[]
