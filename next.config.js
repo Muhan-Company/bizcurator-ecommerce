@@ -39,6 +39,12 @@ const nextConfig = {
         port: '',
         pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname: 'mall.ourhome.co.kr',
+        port: '',
+        pathname: '**',
+      },
     ],
   },
 };
