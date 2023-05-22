@@ -9,6 +9,7 @@ interface FormValues6 {
 
 export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
   const { title, description, request, setRequest } = formValues6;
+
   return (
     <div className="mt-12 gap-y-1.5 flex flex-col">
       <label className="font-bold text-label-md text-main space-y-2">
