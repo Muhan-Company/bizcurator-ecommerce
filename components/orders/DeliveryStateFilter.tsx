@@ -1,40 +1,42 @@
-import { useState } from 'react';
+import { useGetMyPageMain } from '@/apis/mypage';
+import { useRouter } from 'next/router';
 
-const DELIVERY_STATE = ['결제완료', '배송중', '배송완료', '구매확정'];
+const DELIVERY_STATE = [
+  { payDoneCount: ['결제완료', 'paid'] },
+  { deliveringCount: ['배송중', 'delivering'] },
+  { deliverDoneCount: ['배송완료', 'deliver_done'] },
+  { paymentConfirmedCount: ['구매확정', 'finish'] },
+];
 
 export default function DeliveryStateFilter() {
-  const [active, setActive] = useState(0);
+  const { data } = useGetMyPageMain();
+
   return (
-    <div className="center justify-between px-[18.5px] pt-6 pb-7">
-      {DELIVERY_STATE.map((state, index) => (
-        <DeliveryStateFilterButton
-          key={index}
-          index={index}
-          count={0}
-          state={state}
-          active={active}
-          setActive={setActive}
-        />
-      ))}
+    <div className="center-between px-[18.5px] pt-6 pb-7">
+      {DELIVERY_STATE.map((state, index) => {
+        const key = Object.keys(state)[0];
+        const stateValue = Object.values(state)[0];
+        return (
+          <DeliveryStateFilterButton key={index} id={stateValue[1]} count={data && data[key]} state={stateValue[0]} />
+        );
+      })}
     </div>
   );
 }
 
 type DeliveryStateButtonProps = {
-  index: number;
+  id: string;
   count: number;
   state: string;
-  active: number;
-  setActive: (active: number) => void;
 };
 
-function DeliveryStateFilterButton({ index, count, state, active, setActive }: DeliveryStateButtonProps) {
+function DeliveryStateFilterButton({ id, count, state }: DeliveryStateButtonProps) {
+  const { query, replace } = useRouter();
+
   return (
     <div
-      className={`w-14 center flex-col ${
-        DELIVERY_STATE[active] === state ? 'text-primary' : 'text-gray_01'
-      } cursor-pointer`}
-      onClick={() => setActive(index)}
+      className={`w-14 center flex-col ${query?.state === id ? 'text-primary' : 'text-gray_01'} cursor-pointer`}
+      onClick={() => replace(id)}
     >
       <div className="text-[20px] font-bold">{count}</div>
       <div className="text-label-sm">{state}</div>

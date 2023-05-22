@@ -1,23 +1,37 @@
 import DateFilter from '@/components/orders/DateFilter';
 import DeliveryStateFilter from '@/components/orders/DeliveryStateFilter';
 import EmptyOrderList from './EmptyOrderList';
-import Order from './Order';
+import Order, { OrderProps } from './Order';
+import { useRecoilValue } from 'recoil';
+import { selectedDateFilterState } from '@/atoms/selectedDateFilterAtom';
+import { useGetOrderList } from '@/apis/orders';
+import { useRouter } from 'next/router';
 
-type OrderListProps = {
-  orders?: any[];
-};
-export default function OrderList({ orders = [1] }: OrderListProps) {
+export default function OrderList() {
+  const selectedDateFilter = useRecoilValue(selectedDateFilterState);
+  const { query } = useRouter();
+
+  const { data } = useGetOrderList(query?.state, selectedDateFilter);
+  console.log(data);
   return (
-    <div className="pt-[26px] mx-3 static">
+    <div className="pt-[26px] mx-3">
       <DateFilter />
       <DeliveryStateFilter />
-      {orders.length < 1 ? (
-        <EmptyOrderList />
+
+      {data?.length < 1 ? (
+        <div className="flex">
+          <EmptyOrderList />
+        </div>
       ) : (
         <div>
-          {/* todo: api 데이터 받아 map함수 사용 */}
-          {/* todo: orderTime, paymentId props 내려주기 */}
-          <Order />
+          {data?.map((order: OrderProps) => (
+            <Order
+              key={order?.paymentId}
+              orderTime={order.orderInfo[0].orderTime}
+              paymentId={order?.paymentId}
+              orderInfo={order.orderInfo}
+            />
+          ))}
         </div>
       )}
     </div>

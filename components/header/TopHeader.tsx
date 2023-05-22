@@ -37,10 +37,10 @@ export default function TopHeader() {
       </Link>
       <div className="lg:flex flex-col lg:space-y-10">
         <div className="hidden lg:block space-x-5">
-          <Link href={'/'}>회원가입</Link>
+          <Link href={'/signup'}>회원가입</Link>
           <button onClick={openLogInModal}>로그인</button>
           {showLogInModal && createPortal(<LogInModal setShowLogInModal={setShowLogInModal} />, document.body)}
-          <Link href={'/'}>고객센터</Link>
+          <Link href={'/customer'}>고객센터</Link>
         </div>
         <div className="flex items-center space-x-5 ml-auto">
           <button className="header-btn" onClick={showSearch}>
@@ -50,7 +50,7 @@ export default function TopHeader() {
           <button className="hidden lg:inline header-btn">
             <UserIcon color="main" />
           </button>
-          <Link href={'/user/cart'} className="header-btn">
+          <Link href={'/cart'} className="header-btn">
             <Cart className="w-5 lg:w-8 h-5 lg:h-8" />
           </Link>
         </div>
