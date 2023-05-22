@@ -1,7 +1,7 @@
 import { useGetOrderDeliveryDetail } from '@/apis/adminOrderDelivery';
 import SearchForm from './AdminSearch';
 import { useState } from 'react';
-import { deliveryApi } from '@/apis/deliveryApi';
+import { deliveryApi } from '@/apis/SearchFormApi';
 import TableComponent from './TableComponent';
 
 export default function OrderDelivery() {

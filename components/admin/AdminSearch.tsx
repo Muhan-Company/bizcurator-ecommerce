@@ -24,6 +24,7 @@ const SearchForm = ({ onSearch, api }: SearchFormProps) => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log(api);
         handleSearch.mutate();
     };
 

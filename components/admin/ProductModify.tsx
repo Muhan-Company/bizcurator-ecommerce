@@ -1,29 +1,31 @@
-import AdminSearch from "./AdminSearch";
 import React, { ChangeEvent, useState } from "react";
 import { useRecoilState } from "recoil";
-import { selectedProductState, productToModifyState } from "@/atoms/adminAtoms";
+import { productToModifyState } from "@/atoms/adminAtoms";
 import axios from "axios";
 import { useGetModifyDetail, ProductModifyInfo, ProductModifyProps } from "@/apis/adminProductModify";
+import { ProductModifyApi } from "@/apis/SearchFormApi";
+import SearchForm from "./AdminSearch";
 
 
 
-export default function ProductModify({ list }: ProductModifyProps) {
-
-    const [radioCheck, setRadioCheck] = useState<number | null>(null); //체크한 물품의 id를 저장하는상태
+export default function ProductModify() {
     const { data, isLoading, error } = useGetModifyDetail();
     const [, setProductToModify] = useRecoilState(productToModifyState);
     const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
-
+    const [searchResult, setSearchResult] = useState([]); // 검색 결과를 저장할 상태
+    const handleSearch = (data: any) => {
+        setSearchResult(data.products); // 검색 결과를 저장
+    }
+    console.log(searchResult);
     console.log(data);
     if (isLoading) {
         return <div>Loading...</div>;
     }
-    console.log(list);
 
     if (error) {
         return <div>Error: </div>;
     }
-
+    console.log(ProductModifyApi);
     const handleCheckboxChange = (productId: number) => {
         setSelectedProductId(productId);
     };
@@ -37,18 +39,19 @@ export default function ProductModify({ list }: ProductModifyProps) {
 
         }
     };
-
+    const displayData = searchResult.length > 0 ? searchResult : data?.products;
     return (
         <>
-            <div className="w-[1500px] mx-[60px] my-[15px] bg-white">
+            <SearchForm onSearch={handleSearch} api={ProductModifyApi} />
+            <div className="w-[1500px] h-[630px] mx-[60px] my-[15px] bg-white">
                 <div className="w-[1300px] mx-auto py-[15px]">
                     <div>
                         <button type="button"
                             onClick={handleModifyButtonClick}
-                            className="w-[140px] h-[40px] border mt-10"
+                            className="w-[140px] h-[40px] border mt-1"
                         >물품 수정
                         </button>
-                        <table className="w-full mt-10 text-center">
+                        <table className="w-full mt-3 text-center">
                             <thead>
                                 <tr className="border">
                                     <th className="py-3 border-r">선택</th>
@@ -59,7 +62,7 @@ export default function ProductModify({ list }: ProductModifyProps) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data?.products?.map((i: ProductModifyInfo, index) => ( //값이 없는경우
+                                {displayData?.map((i: ProductModifyInfo, index: number) => ( //값이 없는경우
                                     <tr key={index}>
                                         <td className="py-3 border">
                                             <input

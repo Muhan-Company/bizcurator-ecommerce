@@ -1,25 +1,24 @@
-import { useQuery } from '@tanstack/react-query';
-import { atom, useRecoilState } from 'recoil';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useGetOrderCancelDetail, OrderCancelItemProps } from '@/apis/adminOrderCancel';
+import { useGetOrderCancelDetail, OrderCancelItem } from '@/apis/adminOrderCancel';
+import { OrderCancelManageApi } from '@/apis/SearchFormApi';
+import SearchForm from './AdminSearch';
 
-// Recoil atom 정의
-const selectedItemsState = atom<any[]>({
-    key: 'selectedItemsState',
-    default: [] // 선택된 항목을 저장하는 배열
-});
-export default function OrderCancel({ list }: OrderCancelItemProps) {
-    console.log(list);
+export default function OrderCancel() {
     const { data, isLoading, error } = useGetOrderCancelDetail();
+    const [searchResult, setSearchResult] = useState([]); // 검색 결과를 저장할 상태
 
-    console.log(data);
-    // React Query의 useQuery 훅을 사용하여 데이터를 가져옴
+    const handleSearch = (data: any) => {
+        setSearchResult(data.histories); // 검색 결과를 저장
+    }
+    console.log(searchResult);
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
-    // Recoil 상태와 업데이트 함수 가져오기
-    const [selectedItems, setSelectedItems] = useRecoilState(selectedItemsState);
-
-    // 데이터를 가져오는 로직을 포함한 queryFn 정의
+    if (error) {
+        return <div>Error: </div>;
+    }
 
     // 취소 처리 상태 문자열 변환 함수
     const getCancelStateToString = (cancelState: string) => {
@@ -28,23 +27,22 @@ export default function OrderCancel({ list }: OrderCancelItemProps) {
         // 필요에 따라 실제 취소 처리 상태 문자열로 변환해주세요.
         return cancelState;
     };
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: </div>;
-    }
     // 주문 취소 정보 컴포넌트
     const OrderCanceInfo: React.FC<{ value: string | number }> = ({ value }) => (
         <td className="px-5 py-5 border-r">{value}</td>
     );
 
+    const handleCheckboxChange = () => {
 
+    }
+    const displayData = searchResult.length > 0 ? searchResult : data?.histories;
+
+    console.log(data?.histories);
     return (
         <>
-            <div className="w-[1500px] rounded-[10px] mx-[60px] bg-[#fff] h-[600px] mt-[15px]">
-                <div className="w-[1500px] mx-auto">
+            <SearchForm onSearch={handleSearch} api={OrderCancelManageApi} />
+            <div className="w-[1500px] rounded-[10px] mx-[60px] bg-[#fff] h-[630px] mt-[15px]">
+                <div className="w-[1300px] mx-auto py-[15px]">
                     <table className="w-full mt-10">
                         <thead>
                             <tr className="border">
@@ -61,26 +59,30 @@ export default function OrderCancel({ list }: OrderCancelItemProps) {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className="border text-center h-20">
-                                <td>
-                                    <input
-                                        type="checkbox"
-                                    // onChange={(e) => handleCheckboxChange(e, index)}
+                            {displayData?.map((item: OrderCancelItem, index) => (
+                                <tr
+                                    key={index}
+                                    className="border text-center h-20">
+                                    <td>
+                                        <input
+                                            type="checkbox"
+                                            onChange={(e) => handleCheckboxChange()}
+                                        />
+                                    </td>
+                                    <OrderCancelInfo value={item.productName} />
+                                    <OrderCancelInfo value={item.manufacturerName} />
+                                    <OrderCancelInfo value={item.productCategory} />
+                                    <OrderCancelInfo value={item.applicationId} />
+                                    <OrderCancelInfo value={item.orderTime} />
+                                    <OrderCancelInfo
+                                        value={getCancelStateToString(item.state)}
                                     />
-                                </td>
-                                {/* <OrderCanceInfo value={item.product} />
-                                    <OrderCanceInfo value={item.salesCompany} />
-                                    <OrderCanceInfo value={item.sales_type} />
-                                    <OrderCanceInfo value={item.order_number} />
-                                    <OrderCanceInfo value={item.order_date} />
-                                    <OrderCanceInfo
-                                        value={getCancelStateToString(item.cancel_state)}
-                                    />
-                                    <OrderCanceInfo value={item.order_count} />
-                                    <OrderCanceInfo value={item.order_amount} />
-                                    <OrderCanceInfo value={item.cancel_reason} /> */}
-                            </tr>
+                                    <OrderCancelInfo value={item.quantity} />
+                                    <OrderCancelInfo value={item.cost} />
+                                    <OrderCancelInfo value={item.opinionCategory} />
+                                </tr>
 
+                            ))}
                         </tbody>
                     </table>
                 </div>
@@ -93,6 +95,6 @@ type OrderCanceInfoProps = {
     value?: string | number;
 };
 
-function OrderCanceInfo({ value }: OrderCanceInfoProps) {
+function OrderCancelInfo({ value }: OrderCanceInfoProps) {
     return <td className="border">{value}</td>;
 }
