@@ -13,7 +13,6 @@ axiosInstance.interceptors.request.use(
     let token = null;
 
     /* refreshToken 토큰 사용 api 주소  */
-
     // Server-side 에서는 window가 없기 때문에 local storage 사용 불가
     if (typeof window !== 'undefined') {
       if (config.url === REFRESH_URL) {
