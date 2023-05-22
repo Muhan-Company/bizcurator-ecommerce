@@ -1,8 +1,14 @@
 import { useGetSalesDetail } from "@/apis/adminSales";
 import { useState, useEffect } from "react";
 import axiosInstance from "@/apis/config";
+import SearchForm from "./AdminSearch";
+import { SalesApi } from "@/apis/SearchFormApi";
 
 export default function AdminSalesRequest() {
+    const [searchResult, setSearchResult] = useState([]); // 검색 결과를 저장할 상태
+    const handleSearch = (data: any) => {
+        setSearchResult(data.histories); // 검색 결과를 저장
+    }
     const { data, isLoading, error } = useGetSalesDetail();
     const [selectedRow, setSelectedRow] = useState<number | null>(null);
     const [action, setAction] = useState<string>(""); // 추가: 액션 변수
@@ -52,8 +58,11 @@ export default function AdminSalesRequest() {
     if (error) {
         return <div>Error: </div>;
     }
+    const displayData = searchResult.length > 0 ? searchResult : data?.histories;
+
     return (
         <>
+            <SearchForm onSearch={handleSearch} api={SalesApi} />
             <div className="w-[1500px] rounded-[10px] h-[630px] relative mx-[60px] bg-[#fff] mt-[15px]">
                 <div className="w-[1400px] mx-auto pt-[1px]">
                     <table className="w-full mt-10 text-center">
@@ -70,7 +79,7 @@ export default function AdminSalesRequest() {
                             </tr>
                         </thead>
                         <tbody>
-                            {data?.histories?.map((i, index) => (
+                            {displayData?.map((i, index) => (
                                 <tr
                                     className="border text-center h-[85px]"
                                     key={index}>

@@ -7,7 +7,7 @@ import AdminProductModify from "@/components/admin/ProductModify";
 
 export default function ProductModify() {
     return (
-        <div className="flex bg-[#ebedee]">
+        <div className="flex bg-[#ebedee] h-screen">
             <SidebarItem />
             <div className="ml-80 w-[1600px]">
                 <AdminHeader />

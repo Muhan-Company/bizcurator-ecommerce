@@ -1,8 +1,8 @@
 import axiosInstance from "./config";
 import { useQuery } from "@tanstack/react-query";
 
-export type OrderCancelItem = {
-    applicationId: number;      //취소 고유 번호
+export type OrderRefundItem = {
+    applicationId: number;      //환불 고유 번호
     productName: string;        //상품명
     manufacturerName: string;   //제조사명
     productCategory: string;    //판매종류-대분류
@@ -13,17 +13,17 @@ export type OrderCancelItem = {
     opinionCategory: string;    //신청한사유
 }
 
-export interface OrderCancelItemProps {
-    list: OrderCancelItem[];
+export interface OrderRefundItemProps {
+    list: OrderRefundItem[];
 }
 
-const getOrderCancel = async () => {
+const getOrderRefund = async () => {
     try {
-        const { data } = await axiosInstance.get(`/api/admins/applications/cancellations`);
+        const { data } = await axiosInstance.get(`/api/admins/applications/refunds`);
         console.log(data);
         return data.result as
             {
-                histories: OrderCancelItem[]
+                histories: OrderRefundItem[]
             };
 
     } catch (error) {
@@ -31,6 +31,6 @@ const getOrderCancel = async () => {
     }
 };
 
-export const useGetOrderCancelDetail = () => {
-    return useQuery(['ordercancel'], getOrderCancel); // 객체 형태를 제거하고 각각의 인수로 전달
+export const useGetOrderRefundDetail = () => {
+    return useQuery(['orderrefund'], getOrderRefund); // 객체 형태를 제거하고 각각의 인수로 전달
 };

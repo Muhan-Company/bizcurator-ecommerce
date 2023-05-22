@@ -5,11 +5,10 @@ import AdminOrderCancel from "@/components/admin/OrderCancel";
 
 export default function OrderCancel() {
     return (
-        <div className="flex bg-[#ebedee]">
+        <div className="flex bg-[#ebedee] h-screen">
             <SidebarItem />
             <div className="ml-80 w-[1600px]">
                 <AdminHeader />
-                <SearchForm />
                 <AdminOrderCancel list={[]} />
             </div>
         </div>
