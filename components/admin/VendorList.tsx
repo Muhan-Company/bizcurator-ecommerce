@@ -1,9 +1,13 @@
 import { useGetVendorListDetail } from "@/apis/adminVendorList"
-
+import { useState } from "react";
+import { VendorApi } from "@/apis/SearchFormApi";
+import SearchForm from "./AdminSearch";
 
 export default function VendorList() {
-
-
+    const [searchResult, setSearchResult] = useState([]); // 검색 결과를 저장할 상태
+    const handleSearch = (data: any) => {
+        setSearchResult(data.histories); // 검색 결과를 저장
+    }
     const { data, isLoading, error } = useGetVendorListDetail();
     console.log(data);
     if (isLoading) {
@@ -13,9 +17,11 @@ export default function VendorList() {
     if (error) {
         return <div>Error: </div>;
     }
-
+    const displayData = searchResult.length > 0 ? searchResult : data?.list;
     return (
         <>
+            <SearchForm onSearch={handleSearch} api={VendorApi} />
+
             <div className="w-[1500px] rounded-[10px] mx-[60px] bg-[#fff] h-[600px] mt-[15px]">
                 <div className="w-[1400px] mx-auto">
                     <table className="w-full mt-10">
@@ -31,13 +37,18 @@ export default function VendorList() {
                             </tr>
                         </thead>
                         <tbody>
-                            <VendorInfo />
-                            <VendorInfo />
-                            <VendorInfo />
-                            <VendorInfo />
-                            <VendorInfo />
-                            <VendorInfo />
-                            <VendorInfo />
+                            {displayData?.map((i, index) => (
+                                <tr
+                                    className="border text-center h-[85px]"
+                                    key={index}>
+                                    <VendorInfo value={i.businessName} />
+                                    <VendorInfo value={i.category} />
+                                    <VendorInfo value={i.businessNumber} />
+                                    <VendorInfo value={i.ceoName} />
+                                    <VendorInfo value={i.managerPhoneNumber} />
+                                    <VendorInfo value={i.companyAge} />
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

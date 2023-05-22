@@ -1,7 +1,7 @@
 import { useMemberManageDetail } from "@/apis/adminMemberManage";
 import SearchForm from "./AdminSearch";
 import { useState } from "react";
-import { deliveryApi } from "@/apis/deliveryApi";
+import { memberManageApi } from "@/apis/SearchFormApi";
 
 
 
@@ -13,17 +13,18 @@ export default function AdminMemberManage() {
 
     const { data, isLoading, error } = useMemberManageDetail();
 
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
-
     if (error) {
         return <div>Error: </div>;
     }
+
     const displayData = searchResult.length > 0 ? searchResult : data?.histories;
     return (
         <>
-            <SearchForm onSearch={handleSearch} api={deliveryApi} />
+            <SearchForm onSearch={handleSearch} api={memberManageApi} />
             <div className="w-[1500px] rounded-[10px] h-[630px] relative mx-[60px] bg-[#fff] mt-[15px]">
                 <div className="w-[1400px] mx-auto pt-[1px]">
                     <table className="w-full">
