@@ -1,6 +1,9 @@
-type CartPaymentAmountProps = {};
+type CartPaymentAmountProps = {
+  totalCost: number;
+  totalDiscount: number;
+};
 
-export default function CartPaymentAmountInfo() {
+export default function CartPaymentAmountInfo({ totalCost, totalDiscount }: CartPaymentAmountProps) {
   return (
     <section>
       <h3 className="pt-7 pb-3 border-b-[1px] border-b-black font-medium">결제정보</h3>
@@ -9,15 +12,15 @@ export default function CartPaymentAmountInfo() {
 gray_02"
       >
         {/* 체크된 상품의 정가 * 수량 계산 금액 */}
-        <Amount title="총 상품금액" price={5000 * 10} />
+        <Amount title="총 상품금액" price={totalCost} />
         {/* 체크된 상품의 할인 금액 * 수량 계산 금액 */}
-        <Amount title="할인금액" price={-500 * 10} />
+        <Amount title="할인금액" price={-1 * totalDiscount} />
       </div>
       <div className="flex items-center justify-between py-6">
         <h2 className="text-title-xs font-medium">최종결제금액</h2>
         {/* 체크된 상품의 (정가 * 수량 - 할인 금액 * 수량) 계산 금액 */}
         <span className="text-red font-medium">
-          {(5000 * 10 - 500 * 10).toLocaleString('ko-KR')}
+          {(totalCost - totalDiscount).toLocaleString('ko-KR')}
           <span className="text-main">원</span>
         </span>
       </div>
