@@ -32,7 +32,7 @@ export default function SearchAddressForm({
           disabled
           id="postalCode"
           className="input"
-          {...inputProps![0]}
+          {...(inputProps && { ...inputProps[0] })}
           multiple={multiple}
         />
         <button
@@ -40,7 +40,7 @@ export default function SearchAddressForm({
           className="w-[120px] h-[44px] ml-[10px] btn-white border-main text-button-xs btn-disabled"
           onClick={(e) => {
             e.preventDefault();
-            // 주소 찾기 팝업 API 연결
+            // 주소 찾기 팝업 기능 연결
             openSearchForAddressPopUp(setAddressData);
           }}
         >
@@ -54,7 +54,7 @@ export default function SearchAddressForm({
         disabled
         id="address"
         className="input"
-        {...inputProps![1]}
+        {...(inputProps && { ...inputProps[1] })}
         multiple={multiple}
       />
       <input
@@ -64,7 +64,7 @@ export default function SearchAddressForm({
         disabled={disabled}
         id="detailAddress"
         className="input"
-        {...inputProps![2]}
+        {...(inputProps && { ...inputProps[2] })}
         multiple={multiple}
         onChange={(e) => setAddressData((prev) => ({ ...prev, detailAddress: e.target.value }))}
         onBlur={(e) => setAddressData((prev) => ({ ...prev, detailAddress: e.target.value.trim() }))}
