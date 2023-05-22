@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CustomWriteModal from '../modals/CustomWriteModal';
 import { createPortal } from 'react-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axiosInstance from '@/apis/config';
 import { NoticePostType } from '@/utils/types/responseType';
 
@@ -13,12 +13,13 @@ export default function NoticeList({ dataList }: NoticeListProps) {
 
   const [selectIndex, setSelectIndex] = useState<number | null>(null);
   const [writeOpenModal, setWriteOpenModal] = useState<boolean>(false);
-
+  const queryClient = useQueryClient(); // 쿼리 클라이언트 생성
 
   // console.log(dataList);
 
   const listClick = (index: number) => {
     setSelectIndex(selectIndex === index ? null : index);
+    console.log(selectIndex);
   } // 항목을 클릭했을때 호출되는 함수이고 index를 찾아서 클릭이 된다.
 
   const writeModal = () => {
@@ -27,7 +28,6 @@ export default function NoticeList({ dataList }: NoticeListProps) {
   };
   const onEditClick = (index: number) => {
     setWriteOpenModal(true);
-    console.log(setSelectIndex(index));
   };
 
   const onDeleteClick = async (index: number) => {
@@ -38,6 +38,7 @@ export default function NoticeList({ dataList }: NoticeListProps) {
     try {
       const id = dataList[index].id;
       await deleteNoticeMutation.mutateAsync(id);
+      queryClient.invalidateQueries(['notices']); // 삭제 후 목록을 다시 불러오기 위해 해당 쿼리를 갱신
     } catch (error) {
       console.log('삭제 실패', error);
     }
@@ -45,9 +46,14 @@ export default function NoticeList({ dataList }: NoticeListProps) {
 
   //interceptor.ts에 저장되어있는 axiosInstance 서버주소를통해 delete주소로 보낸다
   //토큰값을 임의로 저장해놓았음
-  const deleteNoticeMutation = useMutation((id: number) =>
-    axiosInstance.delete(`/api/notices/${id}`));
-  console.log(dataList);
+  const deleteNoticeMutation = useMutation(
+    (id: number) => axiosInstance.delete(`/api/notices/${id}`),
+    {
+      onSuccess: () => {
+        console.log('삭제 성공');
+      },
+    }
+  );
 
 
   return (
@@ -61,7 +67,7 @@ export default function NoticeList({ dataList }: NoticeListProps) {
         {dataList?.map((data, index) => (
           <div key={index}>
             <div
-              className="pt-5 pb-5 border-b cursor-pointer relative md:ml-auto mt-4"
+              className=" pt-5 pb-5 border-b cursor-pointer relative md:ml-auto mt-4"
               onClick={() => listClick(index)}
             >
               <span className="ml-3 text-sm md:text-base md:ml-12">{data.title}</span>
@@ -101,6 +107,7 @@ export default function NoticeList({ dataList }: NoticeListProps) {
           <CustomWriteModal
             setWriteOpenModal={setWriteOpenModal}
             item={selectIndex !== null ? dataList[selectIndex] : undefined} // 수정할 아이템 전달
+
           />,
           document.body,
         )}

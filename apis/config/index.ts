@@ -14,12 +14,16 @@ axiosInstance.interceptors.request.use(
     let token = null;
 
     /* refreshToken 토큰 사용 api 주소  */
+
     // Server-side 에서는 window가 없기 때문에 local storage 사용 불가
     if (typeof window !== 'undefined') {
-      if (config.url === REFRESH_URL) {
-        token = localStorage.getItem('refreshToken');
-      } else {
-        token = localStorage.getItem('accessToken');
+      // Server-side 에서는 window가 없기 때문에 local storage 사용 불가
+      if (typeof window !== 'undefined') {
+        if (config.url === REFRESH_URL) {
+          token = localStorage.getItem('refreshToken');
+        } else {
+          token = localStorage.getItem('accessToken');
+        }
       }
     }
 
@@ -52,18 +56,15 @@ axiosInstance.interceptors.response.use(
     //   return axios(config);
     // }
 
-    // Server-side에서 response 객체가 존재하지 않을 때 에러가 발생하기 때문에, response가 존재하면 코드 실행하는 조건 추가
-    if (response && response.status && response.data) {
-      const { status, data } = response;
-      toast.error(data?.message);
-      console.log(data);
-    }
-
+    toast.error(data?.message);
+    console.log(data);
     return Promise.reject(error);
   },
 );
 
 export default axiosInstance;
+
+const BASE_URL = 'http://43.201.195.195:8080';
 
 const BASE_URL = 'http://43.201.195.195:8080';
 
