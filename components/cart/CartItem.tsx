@@ -4,11 +4,19 @@ import CartItemInfo from './CartItemInfo';
 import { useEffect, useState } from 'react';
 
 type CartItemPropsType = {
+  cartItem: CartItemType;
   isAllSelected: boolean;
   setIsAllSelected: React.Dispatch<React.SetStateAction<boolean>>;
 };
+export interface CartItemType {
+  name: string;
+  discountPrice: number;
+  regularPrice: number;
+  quantity: number;
+  productImageDtos: string;
+}
 
-export default function CartItem({ isAllSelected, setIsAllSelected }: CartItemPropsType) {
+export default function CartItem({ isAllSelected, setIsAllSelected, cartItem }: CartItemPropsType) {
   const [isChecked, setIsChecked] = useState(isAllSelected);
 
   // todo: 전체선택, 개별선택 기능 수정
@@ -34,7 +42,7 @@ export default function CartItem({ isAllSelected, setIsAllSelected }: CartItemPr
       <div className="flex grow">
         <div className="w-[86px] md:w-[120px] h-[86px] md:h-[120px] rounded-[10px] bg-gray_04 p-3 box-border">
           <Image
-            src="/img/image 68.png"
+            src={cartItem?.productImageDtos}
             alt="thumbnail"
             width={62}
             height={62}
@@ -42,7 +50,7 @@ export default function CartItem({ isAllSelected, setIsAllSelected }: CartItemPr
           />
         </div>
         {/* todo: 상품 정보 props 내려주기 */}
-        <CartItemInfo />
+        <CartItemInfo cartItem={cartItem} />
       </div>
       {/* todo: 삭제기능 연결 */}
       <div className="pr-[10px] md:ml-6 md:flex md:items-center">
