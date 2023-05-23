@@ -1,17 +1,12 @@
 import { UploadIcon } from '@/components/Icons';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { IFormInputs } from '../PurchaseForm';
+import { FormValues } from './NumOne';
 
-interface FormValues6 {
-  register: UseFormRegister<IFormInputs>;
-  errors: FieldErrors<IFormInputs>;
-  title: string;
-  description: string;
+interface FormValues3 extends FormValues {
   placeholder: string;
 }
 
-export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
-  const { register, errors, title, description, placeholder } = formValues6;
+export default function NumThree({ formValues3 }: { formValues3: FormValues3 }) {
+  const { register, errors, title, description, placeholder } = formValues3;
 
   return (
     <div className="mt-12 gap-y-1.5 flex flex-col">
@@ -24,10 +19,10 @@ export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
           <textarea
             className="h-full max-w-full bg-gray-100 p-2 resize-none text-main rounded-lg outline-none font-normal text-body-sm placeholder:text-gray_01"
             placeholder={placeholder}
-            {...register('request')}
+            {...register('intro')}
           />
-          {errors.request && (
-            <p className="text-red text-xs font-medium break-keep text-center">{errors.request.message}</p>
+          {errors.intro && (
+            <p className="text-red text-xs font-medium break-keep text-center">{errors.intro.message}</p>
           )}
         </section>
 

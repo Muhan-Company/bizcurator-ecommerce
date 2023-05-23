@@ -2,8 +2,10 @@ import Footer from '@/components/footer/Footer';
 import NavBar from '@/components/footer/NavBar';
 import DownHeader from '@/components/header/DownHeader';
 import Layout from '@/components/layout/Layout';
+import CompanyInfo from '@/components/request/CompanyInfo';
 import Description from '@/components/request/Description';
 import FormTitle from '@/components/request/FormTitle';
+import PartnerForm from '@/components/request/PartnerForm';
 
 export default function PurchaseRequest() {
   const desc = {
@@ -17,8 +19,9 @@ export default function PurchaseRequest() {
       <DownHeader />
       <FormTitle title="판매입점 의뢰서" />
       <Description desc={desc} />
-
+      <CompanyInfo />
       <div className="h-[1px] bg-gray_02 my-8"></div>
+      <PartnerForm />
       <Footer />
       <NavBar />
     </Layout>

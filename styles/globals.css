@@ -168,4 +168,12 @@
     border-top: 4px solid #16133a;
     border-radius: 50%;
   }
+
+  input[type='date'] {
+    @apply relative;
+  }
+
+  input[type='date']::-webkit-calendar-picker-indicator {
+    @apply absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 outline-none;
+  }
 }
