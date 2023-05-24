@@ -34,11 +34,10 @@ export default function FileUpload({ imageChange, handleFileChange }: FileUpload
     handleFileChange(event.target.files[0], imageChange);
     // console.log(event.target.files[0].name);
     setFile(event.target.files[0]);
-  }, [imageChange]);
+  }, [imageChange, handleFileChange]);
 
   const onUploadImageButtonClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(inputRef)
     if (inputRef.current) {
       inputRef.current.click();
     }
@@ -47,7 +46,6 @@ export default function FileUpload({ imageChange, handleFileChange }: FileUpload
   const closeImageClick = () => {
     setFileUrl("");
   }
-  console.log(fileUrl);
   return (
     <div>
       <div className="py-[30px] bg-[#fff]">

@@ -2,7 +2,6 @@ import React, { FC, Fragment, useMemo } from "react";
 import NoticeList from "./NoticeList";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from 'react-intersection-observer'
-import { NoticePostType } from "@/utils/types/responseType";
 import axiosInstance from "@/apis/config";
 
 const Notice: FC<{}> = () => {
@@ -10,7 +9,7 @@ const Notice: FC<{}> = () => {
     const { ref, inView } = useInView()
 
     const { data, fetchNextPage } =
-        useInfiniteQuery<NoticePostType[], Error>(
+        useInfiniteQuery<any, Error>(
             ["notices"],
             async ({ pageParam = 0 }) => {
                 if (!pageParam) {
@@ -39,7 +38,7 @@ const Notice: FC<{}> = () => {
         if (inView) {
             fetchNextPage();
         }
-    }, [inView]);
+    }, [inView, fetchNextPage]);
 
     return (
         <Fragment>

@@ -1,5 +1,5 @@
 import { useGetPurchaseDetail, PurchaseProps } from "@/apis/adminPurchase"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axiosInstance from "@/apis/config";
 import SearchForm from "./AdminSearch";
 import { PurchaseApi } from "@/apis/SearchFormApi";
@@ -18,13 +18,7 @@ export default function AdminPurchaseRequest() {
         setAction(action);
     };
 
-    useEffect(() => {
-        if (selectedRow !== null) {
-            sendAPIRequest();
-        }
-    }, [selectedRow]);
-
-    const sendAPIRequest = async () => {
+    const sendAPIRequest = useCallback(async () => {
         if (data && data.histories && selectedRow !== null) {
             const selectedHistory = data.histories[selectedRow];
             const postData = {
@@ -44,7 +38,13 @@ export default function AdminPurchaseRequest() {
                 console.error(error);
             }
         }
-    };
+    }, [data, selectedRow, action]);
+
+    useEffect(() => {
+        if (selectedRow !== null) {
+            sendAPIRequest();
+        }
+    }, [selectedRow, sendAPIRequest]);
 
     if (isLoading) {
         return <div>Loading...</div>;

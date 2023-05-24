@@ -15,7 +15,7 @@ const Question: FC<{}> = () => {
 
     const { ref, inView } = useInView();
 
-    const { data, fetchNextPage } = useInfiniteQuery<Item[], Error>(
+    const { data, fetchNextPage } = useInfiniteQuery<any, Error>(
         ["question"],
         async ({ pageParam = 0 }) => {
             if (!pageParam) {
@@ -42,7 +42,7 @@ const Question: FC<{}> = () => {
         if (inView) {
             fetchNextPage();
         }
-    }, [inView]);
+    }, [inView, fetchNextPage]);
 
     return (
         <Fragment>
