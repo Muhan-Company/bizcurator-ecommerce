@@ -30,7 +30,7 @@ export default function Product({
       onClick={() => router.push(`/products/${category_id}?itemId=${id}`)}
       className="w-full sm:space-y-3 lg:space-y-4"
     >
-      <div className="aspect-square relative rounded-lg overflow-hidden">
+      <div className="aspect-square relative rounded-lg overflow-hidden shadow-md">
         <Image src={main_image_url} alt="Product" fill sizes="100%" className="object-cover" />
         <button
           onClick={openModal}

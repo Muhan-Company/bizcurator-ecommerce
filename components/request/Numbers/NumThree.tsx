@@ -1,20 +1,20 @@
 import { UploadIcon } from '@/components/Icons';
-import { FormValues } from './One';
-import Image from 'next/image';
+import { FormValues } from './NumOne';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Loader from '@/components/products/Loader';
 
-interface FormValues6 extends FormValues {
+interface FormValues3 extends FormValues {
+  placeholder: string;
   file: File | null;
   setFile: React.Dispatch<React.SetStateAction<File | null>>;
   fileSizeError: boolean;
   setFileSizeError: React.Dispatch<React.SetStateAction<boolean>>;
   fileTypeError: boolean;
   setFileTypeError: React.Dispatch<React.SetStateAction<boolean>>;
-  placeholder: string;
 }
 
-export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
+export default function NumThree({ formValues3 }: { formValues3: FormValues3 }) {
   const {
     register,
     errors,
@@ -27,7 +27,7 @@ export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
     setFileSizeError,
     fileTypeError,
     setFileTypeError,
-  } = formValues6;
+  } = formValues3;
 
   const [preview, setPreview] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -90,9 +90,9 @@ export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
           <textarea
             className="h-full max-w-full bg-gray-100 p-2 resize-none text-main rounded-lg outline-none font-normal text-body-sm placeholder:text-gray_01"
             placeholder={placeholder}
-            {...register('request')}
+            {...register('intro')}
           />
-          {errors.request && <p className="err-msg">{errors.request.message}</p>}
+          {errors.intro && <p className="err-msg">{errors.intro.message}</p>}
         </section>
 
         <div className="col-span-2">
@@ -112,6 +112,7 @@ export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
               이미지 업로드
             </label>
           )}
+
           <input id="file" type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
           {fileTypeError && <p className="err-msg">이미지 타입 파일을 업로드 하세요</p>}
           {fileSizeError && <p className="err-msg">파일 크기는 30,000,000 bytes 이하여야 합니다</p>}

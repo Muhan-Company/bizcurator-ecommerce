@@ -168,4 +168,20 @@
     border-top: 4px solid #16133a;
     border-radius: 50%;
   }
+
+  input[type='date'] {
+    @apply relative;
+  }
+
+  input[type='date']::-webkit-calendar-picker-indicator {
+    @apply absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 outline-none;
+  }
+
+  .err-msg {
+    @apply text-red text-xs font-medium break-keep;
+  }
+
+  .submit-btn {
+    @apply cursor-pointer mt-[60px] bg-primary h-[60px] rounded-lg w-full text-white font-normal text-button-md;
+  }
 }
