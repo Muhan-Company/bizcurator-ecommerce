@@ -8,11 +8,15 @@ import { useState } from 'react';
 import Four from './Numbers/Four';
 import Five from './Numbers/Five';
 import Six from './Numbers/Six';
+import useToast from '@/hooks/useToast';
 
 export interface IFormInputs {
-  one: string;
-  two: string;
-  three: string;
+  name: string;
+  detail: string;
+  quantity: number;
+  estimateDate: Date;
+  deliveryDate: Date;
+  request: string;
 }
 
 export interface Category {
@@ -20,13 +24,59 @@ export interface Category {
   name: string;
 }
 
-const SignupSchema = yup
+export const RequestSchema = yup
   .object({
-    one: yup.string().required('상품명을 입력하세요'),
-    two: yup.string().required('상품에 대해 설명해주세요'),
-    three: yup.string().required('수량을 입력하세요'),
+    name: yup.string().required('상품명을 입력하세요'),
+    detail: yup.string().required('상품에 대해 설명해주세요'),
+    quantity: yup.number().typeError('수량을 입력하세요').positive('양수를 입력하세요').integer('정수를 입력하세요'),
+    estimateDate: yup.date().typeError('날짜를 입력하세요').min(new Date(), '유효하지 않은 날짜 (YYYY-MM-DD)'),
+    deliveryDate: yup.date().typeError('날짜를 입력하세요').min(new Date(), '유효하지 않은 날짜 (YYYY-MM-DD)'),
+    request: yup.string().required('요청사항을 적어주세요'),
   })
   .required();
+
+export const categories = [
+  {
+    id: 1,
+    name: '객실용품',
+  },
+  {
+    id: 2,
+    name: '욕실용품',
+  },
+  {
+    id: 3,
+    name: '위생용품',
+  },
+  {
+    id: 4,
+    name: '침구류',
+  },
+  {
+    id: 5,
+    name: '가전/전자제품',
+  },
+  {
+    id: 6,
+    name: '청소/시설관리',
+  },
+  {
+    id: 7,
+    name: '소방/안전관리',
+  },
+  {
+    id: 8,
+    name: '사무용품',
+  },
+  {
+    id: 9,
+    name: '음료/식품',
+  },
+  {
+    id: 10,
+    name: '선물세트',
+  },
+];
 
 export default function PurchaseForm() {
   const {
@@ -34,62 +84,33 @@ export default function PurchaseForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInputs>({
-    resolver: yupResolver(SignupSchema),
+    resolver: yupResolver(RequestSchema),
   });
 
-  const categories = [
-    {
-      id: 1,
-      name: '객실용품',
-    },
-    {
-      id: 2,
-      name: '욕실용품',
-    },
-    {
-      id: 3,
-      name: '위생용품',
-    },
-    {
-      id: 4,
-      name: '침구류',
-    },
-    {
-      id: 5,
-      name: '가전/전자제품',
-    },
-    {
-      id: 6,
-      name: '청소/시설관리',
-    },
-    {
-      id: 7,
-      name: '소방/안전관리',
-    },
-    {
-      id: 8,
-      name: '사무용품',
-    },
-    {
-      id: 9,
-      name: '음료/식품',
-    },
-    {
-      id: 10,
-      name: '선물세트',
-    },
-  ];
-
   const [selectedCategory, setSelectedCategory] = useState<Category>({ id: 0, name: '카테고리 선택' });
-  const [firstDate, setFirstDate] = useState<Date | undefined>(undefined);
-  const [secondDate, setSecondDate] = useState<Date | undefined>(undefined);
-  const [request, setRequest] = useState<string>('');
+  const [fileTypeError, setFileTypeError] = useState<boolean>(false);
+  const [fileSizeError, setFileSizeError] = useState<boolean>(false);
 
-  const notSelected = selectedCategory.id === 0;
+  const [file, setFile] = useState<File | null>(null);
+
+  const showToast = useToast();
 
   const onSubmit = (data: IFormInputs) => {
-    const newData = { ...data, firstDate, secondDate, request };
-    alert(JSON.stringify(newData));
+    if (!file) {
+      showToast('이미지를 업로드하세요', true);
+      return;
+    }
+
+    const newData = { ...data, image: file };
+    const formData = new FormData();
+
+    formData.append('name', newData.name);
+    formData.append('detail', newData.detail);
+    formData.append('quantity', newData.quantity.toString());
+    formData.append('estimateDate', newData.estimateDate.toISOString());
+    formData.append('deliveryDate', newData.deliveryDate.toISOString());
+    formData.append('request', newData.request);
+    formData.append('image', newData.image);
   };
 
   const formValues = {
@@ -114,30 +135,34 @@ export default function PurchaseForm() {
 
   const formValues3 = {
     ...formValues,
-    title: '구매 수량',
+    title: '3. 구매 수량',
     description: '구매하고자 하는 제품 예상 수량을 작성해주세요',
   };
 
   const formValues4 = {
+    ...formValues,
     title: '견적 수령 희망일',
     description: '신청 문의 후, 견적을 받아보고 싶은 날짜를 작성해주세요',
-    firstDate,
-    setFirstDate,
   };
 
   const formValues5 = {
+    ...formValues,
     title: '제품 배송 희망일',
     description: '판매사의 제품이 최종 낙찰된 후, 희망 납품(예상)일 혹은 기한을 작성해주세요',
-    secondDate,
-    setSecondDate,
   };
 
   const formValues6 = {
-    title: '제품 이미지',
+    ...formValues,
+    title: '6. 제품 이미지',
     description:
       '요청사항이나 유사 컨셉의 제품 혹은 현재 사용 중인 제품의 이미지나 스케치를 첨부해주세요. (상세한 요청사항을 적어주시면 요청하신 부분과 일치하는 제품의 견적을 받을 확률이 높아집니다. 상세하게 작성 부탁드립니다)',
-    request,
-    setRequest,
+    placeholder: '요청사항을 적어주세요',
+    file,
+    setFile,
+    fileSizeError,
+    setFileSizeError,
+    fileTypeError,
+    setFileTypeError,
   };
 
   return (
@@ -148,12 +173,8 @@ export default function PurchaseForm() {
       <Four formValues4={formValues4} />
       <Five formValues5={formValues5} />
       <Six formValues6={formValues6} />
-      <input
-        type="submit"
-        value={'제출하기'}
-        disabled={notSelected || !firstDate || !secondDate || !request}
-        className="mt-[60px] disabled:cursor-not-allowed disabled:opacity-50 bg-primary h-[60px] rounded-lg w-full text-white font-normal text-button-md"
-      />
+
+      <input type="submit" value={'제출하기'} className="submit-btn" />
     </form>
   );
 }

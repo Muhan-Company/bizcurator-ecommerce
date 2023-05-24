@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '../../Icons';
-import { Category, IFormInputs } from '../PurchaseForm';
+import { Category } from '../PurchaseForm';
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
+import { FormInputs } from '../PartnerForm';
 
 export interface FormValues {
   title: string;
-  description: string;
-  register: UseFormRegister<IFormInputs>;
-  errors: FieldErrors<IFormInputs>;
+  description?: string;
+  register: UseFormRegister<FormInputs>;
+  errors: FieldErrors<FormInputs>;
 }
 
 interface FormValues1 extends FormValues {
@@ -16,7 +17,7 @@ interface FormValues1 extends FormValues {
   setSelectedCategory: React.Dispatch<React.SetStateAction<Category>>;
 }
 
-export default function One({ formValues1 }: { formValues1: FormValues1 }) {
+export default function NumOne({ formValues1 }: { formValues1: FormValues1 }) {
   const { title, description, register, errors, categories, selectedCategory, setSelectedCategory } = formValues1;
 
   const [open, setOpen] = useState<boolean>(false);
@@ -82,10 +83,10 @@ export default function One({ formValues1 }: { formValues1: FormValues1 }) {
             selectedCategory.name === '제작목적 선택' ||
             selectedCategory.name === '생산종류카테고리'
           }
-          {...register('name')}
+          {...register('detail')}
           className="disabled:cursor-not-allowed bg-gray-100 px-4 font-normal text-main text-body-xs disabled:bg-gray_04 rounded-lg h-[50px] w-full outline-none"
         />
-        {errors.name && <p className="err-msg">{errors.name.message}</p>}
+        {errors.detail && <p className="err-msg">{errors.detail.message}</p>}
       </div>
     </>
   );

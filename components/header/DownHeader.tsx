@@ -30,7 +30,7 @@ export default function DownHeader() {
         <ActiveLink href={'/request/purchase'} className="mx-3">
           제품구매 의뢰
         </ActiveLink>
-        <ActiveLink href={'/'}>입점 의뢰</ActiveLink>
+        <ActiveLink href={'/partners'}>입점 의뢰</ActiveLink>
       </div>
     </header>
   );
