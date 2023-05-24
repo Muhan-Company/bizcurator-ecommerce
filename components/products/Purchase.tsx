@@ -5,7 +5,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { createPortal } from 'react-dom';
 import AddCompleteModal from '../modals/AddCompleteModal';
 import BuyCompleteModal from '../modals/BuyCompleteModal';
-import { Trending } from '@/pages';
+
 import { addToCart } from '@/apis/cartApis';
 import { AxiosResponse } from 'axios';
 import useInvalidation from '@/hooks/useInvalidateQueries';
@@ -13,13 +13,14 @@ import useCustomMutation from '@/hooks/useCustomMutation';
 import useAddCompleteModal from '@/hooks/useAddCompleteModal';
 import useToast from '@/hooks/useToast';
 import { addCompleteModalState, buyCompleteModalState } from '@/atoms/modalAtoms';
+import { ProductDetail } from '@/pages';
 
 export interface AddToCartVariables {
   product_id: number;
   quantity: number;
 }
 
-export default function Purchase({ product_name, id, min_quantity, regular_price, sale_price }: Trending) {
+export default function Purchase({ product_name, id, min_quantity, regular_price, sale_price }: ProductDetail) {
   const [quantity, setQuantity] = useState<number>(min_quantity);
   const [open, setOpen] = useState<boolean>(false);
   const showAddCompleteModal = useRecoilValue(addCompleteModalState);
