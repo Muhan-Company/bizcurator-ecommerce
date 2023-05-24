@@ -7,7 +7,7 @@ import axios from "axios";
 import { ProductInfo, FileUploadProps, DetailPageProps } from "@/utils/type/adminRegister";
 import { productToModifyState } from "@/atoms/adminAtoms";
 
-export default function ProductRegisters() {
+export default function ProductRegister() {
     const [productToModify, setProductToModify] = useRecoilState(productToModifyState);
 
     const [productInfo, setProductInfo] = useState<ProductInfo>({
@@ -104,10 +104,13 @@ export default function ProductRegisters() {
         } catch (error) {
 
         }
+
     }
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <form
+                className="bg-gray-100"
+                onSubmit={handleSubmit}>
                 <div className="w-[1500px] mx-[60px] mt-[15px]">
                     <div className="rounded-xl bg-[#fff] my-3 pl-[30px] py-[10px]">
                         <div className="py-[30px] bg-[#fff]  rounded-t-xl">상품 카테고리</div>

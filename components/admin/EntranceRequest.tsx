@@ -1,5 +1,5 @@
 import { useGetEntrnaceDetail } from "@/apis/adminEntrance";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axiosInstance from "@/apis/config";
 import SearchForm from "./AdminSearch";
 import { EntranceApi } from "@/apis/SearchFormApi";
@@ -19,13 +19,7 @@ export default function AdminEntranceRequest() {
         setAction(action);
     };
 
-    useEffect(() => {
-        if (selectedRow !== null) {
-            sendAPIRequest();
-        }
-    }, [selectedRow]);
-
-    const sendAPIRequest = async () => {
+    const sendAPIRequest = useCallback(async () => {
         if (data && data.histories && selectedRow !== null) {
             const selectedHistory = data.histories[selectedRow];
             const postData = {
@@ -45,7 +39,15 @@ export default function AdminEntranceRequest() {
                 console.error(error);
             }
         }
-    };
+    }, [selectedRow, data, action]);
+
+    useEffect(() => {
+        if (selectedRow !== null) {
+            sendAPIRequest();
+        }
+    }, [selectedRow, sendAPIRequest]);
+
+
     console.log(data);
     if (isLoading) {
         return <div>Loading...</div>;

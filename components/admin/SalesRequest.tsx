@@ -1,5 +1,5 @@
 import { useGetSalesDetail } from "@/apis/adminSales";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axiosInstance from "@/apis/config";
 import SearchForm from "./AdminSearch";
 import { SalesApi } from "@/apis/SearchFormApi";
@@ -18,20 +18,14 @@ export default function AdminSalesRequest() {
         setAction(action);
     };
 
-    useEffect(() => {
-        if (selectedRow !== null) {
-            sendAPIRequest();
-        }
-    }, [selectedRow]);
-
-    const sendAPIRequest = async () => {
+    const sendAPIRequest = useCallback(async () => {
         if (data && data.histories && selectedRow !== null) {
             const selectedHistory = data.histories[selectedRow];
             let rejectReason = "";
             if (action === "reject") {
-                rejectReason = "거절사유는 ~~~입니다"
+                rejectReason = "거절사유는 ~~~입니다";
             } else {
-                rejectReason = "승인사유는 ~~~입니다"
+                rejectReason = "승인사유는 ~~~입니다";
             }
             const postData = {
                 ...selectedHistory,
@@ -49,7 +43,13 @@ export default function AdminSalesRequest() {
                 console.error(error);
             }
         }
-    };
+    }, [data, selectedRow, action]);
+
+    useEffect(() => {
+        if (selectedRow !== null) {
+            sendAPIRequest();
+        }
+    }, [selectedRow, sendAPIRequest]);
 
     if (isLoading) {
         return <div>Loading...</div>;

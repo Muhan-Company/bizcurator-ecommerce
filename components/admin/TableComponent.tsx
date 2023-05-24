@@ -65,7 +65,7 @@ export default function TableComponent({ data, displayData }: any) {
             },
             {
                 header: '송장번호',
-                accessorKey: 'paymentId',
+                accessorKey: 'invoiceNumber',
                 // @ts-ignore
                 cell: info => info.getValue(),
             },
