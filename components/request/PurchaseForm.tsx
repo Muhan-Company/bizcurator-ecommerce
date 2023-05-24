@@ -8,6 +8,7 @@ import { useState } from 'react';
 import Four from './Numbers/Four';
 import Five from './Numbers/Five';
 import Six from './Numbers/Six';
+import useToast from '@/hooks/useToast';
 
 export interface IFormInputs {
   name: string;
@@ -27,13 +28,9 @@ export const RequestSchema = yup
   .object({
     name: yup.string().required('상품명을 입력하세요'),
     detail: yup.string().required('상품에 대해 설명해주세요'),
-    quantity: yup
-      .number()
-      .typeError('수량을 입력하세요') // Custom error message for non-number values
-      .positive('양수를 입력하세요')
-      .integer('정수를 입력하세요'),
-    estimateDate: yup.date().typeError('날짜를 입력하세요'),
-    deliveryDate: yup.date().typeError('날짜를 입력하세요'),
+    quantity: yup.number().typeError('수량을 입력하세요').positive('양수를 입력하세요').integer('정수를 입력하세요'),
+    estimateDate: yup.date().typeError('날짜를 입력하세요').min(new Date(), '유효하지 않은 날짜 (YYYY-MM-DD)'),
+    deliveryDate: yup.date().typeError('날짜를 입력하세요').min(new Date(), '유효하지 않은 날짜 (YYYY-MM-DD)'),
     request: yup.string().required('요청사항을 적어주세요'),
   })
   .required();
@@ -91,9 +88,29 @@ export default function PurchaseForm() {
   });
 
   const [selectedCategory, setSelectedCategory] = useState<Category>({ id: 0, name: '카테고리 선택' });
+  const [fileTypeError, setFileTypeError] = useState<boolean>(false);
+  const [fileSizeError, setFileSizeError] = useState<boolean>(false);
+
+  const [file, setFile] = useState<File | null>(null);
+
+  const showToast = useToast();
 
   const onSubmit = (data: IFormInputs) => {
-    alert(JSON.stringify(data));
+    if (!file) {
+      showToast('이미지를 업로드하세요', true);
+      return;
+    }
+
+    const newData = { ...data, image: file };
+    const formData = new FormData();
+
+    formData.append('name', newData.name);
+    formData.append('detail', newData.detail);
+    formData.append('quantity', newData.quantity.toString());
+    formData.append('estimateDate', newData.estimateDate.toISOString());
+    formData.append('deliveryDate', newData.deliveryDate.toISOString());
+    formData.append('request', newData.request);
+    formData.append('image', newData.image);
   };
 
   const formValues = {
@@ -140,6 +157,12 @@ export default function PurchaseForm() {
     description:
       '요청사항이나 유사 컨셉의 제품 혹은 현재 사용 중인 제품의 이미지나 스케치를 첨부해주세요. (상세한 요청사항을 적어주시면 요청하신 부분과 일치하는 제품의 견적을 받을 확률이 높아집니다. 상세하게 작성 부탁드립니다)',
     placeholder: '요청사항을 적어주세요',
+    file,
+    setFile,
+    fileSizeError,
+    setFileSizeError,
+    fileTypeError,
+    setFileTypeError,
   };
 
   return (
@@ -150,11 +173,8 @@ export default function PurchaseForm() {
       <Four formValues4={formValues4} />
       <Five formValues5={formValues5} />
       <Six formValues6={formValues6} />
-      <input
-        type="submit"
-        value={'제출하기'}
-        className="mt-[60px] disabled:cursor-not-allowed disabled:opacity-50 bg-primary h-[60px] rounded-lg w-full text-white font-normal text-button-md"
-      />
+
+      <input type="submit" value={'제출하기'} className="submit-btn" />
     </form>
   );
 }

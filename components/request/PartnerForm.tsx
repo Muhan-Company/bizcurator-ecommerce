@@ -6,6 +6,7 @@ import { useState } from 'react';
 import NumOne from './Numbers/NumOne';
 import NumTwo from './Numbers/NumTwo';
 import NumThree from './Numbers/NumThree';
+import useToast from '@/hooks/useToast';
 
 export interface FormInputs {
   detail: string;
@@ -18,9 +19,14 @@ const PartnerSchema = yup
     detail: yup.string().required('생산제품을 입력하세요'),
     year: yup
       .number()
-      .typeError('설립연도를 입력하세요') // Custom error message for non-number values
+      .typeError('설립연도를 입력하세요')
       .positive('양수를 입력하세요')
-      .integer('정수를 입력하세요'),
+      .integer('정수를 입력하세요')
+      .test('is-future-year', '유효하지 않은 년도', (value: number | undefined) => {
+        const currentYear = new Date().getFullYear();
+
+        return value! <= currentYear;
+      }),
     intro: yup.string().required('회사에 대해 설명해주세요'),
   })
   .required();
@@ -34,16 +40,33 @@ export default function PartnerForm() {
     resolver: yupResolver(PartnerSchema),
   });
 
+  const [selectedCategory, setSelectedCategory] = useState<Category>({ id: 0, name: '생산종류카테고리' });
+  const [fileTypeError, setFileTypeError] = useState<boolean>(false);
+  const [fileSizeError, setFileSizeError] = useState<boolean>(false);
+
+  const [file, setFile] = useState<File | null>(null);
+
+  const showToast = useToast();
+
   const onSubmit = (data: FormInputs) => {
-    alert(JSON.stringify(data));
+    if (!file) {
+      showToast('이미지를 업로드하세요', true);
+      return;
+    }
+
+    const newData = { ...data, image: file };
+    const formData = new FormData();
+
+    formData.append('detail', newData.detail);
+    formData.append('year', newData.year.toString());
+    formData.append('intro', newData.intro);
+    formData.append('image', newData.image);
   };
 
   const formValues = {
     register,
     errors,
   };
-
-  const [selectedCategory, setSelectedCategory] = useState<Category>({ id: 0, name: '생산종류카테고리' });
 
   const formValues1 = {
     ...formValues,
@@ -64,6 +87,12 @@ export default function PartnerForm() {
     title: '3. 회사 소개글',
     description: '회사 소개글을 적어주세요',
     placeholder: '회사 소개글을 적어주세요',
+    file,
+    setFile,
+    fileSizeError,
+    setFileSizeError,
+    fileTypeError,
+    setFileTypeError,
   };
 
   return (
@@ -71,11 +100,7 @@ export default function PartnerForm() {
       <NumOne formValues1={formValues1} />
       <NumTwo formValues2={formValues2} />
       <NumThree formValues3={formValues3} />
-      <input
-        type="submit"
-        value={'제출하기'}
-        className="mt-[60px] disabled:cursor-not-allowed disabled:opacity-50 bg-primary h-[60px] rounded-lg w-full text-white font-normal text-button-md"
-      />
+      <input type="submit" value={'제출하기'} className="submit-btn" />
     </form>
   );
 }

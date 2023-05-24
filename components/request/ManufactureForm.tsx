@@ -8,6 +8,7 @@ import Three from './Numbers/Three';
 import Four from './Numbers/Four';
 import Five from './Numbers/Five';
 import Six from './Numbers/Six';
+import useToast from '@/hooks/useToast';
 
 export default function ManufactureForm() {
   const {
@@ -25,9 +26,28 @@ export default function ManufactureForm() {
   ];
 
   const [selectedCategory, setSelectedCategory] = useState<Category>({ id: 0, name: '제작목적 선택' });
+  const [fileTypeError, setFileTypeError] = useState<boolean>(false);
+  const [fileSizeError, setFileSizeError] = useState<boolean>(false);
 
+  const [file, setFile] = useState<File | null>(null);
+
+  const showToast = useToast();
   const onSubmit = (data: IFormInputs) => {
-    alert(JSON.stringify(data));
+    if (!file) {
+      showToast('이미지를 업로드하세요', true);
+      return;
+    }
+
+    const newData = { ...data, image: file };
+    const formData = new FormData();
+
+    formData.append('name', newData.name);
+    formData.append('detail', newData.detail);
+    formData.append('quantity', newData.quantity.toString());
+    formData.append('estimateDate', newData.estimateDate.toISOString());
+    formData.append('deliveryDate', newData.deliveryDate.toISOString());
+    formData.append('request', newData.request);
+    formData.append('image', newData.image);
   };
 
   const formValues = {
@@ -74,6 +94,12 @@ export default function ManufactureForm() {
     description:
       '요청사항이나 유사 컨셉의 제품 혹은 이미지나 스케치를 첨부해주세요. 만들고자 하는 제품의 크기, 두께, 재질, 특징들을 상세하게 입력해주세요(e.g, 실리콘, 아크릴7mm, 가로세로 높이: ...mm 등, 상세한요청사항을 적어주시면 요청하신 부분을 잘 반영하여 제품을 제작할 확률이 높아집니다. 상세하게 작성 부탁드립니다)',
     placeholder: '요청사항을 적어주세요',
+    file,
+    setFile,
+    fileSizeError,
+    setFileSizeError,
+    fileTypeError,
+    setFileTypeError,
   };
 
   return (
@@ -84,11 +110,7 @@ export default function ManufactureForm() {
       <Four formValues4={formValues4} />
       <Five formValues5={formValues5} />
       <Six formValues6={formValues6} />
-      <input
-        type="submit"
-        value={'제출하기'}
-        className="mt-[60px] disabled:cursor-not-allowed disabled:opacity-70 bg-primary h-[60px] rounded-lg w-full text-white font-normal text-button-md"
-      />
+      <input type="submit" value={'제출하기'} className="submit-btn" />
     </form>
   );
 }

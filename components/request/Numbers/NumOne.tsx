@@ -43,7 +43,7 @@ export default function NumOne({ formValues1 }: { formValues1: FormValues1 }) {
       <div className="space-y-1.5">
         <label className="font-bold text-label-md text-main space-y-2">
           1. {title} <span className="text-red">*</span>
-          <p className="font-normal text-body-sm">{description}</p>
+          <p className="font-normal text-body-sm break-keep">{description}</p>
         </label>
         <section className="relative h-10">
           <ul
@@ -86,7 +86,7 @@ export default function NumOne({ formValues1 }: { formValues1: FormValues1 }) {
           {...register('detail')}
           className="disabled:cursor-not-allowed bg-gray-100 px-4 font-normal text-main text-body-xs disabled:bg-gray_04 rounded-lg h-[50px] w-full outline-none"
         />
-        {errors.detail && <p className="text-red text-xs font-medium">{errors.detail.message}</p>}
+        {errors.detail && <p className="err-msg">{errors.detail.message}</p>}
       </div>
     </>
   );
