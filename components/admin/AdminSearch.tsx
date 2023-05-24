@@ -10,7 +10,6 @@ type SearchFormProps = {
 
 const SearchForm = ({ onSearch, api }: SearchFormProps) => {
     const [searchTerm, setSearchTerm] = useState('');
-
     const handleSearch = useMutation(async () => {
         const data = await api(searchTerm);
         console.log(data);
