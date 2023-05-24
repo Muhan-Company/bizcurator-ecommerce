@@ -1,8 +1,8 @@
 import React, { useRef, useState, ChangeEvent, useEffect } from 'react';
-import useOnClickOutside from '@/hooks/useOnClickOutSide';
 import { useMutation } from '@tanstack/react-query';
 import { NoticePostType } from '@/utils/types/responseType';
 import axiosInstance from '@/apis/config';
+import useOnClickOutside from '@/hooks/useOnClickOutSide';
 
 type CustomWritePropsType = {
   setWriteOpenModal: React.Dispatch<React.SetStateAction<boolean>>; //useState를 통해 생성된 매개변수를 해당 상태로 변경하는 type
