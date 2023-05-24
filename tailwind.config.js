@@ -8,17 +8,16 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        sm: '430px',
+        sm: '431px',
       },
       colors: {
         primary: '#16133A',
-        secondary: '#F0F3Fc',
+        secondary: '#F0F3FC',
         main: '#1C1C1C',
         gray_01: '#999999',
         gray_02: '#D9D9D9',
         gray_03: '#FAFAFA',
         gray_04: '#F9F9F9',
-        white: '#FFFFFF',
         star: '#FFB628',
         red: '#D30B0B',
       },
