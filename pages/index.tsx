@@ -44,8 +44,7 @@ export default function Home({ weeklyTrending, monthlyTrending }: TrendingProps)
 }
 
 export async function getServerSideProps() {
-  const weeklyTrending = await getWeeklyTrending();
-  const monthlyTrending = await getMonthlyTrending();
+  const [weeklyTrending, monthlyTrending] = await Promise.all([getWeeklyTrending(), getMonthlyTrending()]);
 
   return {
     props: {
