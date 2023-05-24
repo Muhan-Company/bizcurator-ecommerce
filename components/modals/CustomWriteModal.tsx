@@ -1,5 +1,5 @@
 import React, { useRef, useState, ChangeEvent, useEffect } from "react"
-import useOnClickOutside from "@/hooks/UseOnClickOutSide"
+import UseOnClickOutSide from "@/hooks/UseOnClickOutSide";
 import { useMutation } from "@tanstack/react-query";
 import { NoticePostType } from "@/utils/types/responseType";
 import axiosInstance from "@/apis/config";
@@ -33,7 +33,7 @@ export default function CustomWriteModal({
 }: CustomWritePropsType) {
     // console.log(item);
     const ref = useRef<HTMLDivElement>(null); // 특정DOM요소에 접근할때 사용
-    useOnClickOutside(ref, () => {
+    UseOnClickOutSide(ref, () => {
         setWriteOpenModal(false)
     })
     const [writeForm, setWriteForm] = useState<WriteFormType>(writeFormState);
