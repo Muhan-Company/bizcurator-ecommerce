@@ -2,7 +2,7 @@ import React, { useRef, useState, ChangeEvent, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { NoticePostType } from '@/utils/types/responseType';
 import axiosInstance from '@/apis/config';
-import useOnClickOutside from '@/hooks/useOnClickOutSide';
+import UseOnClickOutside from '@/utils/UseOnClickOutSide';
 
 type CustomWritePropsType = {
   setWriteOpenModal: React.Dispatch<React.SetStateAction<boolean>>; //useState를 통해 생성된 매개변수를 해당 상태로 변경하는 type
@@ -29,7 +29,7 @@ const writeFormState: WriteFormType = {
 export default function CustomWriteModal({ setWriteOpenModal, item }: CustomWritePropsType) {
   // console.log(item);
   const ref = useRef<HTMLDivElement>(null); // 특정DOM요소에 접근할때 사용
-  useOnClickOutside(ref, () => {
+  UseOnClickOutside(ref, () => {
     setWriteOpenModal(false);
   });
   const [writeForm, setWriteForm] = useState<WriteFormType>(writeFormState);
