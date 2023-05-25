@@ -37,13 +37,10 @@ export const getRefreshToken = async () => {
     const { data } = await axiosInstance('/api/users/refresh');
     const { accessToken, refreshToken } = data.result.result;
 
-    console.log(data);
-
     window.localStorage.setItem('accessToken', accessToken);
     window.localStorage.setItem('refreshToken', refreshToken);
 
-    console.log(accessToken);
-    return await accessToken;
+    return null;
   } catch (error) {
     console.log(error);
     return error;
@@ -70,7 +67,7 @@ export const getMyInfo = async () => {
     const { data } = await axiosInstance('/api/users/check');
 
     console.log(data);
-    return await data.result.info;
+    return await data?.result?.info;
   } catch (error) {
     console.log(error);
   }
