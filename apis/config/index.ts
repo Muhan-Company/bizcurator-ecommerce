@@ -22,7 +22,7 @@ axiosInstance.interceptors.request.use(
       }
     }
 
-    if (token !== null) {
+    if (token !== null && config.url?.includes('/api/users')) {
       // 토큰이 존재하는 경우 헤더에 토큰 추가
       config.headers['Authorization'] = `Bearer ${token}`;
     }

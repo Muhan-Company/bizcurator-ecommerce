@@ -1,5 +1,6 @@
 import { SignupFormValues } from '@/components/users/types';
 import axiosInstance from './config';
+import { useQuery } from '@tanstack/react-query';
 
 interface LoginData {
   username: string;
@@ -24,8 +25,8 @@ export const postLogin = async (loginData: LoginData) => {
     return await data;
   } catch (error) {
     // 실패시 localStorage 저장 토큰 삭제(임시코드: 로그아웃 기능 구현 전까지 유지)
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    window.localStorage.removeItem('accessToken');
+    window.localStorage.removeItem('refreshToken');
     return error;
   }
 };
@@ -59,6 +60,42 @@ export const postSignup = async (formData: SignupFormValues) => {
       },
     });
     console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 로그인 회원정보 조회 API
+export const getMyInfo = async () => {
+  try {
+    const { data } = await axiosInstance('/api/users/check');
+
+    console.log(data);
+    return await data.result.info;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const useGetMyInfo = () => {
+  return useQuery({
+    queryKey: ['myInfo'],
+    queryFn: () => getMyInfo(),
+  });
+};
+
+// 로그아웃 API
+export const getLogout = async () => {
+  try {
+    const { data } = await axiosInstance('/api/users/logout');
+
+    // localStorage에 저장된 토큰 삭제
+    window.localStorage.removeItem('accessToken');
+    window.localStorage.removeItem('refreshToken');
+
+    console.log(data);
+
+    return null;
   } catch (error) {
     console.log(error);
   }
