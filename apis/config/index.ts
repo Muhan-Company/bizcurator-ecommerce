@@ -1,6 +1,7 @@
 import { REFRESH_URL } from '@/utils/constants';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { getRefreshToken } from '../users';
 
 const axiosInstance = axios.create({
   // API 서버주소
@@ -12,9 +13,9 @@ axiosInstance.interceptors.request.use(
   (config) => {
     let token = null;
 
-    /* refreshToken 토큰 사용 api 주소  */
     // Server-side 에서는 window가 없기 때문에 local storage 사용 불가
     if (typeof window !== 'undefined') {
+      /* refreshToken 토큰 사용 api 주소  */
       if (config.url === REFRESH_URL) {
         token = localStorage.getItem('refreshToken');
       } else {
@@ -51,6 +52,12 @@ axiosInstance.interceptors.response.use(
         id: 'response-error',
       });
       console.log(data);
+      // 토큰 만료 에러일 경우 refresh 토큰 재발급 api 호출
+      if (data?.code === 401) {
+        await getRefreshToken();
+        // 토큰 재발급 후 토큰 만료로 실패한 api 재호출
+        await axiosInstance(config);
+      }
     }
 
     return Promise.reject(error);
