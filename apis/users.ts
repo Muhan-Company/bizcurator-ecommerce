@@ -8,7 +8,7 @@ interface LoginData {
 }
 // 로그인 API
 export const postLogin = async (loginData: LoginData) => {
-  // const test = { username: 'user@user.com', password: '@user123' };
+  // const test = { username: 'user1@user.com', password: '@user123' };
   try {
     const { data } = await axiosInstance.post('/api/users/login', loginData);
     const { accessToken, refreshToken } = data.result.login.token_dto;
@@ -21,24 +21,23 @@ export const postLogin = async (loginData: LoginData) => {
 
     // 로그인 성공시 새로고침 (모달 닫기 & 메인페이지 상품가격 보이기)
     location.reload();
+    // 스크롤 맨위로 이동
+    window.scrollTo(0, 0);
 
     return await data;
   } catch (error) {
-    // 실패시 localStorage 저장 토큰 삭제(임시코드: 로그아웃 기능 구현 전까지 유지)
-    window.localStorage.removeItem('accessToken');
-    window.localStorage.removeItem('refreshToken');
+    console.log(error);
     return error;
   }
 };
 
-// refresh token 재발급 API (임시코드: api 명세 없어 정확하지 않음)
-export const postRefreshToken = async (token: string) => {
+// refresh token 재발급 API (api 수정중)
+export const getRefreshToken = async () => {
   try {
-    const { data } = await axiosInstance.post('/api/users/refresh', token);
-    const { accessToken, refreshToken } = data.result.login.token_dto;
+    const { data } = await axiosInstance('/api/users/refresh');
+    const { accessToken, refreshToken } = data.result.result;
 
     console.log(data);
-    console.log(data.result.login);
 
     window.localStorage.setItem('accessToken', accessToken);
     window.localStorage.setItem('refreshToken', refreshToken);
