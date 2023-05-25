@@ -1,15 +1,16 @@
 import Link from 'next/link';
 import { ChevronRightIcon, SettingIcon } from '../Icons';
 import { useGetMyPageMain } from '@/apis/mypage';
+import { getLogout, useGetMyInfo } from '@/apis/users';
 
 export default function MyPageMain() {
   const { data } = useGetMyPageMain();
-
+  const { data: info } = useGetMyInfo();
   return (
     <div className="pt-[52px]">
       <section className="flex items-center justify-between">
-        {/* 로그인 회원 이름 */}
-        <div className="font-medium">{'회원'}님</div>
+        {/* 로그인 회사명 */}
+        <div className="text-title-md font-medium text-primary">{info?.business_name ?? '회사명이 없습니다.'}</div>
         <Link href="/mypage/edit">
           <SettingIcon />
         </Link>
@@ -30,7 +31,13 @@ export default function MyPageMain() {
         <NavLink path="/my-requests" nav="내 의뢰 내역" />
         <NavLink path="/customer" nav="고객센터" />
         {/* todo: 로그아웃 api 연결 */}
-        <NavLink path="/" nav="로그아웃" onClick={() => ''} />
+        <NavLink
+          path="/"
+          nav="로그아웃"
+          onClick={async () => {
+            await getLogout();
+          }}
+        />
       </section>
     </div>
   );
@@ -45,7 +52,7 @@ function OrderStateLink({ path, count = 0, state }: OrderStateLinkProps) {
   return (
     <Link
       href={path}
-      className="w-[80px] h-[84px] center flex-col justify-between py-[14px] rounded-[10px] bg-gray_03 shadow-[0_2px_8px_0px_rgba(0,0,0,0.08)]"
+      className="w-[80px] h-[84px] center flex-col justify-between py-[14px] rounded-[10px] bg-gray_03 shadow-[0_2px_8px_0px_rgba(0,0,0,0.08)] hover:bg-gray_02"
     >
       <div className="text-[20px] font-bold">{count}</div>
       <div className="text-label-sm">{state}</div>
@@ -56,15 +63,16 @@ function OrderStateLink({ path, count = 0, state }: OrderStateLinkProps) {
 type NavLinkProps = {
   path: string;
   nav: string;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 };
-function NavLink({ path, nav }: NavLinkProps) {
+function NavLink({ path, nav, onClick }: NavLinkProps) {
   return (
     <Link
       href={path}
-      className="py-[17.5px] flex items-center justify-between border-b-[1px] border-b-gray_02 text-label-sm text-gray_01"
+      className="py-[17.5px] flex items-center justify-between border-b-[1px] border-b-gray_02 text-label-sm text-gray_01 hover:bg-gray_03 hover:text-main"
+      onClick={onClick}
     >
-      <div>{nav}</div>
+      <div className="pl-2.5">{nav}</div>
       <ChevronRightIcon color="#999" />
     </Link>
   );
