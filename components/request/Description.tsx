@@ -6,8 +6,8 @@ interface Description {
 
 export default function Description({ desc }: { desc: Description }) {
   return (
-    <div className="pt-5 px-3">
-      <div className="px-3 space-y-[5px]">
+    <div className="pt-5 mx-3">
+      <div className="mx-3 space-y-[5px]">
         <h1 className="text-body-md text-main font-bold">{desc.h}</h1>
         <p className="font-normal text-body-sm text-main">
           <span className="break-keep">{desc.p1}</span>

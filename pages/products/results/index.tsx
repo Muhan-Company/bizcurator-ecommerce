@@ -37,7 +37,7 @@ export default function SearchResults() {
         <Sort />
         {isLoading && (
           <div className="my-10">
-            <Loader height="[50px]" />
+            <Loader />
           </div>
         )}
 

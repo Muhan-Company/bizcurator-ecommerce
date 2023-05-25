@@ -101,7 +101,7 @@ export default function NumThree({ formValues3 }: { formValues3: FormValues3 }) 
               <Image src={preview} alt="Preview" fill className="object-cover" />
             </section>
           ) : loading ? (
-            <Loader height="full" />
+            <Loader className="h-full" />
           ) : (
             <label
               htmlFor="file"
