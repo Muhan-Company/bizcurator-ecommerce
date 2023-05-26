@@ -82,10 +82,10 @@ export default function One({ formValues1 }: { formValues1: FormValues1 }) {
             selectedCategory.name === '제작목적 선택' ||
             selectedCategory.name === '생산종류카테고리'
           }
-          {...register('name')}
+          {...register('product_name')}
           className="disabled:cursor-not-allowed bg-gray-100 px-4 font-normal text-main text-body-xs disabled:bg-gray_04 rounded-lg h-[50px] w-full outline-none"
         />
-        {errors.name && <p className="err-msg">{errors.name.message}</p>}
+        {errors.product_name && <p className="err-msg">{errors.product_name.message}</p>}
       </div>
     </>
   );

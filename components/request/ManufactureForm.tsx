@@ -9,8 +9,17 @@ import Four from './Numbers/Four';
 import Five from './Numbers/Five';
 import Six from './Numbers/Six';
 import useToast from '@/hooks/useToast';
+import { MyInfoProps } from './MyInfo';
+import useInvalidateQueries from '@/hooks/useInvalidateQueries';
+import { useSetRecoilState } from 'recoil';
+import { useRouter } from 'next/router';
+import reqSuccessState from '@/atoms/reqSuccessAtom';
+import useCustomMutation from '@/hooks/useCustomMutation';
+import { AxiosResponse } from 'axios';
+import { requestOrders } from '@/apis/requestApis';
+import { format } from 'date-fns';
 
-export default function ManufactureForm() {
+export default function ManufactureForm({ data: info }: MyInfoProps) {
   const {
     register,
     handleSubmit,
@@ -28,26 +37,50 @@ export default function ManufactureForm() {
   const [selectedCategory, setSelectedCategory] = useState<Category>({ id: 0, name: '제작목적 선택' });
   const [fileTypeError, setFileTypeError] = useState<boolean>(false);
   const [fileSizeError, setFileSizeError] = useState<boolean>(false);
-
   const [file, setFile] = useState<File | null>(null);
 
   const showToast = useToast();
+  const invalidateQueries = useInvalidateQueries();
+  const setReqSuccess = useSetRecoilState(reqSuccessState);
+  const { push } = useRouter();
+
+  const handleSuccess = () => {
+    invalidateQueries(['requests', 'orders']);
+    setReqSuccess(true);
+    push('/my-requests');
+  };
+
+  const { mutate, isLoading: loading } = useCustomMutation<AxiosResponse, FormData>(requestOrders, handleSuccess, () =>
+    showToast('제출 실패', true),
+  );
+
   const onSubmit = (data: IFormInputs) => {
     if (!file) {
       showToast('이미지를 업로드하세요', true);
       return;
     }
 
-    const newData = { ...data, image: file };
+    if (!info) {
+      showToast('제출 불가', true);
+      return;
+    }
+
+    const post = {
+      ...data,
+      desired_estimate_date: format(data.desired_estimate_date, 'yyyy-MM-dd'),
+      desired_delivery_date: format(data.desired_delivery_date, 'yyyy-MM-dd'),
+      document_type: 'make',
+      manager_name: info.manager,
+      manager_call: info.manager_phone_number,
+      category: selectedCategory.id,
+    };
+
     const formData = new FormData();
 
-    formData.append('name', newData.name);
-    formData.append('detail', newData.detail);
-    formData.append('quantity', newData.quantity.toString());
-    formData.append('estimateDate', newData.estimateDate.toISOString());
-    formData.append('deliveryDate', newData.deliveryDate.toISOString());
-    formData.append('request', newData.request);
-    formData.append('image', newData.image);
+    formData.append('post', new Blob([JSON.stringify(post)], { type: 'application/json' }));
+    formData.append('image', file);
+
+    mutate(formData);
   };
 
   const formValues = {
@@ -110,7 +143,12 @@ export default function ManufactureForm() {
       <Four formValues4={formValues4} />
       <Five formValues5={formValues5} />
       <Six formValues6={formValues6} />
-      <input type="submit" value={'제출하기'} className="submit-btn" />
+      <input
+        type="submit"
+        disabled={loading}
+        value={loading ? '제출 중...' : '제출하기'}
+        className="disabled:opacity-50 disabled:cursor-not-allowed submit-btn"
+      />
     </form>
   );
 }

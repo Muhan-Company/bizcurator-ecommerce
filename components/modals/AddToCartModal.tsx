@@ -6,7 +6,7 @@ import { addCompleteModalState } from '@/atoms/modalAtoms';
 import { addToCart } from '@/apis/cartApis';
 import { AxiosResponse } from 'axios';
 import { AddToCartVariables } from '../products/Purchase';
-import useInvalidation from '@/hooks/useInvalidateQueries';
+import useInvalidateQueries from '@/hooks/useInvalidateQueries';
 import useCustomMutation from '@/hooks/useCustomMutation';
 import useAddCompleteModal from '@/hooks/useAddCompleteModal';
 
@@ -46,7 +46,7 @@ export default function AddToCartModal({
     setQuantity(min_quantity);
   };
 
-  const invalidateQueries = useInvalidation();
+  const invalidateQueries = useInvalidateQueries();
   const showModal = useAddCompleteModal();
 
   const handleSuccess = () => {

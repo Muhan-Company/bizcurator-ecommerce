@@ -25,7 +25,9 @@ export default function Products() {
     setSortBy(sortByList[0]);
   }, [setSortBy]);
 
-  const { categoryProducts, isLoading, error } = useCategories({ categoryId, sortBy: sortBy.english });
+  const { data, isLoading, isError } = useCategories({ categoryId, sortBy: sortBy.english });
+
+  const categoryProducts = data?.result.products;
 
   return (
     <Layout>
@@ -35,13 +37,13 @@ export default function Products() {
       <Sort />
       {isLoading && (
         <div className="my-10">
-          <Loader height="[50px]" />
+          <Loader />
         </div>
       )}
 
-      {error instanceof Error && <p className="text-red font-bold text-center my-10">상품 조회 실패</p>}
+      {isError && <p className="text-red font-bold text-center my-10">상품 조회 실패</p>}
 
-      {!isLoading && !error && <ProductList products={categoryProducts} />}
+      {!isLoading && !isError && <ProductList products={categoryProducts} />}
       <NavBar />
       <Footer />
     </Layout>

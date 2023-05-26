@@ -11,6 +11,7 @@ interface FormValues6 extends FormValues {
   setFileSizeError: React.Dispatch<React.SetStateAction<boolean>>;
   fileTypeError: boolean;
   setFileTypeError: React.Dispatch<React.SetStateAction<boolean>>;
+
   placeholder: string;
 }
 
@@ -60,8 +61,6 @@ export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
   useEffect(() => {
     if (file) {
       setLoading(true);
-      const formData = new FormData();
-      formData.append('file', file);
 
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -90,9 +89,9 @@ export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
           <textarea
             className="h-full max-w-full bg-gray-100 p-2 resize-none text-main rounded-lg outline-none font-normal text-body-sm placeholder:text-gray_01"
             placeholder={placeholder}
-            {...register('request')}
+            {...register('request_message')}
           />
-          {errors.request && <p className="err-msg">{errors.request.message}</p>}
+          {errors.request_message && <p className="err-msg">{errors.request_message.message}</p>}
         </section>
 
         <div className="col-span-2">
@@ -101,7 +100,7 @@ export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
               <Image src={preview} alt="Preview" fill className="object-cover" />
             </section>
           ) : loading ? (
-            <Loader height="full" />
+            <Loader className="h-full" />
           ) : (
             <label
               htmlFor="file"

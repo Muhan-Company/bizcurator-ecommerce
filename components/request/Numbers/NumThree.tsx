@@ -90,9 +90,9 @@ export default function NumThree({ formValues3 }: { formValues3: FormValues3 }) 
           <textarea
             className="h-full max-w-full bg-gray-100 p-2 resize-none text-main rounded-lg outline-none font-normal text-body-sm placeholder:text-gray_01"
             placeholder={placeholder}
-            {...register('intro')}
+            {...register('introduction')}
           />
-          {errors.intro && <p className="err-msg">{errors.intro.message}</p>}
+          {errors.introduction && <p className="err-msg">{errors.introduction.message}</p>}
         </section>
 
         <div className="col-span-2">
@@ -101,7 +101,7 @@ export default function NumThree({ formValues3 }: { formValues3: FormValues3 }) 
               <Image src={preview} alt="Preview" fill className="object-cover" />
             </section>
           ) : loading ? (
-            <Loader height="full" />
+            <Loader className="h-full" />
           ) : (
             <label
               htmlFor="file"

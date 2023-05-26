@@ -1,3 +1,4 @@
+import { useGetMyInfo } from '@/apis/users';
 import Footer from '@/components/footer/Footer';
 import NavBar from '@/components/footer/NavBar';
 import DownHeader from '@/components/header/DownHeader';
@@ -15,15 +16,17 @@ export default function PurchaseRequest() {
     p2: '원하시는 제품을 도매가로 찾아드리고 견적을 보내드려요',
   };
 
+  const info = useGetMyInfo();
+
   return (
     <Layout>
       <DownHeader />
       <FormTitle title="제품 구매 및 제작 의뢰신청서" />
       <Description desc={desc} />
       <RequestLinks />
-      <MyInfo />
+      <MyInfo {...info} />
       <div className="h-[1px] bg-gray_02 my-8"></div>
-      <PurchaseForm />
+      <PurchaseForm {...info} />
       <Footer />
       <NavBar />
     </Layout>

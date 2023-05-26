@@ -1,18 +1,26 @@
 import useToast from '@/hooks/useToast';
-import CompanyInput from './CompanyInput';
+import CompanyValue from './CompanyValue';
+import { useGetMyInfo } from '@/apis/users';
+import Loader from '../products/Loader';
 
 export default function CompanyInfo() {
   const showToast = useToast();
-  const companyInputs = [
-    { id: 1, value: '상호명' },
-    { id: 2, value: '대표자명' },
-    { id: 3, value: '사업자번호' },
-    { id: 4, value: '구매담당자 전화번호' },
+  const { data: info, isLoading, isError } = useGetMyInfo();
+
+  const companyInfo = [
+    { id: 1, name: '상호명', value: info?.business_name },
+    { id: 2, name: '대표자명', value: info?.representative },
+    { id: 3, name: '사업자번호', value: info?.business_number },
+    { id: 4, name: '구매담당자 전화번호', value: info?.manager_phone_number },
   ];
+
+  if (isLoading) return <Loader className="mt-10" />;
+  if (isError) return <p className="text-body-md text-red font-medium mt-10 mx-3">정보 불러오기 실패</p>;
+
   return (
     <div className="mt-10 mx-3 space-y-[10px]" onClick={() => showToast('수정은 마이페이지에서 가능합니다.')}>
-      {companyInputs.map((input) => (
-        <CompanyInput key={input.id} value={input.value} />
+      {companyInfo.map((info) => (
+        <CompanyValue key={info.id} {...info} />
       ))}
     </div>
   );

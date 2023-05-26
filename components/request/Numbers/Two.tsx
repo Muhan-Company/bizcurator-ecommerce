@@ -10,10 +10,10 @@ export default function Two({ formValues2 }: { formValues2: FormValues }) {
         <p className="font-normal text-body-sm break-keep">{description}</p>
       </label>
       <input
-        {...register('detail')}
+        {...register('product_detail')}
         className="bg-gray-100 px-4 font-normal text-main text-body-xs rounded-lg h-[50px] w-full outline-none"
       />
-      {errors.detail && <p className="err-msg">{errors.detail.message}</p>}
+      {errors.product_detail && <p className="err-msg">{errors.product_detail.message}</p>}
     </div>
   );
 }

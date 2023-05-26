@@ -10,13 +10,13 @@ export default function Five({ formValues5 }: { formValues5: FormValues }) {
         <p className="font-normal text-body-sm break-keep">{description}</p>
       </label>
       <input
-        {...register('deliveryDate')}
+        {...register('desired_delivery_date')}
         type="date"
         data-placeholder="YYYY-MM-DD"
         className="outline-none bg-gray-100 pl-12 leading-[50px] font-normal text-main
 text-body-xs rounded-lg h-[50px]"
       />
-      {errors.deliveryDate && <p className="err-msg">{errors.deliveryDate.message}</p>}
+      {errors.desired_delivery_date && <p className="err-msg">{errors.desired_delivery_date.message}</p>}
     </div>
   );
 }
