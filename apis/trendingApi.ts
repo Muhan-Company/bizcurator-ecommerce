@@ -1,7 +1,7 @@
 import axiosInstance from './config';
 
 const getWeeklyTrending = async () => {
-  const { data } = await axiosInstance.get('/api/products/top-weekly').then((res) => res.data);
+  const { data } = await axiosInstance.get('/api/products/top-weekly');
 
   return data;
 };

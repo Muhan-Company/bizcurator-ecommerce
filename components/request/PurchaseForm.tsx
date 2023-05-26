@@ -1,20 +1,23 @@
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import useToast from '@/hooks/useToast';
+import useCustomMutation from '@/hooks/useCustomMutation';
+import { requestPurchase } from '@/apis/requestApis';
+import useInvalidateQueries from '@/hooks/useInvalidateQueries';
+import { useSetRecoilState } from 'recoil';
 import { useForm } from 'react-hook-form';
+import purchaseReqState from '@/atoms/fromAtoms';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import One from './Numbers/One';
 import Two from './Numbers/Two';
 import Three from './Numbers/Three';
-import { useState } from 'react';
 import Four from './Numbers/Four';
 import Five from './Numbers/Five';
 import Six from './Numbers/Six';
-import useToast from '@/hooks/useToast';
-import useCustomMutation from '@/hooks/useCustomMutation';
-import { requestPurchase } from '@/apis/requestApis';
-import useInvalidateQueries from '@/hooks/useInvalidateQueries';
-import { AxiosResponse } from 'axios';
-import { MyInfoProps } from './MyInfo';
 import { format } from 'date-fns';
+import { MyInfoProps } from './MyInfo';
+import { AxiosResponse } from 'axios';
 
 export interface IFormInputs {
   product_name: string;
@@ -100,10 +103,13 @@ export default function PurchaseForm({ data: info }: MyInfoProps) {
 
   const showToast = useToast();
   const invalidateQueries = useInvalidateQueries();
+  const setPurchaseReq = useSetRecoilState(purchaseReqState);
+  const { push } = useRouter();
 
   const handleSuccess = () => {
     invalidateQueries(['requests', 'orders']);
-    showToast('제출되었습니다.', false);
+    setPurchaseReq(true);
+    push('/my-requests');
   };
 
   const { mutate, isLoading: loading } = useCustomMutation<AxiosResponse, FormData>(
@@ -119,7 +125,7 @@ export default function PurchaseForm({ data: info }: MyInfoProps) {
     }
 
     if (!info) {
-      showToast('제출 실패', true);
+      showToast('제출 불가', true);
       return;
     }
 
@@ -203,7 +209,12 @@ export default function PurchaseForm({ data: info }: MyInfoProps) {
       <Five formValues5={formValues5} />
       <Six formValues6={formValues6} />
 
-      <input type="submit" value={'제출하기'} className="submit-btn" />
+      <input
+        type="submit"
+        disabled={loading}
+        value={loading ? '제출 중...' : '제출하기'}
+        className="disabled:opacity-50 disabled:cursor-not-allowed submit-btn"
+      />
     </form>
   );
 }
