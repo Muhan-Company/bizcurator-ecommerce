@@ -5,7 +5,7 @@ import Loader from '../products/Loader';
 
 export default function CompanyInfo() {
   const showToast = useToast();
-  const { data: info, isLoading, error } = useGetMyInfo();
+  const { data: info, isLoading, isError } = useGetMyInfo();
 
   const companyInfo = [
     { id: 1, name: '상호명', value: info?.business_name },
@@ -15,7 +15,7 @@ export default function CompanyInfo() {
   ];
 
   if (isLoading) return <Loader className="mt-10" />;
-  if (error) return <p className="text-body-md text-red font-medium mt-10 mx-3">정보 불러오기 실패</p>;
+  if (isError) return <p className="text-body-md text-red font-medium mt-10 mx-3">정보 불러오기 실패</p>;
 
   return (
     <div className="mt-10 mx-3 space-y-[10px]" onClick={() => showToast('수정은 마이페이지에서 가능합니다.')}>

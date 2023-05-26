@@ -5,9 +5,15 @@ export interface CategoryProducts {
   sortBy: string;
 }
 
-const getProductInfo = (product_id: number) => axiosInstance.get(`/api/products/${product_id}`).then((res) => res.data);
+const getProductInfo = async (product_id: number) => {
+  const { data } = await axiosInstance.get(`/api/products/${product_id}`);
+  return data;
+};
 
-const getCategoryProducts = ({ categoryId, sortBy }: CategoryProducts) =>
-  axiosInstance.get(`/api/products?categoryId=${categoryId}&sort=${sortBy}`).then((res) => res.data);
+const getCategoryProducts = async ({ categoryId, sortBy }: CategoryProducts) => {
+  const { data } = await axiosInstance.get(`/api/products?categoryId=${categoryId}&sort=${sortBy}`);
+
+  return data;
+};
 
 export { getProductInfo, getCategoryProducts };

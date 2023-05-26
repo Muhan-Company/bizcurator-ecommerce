@@ -1,3 +1,4 @@
+import { useGetMyInfo } from '@/apis/users';
 import Footer from '@/components/footer/Footer';
 import NavBar from '@/components/footer/NavBar';
 import DownHeader from '@/components/header/DownHeader';
@@ -15,13 +16,15 @@ export default function ManufactureRequest() {
     p2: '      제품 목업부터 실제 제작을 위한 공정을 저희와 함께해요',
   };
 
+  const info = useGetMyInfo();
+
   return (
     <Layout>
       <DownHeader />
       <FormTitle title="제품 구매 및 제작 의뢰신청서" />
       <Description desc={desc} />
       <RequestLinks />
-      <MyInfo />
+      <MyInfo {...info} />
       <div className="h-[1px] bg-gray_02 my-8"></div>
       <ManufactureForm />
       <Footer />

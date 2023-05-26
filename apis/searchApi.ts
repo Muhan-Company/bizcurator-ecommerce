@@ -5,7 +5,9 @@ export interface SearchType {
   sortBy: string;
 }
 
-const search = ({ searchQuery, sortBy }: SearchType) =>
-  axiosInstance.get(`/api/products/search?keyword=${searchQuery}&sort=${sortBy}`).then((res) => res.data);
+const search = async ({ searchQuery, sortBy }: SearchType) => {
+  const { data } = await axiosInstance.get(`/api/products/search?keyword=${searchQuery}&sort=${sortBy}`);
+  return data;
+};
 
 export default search;

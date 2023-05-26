@@ -13,11 +13,14 @@ export default function Item() {
 
   const id = query.itemId;
 
-  const { productInfo, isLoading, error } = useProductInfo(Number(id));
+  const { data, isLoading, isError } = useProductInfo(Number(id));
+
+  const productInfo = data?.result.productDetail;
 
   if (isLoading) return <Loader />;
 
-  if (error) return <p className="text-center leading-[100vh] text-red font-bold text-lg">상품 상세 정보 조회 실패</p>;
+  if (isError)
+    return <p className="text-center leading-[100vh] text-red font-bold text-lg">상품 상세 정보 조회 실패</p>;
 
   return (
     <>

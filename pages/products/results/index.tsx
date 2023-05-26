@@ -19,10 +19,12 @@ export default function SearchResults() {
   const showSearchBar = useRecoilValue(searchBarState);
 
   const { query } = useRouter();
-  const { searchResults, isLoading, error } = useSearch({
+  const { data, isLoading, isError } = useSearch({
     searchQuery: query.search_query as string,
     sortBy: sortBy.english,
   });
+
+  const searchResults = data?.result.products;
 
   useEffect(() => {
     setSortBy(sortByList[0]);
@@ -41,9 +43,9 @@ export default function SearchResults() {
           </div>
         )}
 
-        {error instanceof Error && <p className="text-red font-bold text-center my-10">상품 검색 실패</p>}
+        {isError && <p className="text-red font-bold text-center my-10">상품 검색 실패</p>}
 
-        {!isLoading && !error && <ProductList products={searchResults} />}
+        {!isLoading && !isError && <ProductList products={searchResults} />}
         <NavBar />
         <Footer />
       </Layout>
