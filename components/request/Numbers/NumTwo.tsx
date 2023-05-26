@@ -11,10 +11,10 @@ export default function NumTwo({ formValues2 }: { formValues2: FormValues }) {
       </label>
       <input
         type="number"
-        {...register('year', { valueAsNumber: true })}
+        {...register('established_year', { valueAsNumber: true })}
         className="bg-gray-100 px-4 font-normal text-main text-body-xs rounded-lg h-[50px] w-full outline-none"
       />
-      {errors.year && <p className="err-msg">{errors.year.message}</p>}
+      {errors.established_year && <p className="err-msg">{errors.established_year.message}</p>}
     </div>
   );
 }

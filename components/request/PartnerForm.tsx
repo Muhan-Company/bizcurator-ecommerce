@@ -7,17 +7,26 @@ import NumOne from './Numbers/NumOne';
 import NumTwo from './Numbers/NumTwo';
 import NumThree from './Numbers/NumThree';
 import useToast from '@/hooks/useToast';
+import { MyInfoProps } from './MyInfo';
+import useInvalidateQueries from '@/hooks/useInvalidateQueries';
+import { useSetRecoilState } from 'recoil';
+import reqSuccessState from '@/atoms/reqSuccessAtom';
+import { useRouter } from 'next/router';
+import useCustomMutation from '@/hooks/useCustomMutation';
+import { AxiosResponse } from 'axios';
+import { requestPartner } from '@/apis/requestApis';
+import { format } from 'date-fns';
 
 export interface FormInputs {
-  detail: string;
-  year: number;
-  intro: string;
+  product_detail: string;
+  established_year: number;
+  introduction: string;
 }
 
 const PartnerSchema = yup
   .object({
-    detail: yup.string().required('생산제품을 입력하세요'),
-    year: yup
+    product_detail: yup.string().required('생산제품을 입력하세요'),
+    established_year: yup
       .number()
       .typeError('설립연도를 입력하세요')
       .positive('양수를 입력하세요')
@@ -27,11 +36,11 @@ const PartnerSchema = yup
 
         return value! <= currentYear;
       }),
-    intro: yup.string().required('회사에 대해 설명해주세요'),
+    introduction: yup.string().required('회사에 대해 설명해주세요'),
   })
   .required();
 
-export default function PartnerForm() {
+export default function PartnerForm({ data: info }: MyInfoProps) {
   const {
     register,
     handleSubmit,
@@ -43,10 +52,22 @@ export default function PartnerForm() {
   const [selectedCategory, setSelectedCategory] = useState<Category>({ id: 0, name: '생산종류카테고리' });
   const [fileTypeError, setFileTypeError] = useState<boolean>(false);
   const [fileSizeError, setFileSizeError] = useState<boolean>(false);
-
   const [file, setFile] = useState<File | null>(null);
 
   const showToast = useToast();
+  const invalidateQueries = useInvalidateQueries();
+  const setReqSuccess = useSetRecoilState(reqSuccessState);
+  const { push } = useRouter();
+
+  const handleSuccess = () => {
+    invalidateQueries(['requests', 'partner']);
+    setReqSuccess(true);
+    push('/my-requests');
+  };
+
+  const { mutate, isLoading: loading } = useCustomMutation<AxiosResponse, FormData>(requestPartner, handleSuccess, () =>
+    showToast('제출 실패', true),
+  );
 
   const onSubmit = (data: FormInputs) => {
     if (!file) {
@@ -54,13 +75,22 @@ export default function PartnerForm() {
       return;
     }
 
-    const newData = { ...data, image: file };
+    const post = {
+      ...data,
+      business_name: info?.business_name,
+      ceo_name: info?.representative,
+      business_number: info?.business_number,
+      manager_phone_number: info?.manager_phone_number,
+      category: selectedCategory.id,
+      established_year: format(data.established_year, 'yyyy-MM-dd'),
+    };
+
     const formData = new FormData();
 
-    formData.append('detail', newData.detail);
-    formData.append('year', newData.year.toString());
-    formData.append('intro', newData.intro);
-    formData.append('image', newData.image);
+    formData.append('post', new Blob([JSON.stringify(post)], { type: 'application/json' }));
+    formData.append('image', file);
+
+    mutate(formData);
   };
 
   const formValues = {
@@ -100,7 +130,12 @@ export default function PartnerForm() {
       <NumOne formValues1={formValues1} />
       <NumTwo formValues2={formValues2} />
       <NumThree formValues3={formValues3} />
-      <input type="submit" value={'제출하기'} className="submit-btn" />
+      <input
+        type="submit"
+        disabled={loading}
+        value={loading ? '제출 중...' : '제출하기'}
+        className="disabled:opacity-50 disabled:cursor-not-allowed submit-btn"
+      />{' '}
     </form>
   );
 }

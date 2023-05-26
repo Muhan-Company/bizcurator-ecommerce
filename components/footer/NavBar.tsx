@@ -26,7 +26,7 @@ export default function NavBar() {
 
       {showSearchModal && createPortal(<SearchModal setShowSearchModal={setShowSearchModal} />, document.body)}
 
-      <Link href={'mypage'} className="navbar-btn">
+      <Link href={'/mypage'} className="navbar-btn">
         <UserIcon color="primary" />
         <span className="navbar-text">마이페이지</span>
       </Link>

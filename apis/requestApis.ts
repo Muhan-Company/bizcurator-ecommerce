@@ -1,5 +1,7 @@
 import axiosInstance from './config';
 
-const requestOrders = async (formData: FormData) => axiosInstance.post('/api/requests/orders', formData);
+const requestOrders = (formData: FormData) => axiosInstance.post('/api/requests/orders', formData);
 
-export { requestOrders };
+const requestPartner = (formData: FormData) => axiosInstance.post('/api/requests/partners', formData);
+
+export { requestOrders, requestPartner };
