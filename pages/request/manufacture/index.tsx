@@ -26,7 +26,7 @@ export default function ManufactureRequest() {
       <RequestLinks />
       <MyInfo {...info} />
       <div className="h-[1px] bg-gray_02 my-8"></div>
-      <ManufactureForm />
+      <ManufactureForm {...info} />
       <Footer />
       <NavBar />
     </Layout>
