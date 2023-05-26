@@ -14,7 +14,9 @@ export default function PartnerRequest() {
     p1: '판매입점을 하시면 제품구매의뢰 또는 제작의뢰를 받으실 수 있고 바로구매 물품의 업로드 제안을 받을 수 있습니다.',
     p2: '비즈큐레이터의 파트너가 되어주세요',
   };
+
   const info = useGetMyInfo();
+
   return (
     <Layout>
       <DownHeader />
