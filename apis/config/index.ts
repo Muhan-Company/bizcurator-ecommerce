@@ -47,16 +47,27 @@ axiosInstance.interceptors.response.use(
 
     // Server-side에서 response 객체가 존재하지 않을 때 에러가 발생하기 때문에, response가 존재하면 코드 실행하는 조건 추가
     if (response && response.status && response.data) {
-      const { status, data } = response;
+      const { data } = response;
       toast.error(data?.message, {
         id: 'response-error',
       });
-      console.log(data);
-      // 토큰 만료 에러일 경우 refresh 토큰 재발급 api 호출
+
+      // 인증(토큰 만료) 에러일 경우
       if (data?.code === 401) {
-        await getRefreshToken();
-        // 토큰 재발급 후 토큰 만료로 실패한 api 재호출
-        await axiosInstance(config);
+        // refresh 토큰 만료 에러일 경우
+        if (config.url === REFRESH_URL) {
+          // 기존 토큰 삭제
+          window.localStorage.removeItem('accessToken');
+          window.localStorage.removeItem('refreshToken');
+
+          alert('재로그인이 필요합니다.');
+          window.location.replace('/');
+        } else {
+          // refresh 토큰 재발급 api 호출
+          await getRefreshToken();
+          // 토큰 재발급 후 토큰 만료로 실패한 api 재호출
+          await axiosInstance(config);
+        }
       }
     }
 
