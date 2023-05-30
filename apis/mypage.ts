@@ -13,3 +13,17 @@ export const useGetMyPageMain = () => {
     queryFn: async () => await getMyPageMain(),
   });
 };
+
+// 마이페이지 내 의뢰내역 조회 API
+const getMyRequests = async (filter_month: number) => {
+  const { data } = await axiosInstance(`/api/mypages/requests/histories?filter-month=${filter_month}`);
+
+  console.log(data);
+  return await data?.result?.details;
+};
+export const useGetMyRequests = (filter_month: number) => {
+  return useQuery({
+    queryKey: ['myRequests', filter_month],
+    queryFn: async () => await getMyRequests(filter_month),
+  });
+};
