@@ -21,10 +21,11 @@ export default function MyRequestsListTable({ data }: MyRequestsListTableData) {
         </tr>
       </thead>
       <tbody>
-        {data.map((row) => (
+        {data?.map((row, index) => (
           // todo: requestType에 따라 상세페이지 경로 다르게 지정
           <tr
-            key={row.requestId}
+            // requestId 중복(제작,구입의뢰)이 있어 index로 대체
+            key={index}
             className="text-label-sm hover:bg-gray-100 hover:cursor-pointer"
             onClick={() => router.push(`/my-requests/purchase/${row.requestId}`)}
           >
