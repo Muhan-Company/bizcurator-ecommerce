@@ -11,13 +11,14 @@ import Six from './Numbers/Six';
 import useToast from '@/hooks/useToast';
 import { MyInfoProps } from './MyInfo';
 import useInvalidateQueries from '@/hooks/useInvalidateQueries';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 import reqSuccessState from '@/atoms/reqSuccessAtom';
 import useCustomMutation from '@/hooks/useCustomMutation';
 import { AxiosResponse } from 'axios';
 import { requestOrders } from '@/apis/requestApis';
 import { format } from 'date-fns';
+import reqDetailsState from '@/atoms/reqDetailsAtom';
 
 export default function ManufactureForm({ data: info }: MyInfoProps) {
   const {
@@ -29,12 +30,17 @@ export default function ManufactureForm({ data: info }: MyInfoProps) {
   });
 
   const categories = [
+    { id: 0, name: '제작목적 선택' },
     { id: 1, name: '창업(제품판매)' },
     { id: 2, name: '작품 제작' },
     { id: 3, name: '개인적인 목적' },
   ];
 
-  const [selectedCategory, setSelectedCategory] = useState<Category>({ id: 0, name: '제작목적 선택' });
+  const reqDetails = useRecoilValue(reqDetailsState);
+
+  const [selectedCategory, setSelectedCategory] = useState<Category>(
+    reqDetails ? { id: reqDetails.categoryId, name: reqDetails.category } : categories[0],
+  );
   const [fileTypeError, setFileTypeError] = useState<boolean>(false);
   const [fileSizeError, setFileSizeError] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
@@ -60,18 +66,13 @@ export default function ManufactureForm({ data: info }: MyInfoProps) {
       return;
     }
 
-    if (!info) {
-      showToast('제출 불가', true);
-      return;
-    }
-
     const post = {
       ...data,
       desired_estimate_date: format(data.desired_estimate_date, 'yyyy-MM-dd'),
       desired_delivery_date: format(data.desired_delivery_date, 'yyyy-MM-dd'),
       document_type: 'make',
-      manager_name: info.manager,
-      manager_call: info.manager_phone_number,
+      manager_name: info?.manager,
+      manager_call: info?.manager_phone_number,
       category: selectedCategory.id,
     };
 

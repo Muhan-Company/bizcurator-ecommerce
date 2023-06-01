@@ -6,6 +6,7 @@ const useAddCompleteModal = () => {
 
   const showModal = () => {
     setShowAddCompleteModal(true);
+
     document.body.classList.add('modal-open');
   };
 

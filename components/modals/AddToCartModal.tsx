@@ -3,12 +3,12 @@ import Counter from '../cart/Counter';
 import AddCompleteModal from './AddCompleteModal';
 import { useRecoilValue } from 'recoil';
 import { addCompleteModalState } from '@/atoms/modalAtoms';
-import { addToCart } from '@/apis/cartApis';
 import { AxiosResponse } from 'axios';
 import { AddToCartVariables } from '../products/Purchase';
 import useInvalidateQueries from '@/hooks/useInvalidateQueries';
 import useCustomMutation from '@/hooks/useCustomMutation';
 import useAddCompleteModal from '@/hooks/useAddCompleteModal';
+import useAxiosPrivate from '@/hooks/useAxiosPrivate';
 
 interface AddToCartProps {
   id: number;
@@ -45,6 +45,10 @@ export default function AddToCartModal({
     document.body.classList.remove('modal-open');
     setQuantity(min_quantity);
   };
+  const axiosPrivate = useAxiosPrivate();
+
+  const addToCart = ({ product_id, quantity }: { product_id: number; quantity: number }) =>
+    axiosPrivate.post('/api/carts', { product_id, quantity });
 
   const invalidateQueries = useInvalidateQueries();
   const showModal = useAddCompleteModal();
@@ -83,7 +87,7 @@ export default function AddToCartModal({
             </div>
             {/* 수량 계산 */}
             <div className="w-full mb-5 px-2 py-[15px] flex items-center justify-between bg-gray_03">
-              <Counter min_quantity={min_quantity} quantity={quantity} setQuantity={setQuantity} />
+              <Counter minimum_quantity={min_quantity} qty={quantity} setQty={setQuantity} />
               <h4 className="font-medium text-main text-body-sm">총 금액</h4>
               <div className="flex flex-col text-end">
                 {/* 할인적용 가격 */}

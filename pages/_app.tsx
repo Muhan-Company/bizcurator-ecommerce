@@ -3,9 +3,10 @@ import type { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RecoilRoot } from 'recoil';
 import ScrollToTop from '@/components/ScrollToTop';
-import Notification from '@/components/Notification';
+import dynamic from 'next/dynamic';
 
 const queryClient = new QueryClient();
+const DynamicNotification = dynamic(() => import('@/components/Notification'), { ssr: false });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -13,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <RecoilRoot>
         <ScrollToTop />
         <Component {...pageProps} />
-        <Notification />
+        <DynamicNotification />
       </RecoilRoot>
     </QueryClientProvider>
   );

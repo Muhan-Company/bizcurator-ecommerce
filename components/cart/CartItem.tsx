@@ -10,10 +10,11 @@ type CartItemPropsType = {
 };
 export interface CartItemType {
   name: string;
-  discountPrice: number;
-  regularPrice: number;
+  discount_price: number;
+  regular_price: number;
   quantity: number;
-  productImageDtos: string;
+  minimum_quantity: number;
+  product_image_url: string;
 }
 
 export default function CartItem({ isAllSelected, setIsAllSelected, cartItem }: CartItemPropsType) {
@@ -34,6 +35,8 @@ export default function CartItem({ isAllSelected, setIsAllSelected, cartItem }: 
     }
   };
 
+  const { product_image_url } = cartItem;
+
   return (
     <div className="flex md:items-center md:w-[800px] py-[22px] border-b-[1px] border-b-gray_02">
       <div className="pr-3 md:pl-7" onClick={checkHandler}>
@@ -42,7 +45,7 @@ export default function CartItem({ isAllSelected, setIsAllSelected, cartItem }: 
       <div className="flex grow">
         <div className="w-[86px] md:w-[120px] h-[86px] md:h-[120px] rounded-[10px] bg-gray_04 p-3 box-border">
           <Image
-            src={cartItem?.productImageDtos}
+            src={product_image_url}
             alt="thumbnail"
             width={62}
             height={62}

@@ -2,13 +2,12 @@ import { useState } from 'react';
 import { MagnifyingGlassIcon } from '../Icons';
 import { useRouter } from 'next/router';
 import { sortByState } from '@/atoms/sortByAtom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { searchModalState } from '@/atoms/modalAtoms';
 
-export default function SearchModal({
-  setShowSearchModal,
-}: {
-  setShowSearchModal: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export default function SearchModal() {
+  const setShowSearchModal = useSetRecoilState(searchModalState);
+
   const closeModal = () => {
     setShowSearchModal(false);
     document.body.classList.remove('modal-open');

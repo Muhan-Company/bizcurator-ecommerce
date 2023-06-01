@@ -87,7 +87,7 @@ export const categories = [
   },
 ];
 
-export default function PurchaseForm({ data: info }: MyInfoProps) {
+export default function PurchaseForm({ data: myInfo }: MyInfoProps) {
   const {
     register,
     handleSubmit,
@@ -122,7 +122,7 @@ export default function PurchaseForm({ data: info }: MyInfoProps) {
       return;
     }
 
-    if (!info) {
+    if (!myInfo) {
       showToast('제출 불가', true);
       return;
     }
@@ -132,8 +132,8 @@ export default function PurchaseForm({ data: info }: MyInfoProps) {
       desired_estimate_date: format(data.desired_estimate_date, 'yyyy-MM-dd'),
       desired_delivery_date: format(data.desired_delivery_date, 'yyyy-MM-dd'),
       document_type: 'purchase',
-      manager_name: info.manager,
-      manager_call: info.manager_phone_number,
+      manager_name: myInfo.manager,
+      manager_call: myInfo.manager_phone_number,
       category: selectedCategory.id,
     };
 

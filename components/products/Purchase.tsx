@@ -5,7 +5,6 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { createPortal } from 'react-dom';
 import AddCompleteModal from '../modals/AddCompleteModal';
 import BuyCompleteModal from '../modals/BuyCompleteModal';
-
 import { addToCart } from '@/apis/cartApis';
 import { AxiosResponse } from 'axios';
 import useInvalidation from '@/hooks/useInvalidateQueries';
@@ -14,6 +13,7 @@ import useAddCompleteModal from '@/hooks/useAddCompleteModal';
 import useToast from '@/hooks/useToast';
 import { addCompleteModalState, buyCompleteModalState } from '@/atoms/modalAtoms';
 import { ProductDetail } from '@/pages';
+import useAxiosPrivate from '@/hooks/useAxiosPrivate';
 
 export interface AddToCartVariables {
   product_id: number;
@@ -31,24 +31,24 @@ export default function Purchase({ product_name, id, min_quantity, regular_price
     setQuantity(min_quantity);
   };
 
+  const axiosPrivate = useAxiosPrivate();
+
+  const addToCart = ({ product_id, quantity }: { product_id: number; quantity: number }) =>
+    axiosPrivate.post('/api/carts', { product_id, quantity });
+
   const invalidateQueries = useInvalidation();
   const showModal = useAddCompleteModal();
+
   const showToast = useToast();
 
   const handleSuccess = () => {
     showModal();
-    invalidateQueries(['cart']);
+    invalidateQueries(['carts']);
   };
 
-  const handleError = () => {
+  const { mutate, isLoading } = useCustomMutation<AxiosResponse, AddToCartVariables>(addToCart, handleSuccess, () => {
     showToast('장바구니 담기 실패', true);
-  };
-
-  const { mutate, isLoading } = useCustomMutation<AxiosResponse, AddToCartVariables>(
-    addToCart,
-    handleSuccess,
-    handleError,
-  );
+  });
 
   const handleAddToCart = () => {
     const variables = {
@@ -85,7 +85,7 @@ export default function Purchase({ product_name, id, min_quantity, regular_price
           <h3 className="px-[9px] font-normal text-title-xs">{product_name}</h3>
 
           <div className="px-2 py-[15px] center-between bg-gray_03">
-            <Counter min_quantity={min_quantity} quantity={quantity} setQuantity={setQuantity} />
+            <Counter minimum_quantity={min_quantity} qty={quantity} setQty={setQuantity} />
             <h4 className="font-medium text-main text-body-sm">총 금액</h4>
             <div className="flex flex-col text-end">
               <span className="font-bold text-main text-label-md">

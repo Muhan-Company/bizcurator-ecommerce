@@ -8,10 +8,6 @@
 }
 
 @layer components {
-  .header-btn {
-    @apply flex justify-center items-center;
-  }
-
   .header-link {
     @apply text-button-xs md:text-button-sm lg:text-button-md font-normal text-gray_01 w-32 h-14 leading-[56px] text-center;
   }
@@ -183,5 +179,13 @@
 
   .submit-btn {
     @apply cursor-pointer mt-[60px] bg-primary h-[60px] rounded-lg w-full text-white font-normal text-button-md;
+  }
+
+  .shadow-bottom {
+    box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.08);
+  }
+
+  .sticky-header {
+    @apply top-0 sticky z-20 bg-white;
   }
 }

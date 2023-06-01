@@ -2,9 +2,13 @@ import Link from 'next/link';
 import LabeledInput from './LabeledInput';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { LoginFormValues } from './types';
-import { postLogin } from '@/apis/users';
+import { login } from '@/apis/users';
 import { loginFormSchema } from './formSchma';
 import { yupResolver } from '@hookform/resolvers/yup';
+import useCustomMutation from '@/hooks/useCustomMutation';
+import useToast from '@/hooks/useToast';
+import { useEffect } from 'react';
+import { setTokensCookie } from '@/utils/cookie';
 
 export default function LoginForm({ closeModal }: { closeModal: () => void }) {
   const {
@@ -16,10 +20,28 @@ export default function LoginForm({ closeModal }: { closeModal: () => void }) {
     resolver: yupResolver(loginFormSchema),
   });
 
-  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
-    console.log(data);
-    await postLogin(data);
+  const showToast = useToast();
+
+  const handleSuccess = () => {
+    window.location.reload();
+    showToast('로그인 성공');
   };
+
+  const { mutate, data: userData, isLoading, isError, isSuccess } = useCustomMutation(login, handleSuccess);
+
+  const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
+    mutate(data);
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      const { accessToken, refreshToken } = userData.result.login.token_dto;
+
+      setTokensCookie({ accessToken, refreshToken });
+
+      closeModal();
+    }
+  }, [userData, isSuccess, closeModal]);
 
   return (
     <div className="px-4 py-9">

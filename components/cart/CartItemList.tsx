@@ -4,17 +4,15 @@ import CartItem, { CartItemType } from './CartItem';
 import EmptyCart from './EmptyCart';
 import CartPaymentAmountInfo from './CartPaymentAmountInfo';
 import Link from 'next/link';
-import { useGetCartList } from '@/apis/cartApis';
+import CartDeleteModals from '../modals/CartDeleteModals';
+import { createPortal } from 'react-dom';
+import useGetCarts from '@/hooks/useGetCarts';
+import Loader from '../products/Loader';
 
-type CartItemPropsType = {
-  // todo: api 반환값 확정시 수정
-  items?: {}[];
-};
-
-export default function CartItemList({ items = [1] }: CartItemPropsType) {
+export default function CartItemList() {
   const [isAllSelected, setIsAllSelected] = useState<boolean>(true);
-  const { data } = useGetCartList();
-  console.log(data);
+  const { data: cartItems, isLoading, isError } = useGetCarts();
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   // todo: 전역 상태관리로 전체선택, 개별선택 기능 연결지어 관리하기
   // 전체선택 클릭시: 개별선택 체크박스 일괄 변경
@@ -28,38 +26,48 @@ export default function CartItemList({ items = [1] }: CartItemPropsType) {
     }
   };
 
-  const getTotalCost = (data: { regularPrice: number }[]) => {
+  const getTotalCost = (data: { regular_price: number }[]) => {
     let totalCost = 0;
-    data?.map((cartItem) => (totalCost += cartItem.regularPrice));
+    data?.map((cartItem) => (totalCost += cartItem.regular_price));
 
     return totalCost;
   };
-  const getDiscountCost = (data: { regularPrice: number; discountPrice: number }[]) => {
+  const getDiscountCost = (data: { regular_price: number; discount_price: number }[]) => {
     let totalDiscountCost = 0;
-    data?.map((cartItem) => (totalDiscountCost += cartItem.regularPrice - cartItem.discountPrice));
+    data?.map((cartItem) => (totalDiscountCost += cartItem.regular_price - cartItem.discount_price));
 
     return totalDiscountCost;
   };
 
+  const openModal = () => {
+    setShowModal(true);
+    document.body.classList.add('modal-open');
+  };
+
+  if (isLoading) return <Loader className="h-[494px]" />;
+  if (isError) return <p className="text-red center h-[494px] font-bold text-xl">장바구니 조회 실패</p>;
+
   return (
     <div className="relative">
-      {data?.length === 0 ? (
+      {cartItems.length === 0 ? (
         <EmptyCart />
       ) : (
-        <div className="h-screen pt-9">
+        <div className="pt-5 pb-20 mx-3">
           <div className="flex items-center mb-[22px] pb-3 border-b-[1px] border-black">
             <div onClick={allSelectHandler} className="flex items-center">
               {isAllSelected ? <CheckedBoxIcon /> : <CheckBoxIcon />}
               <button className="pl-2.5 pr-4 font-medium">
                 {/* todo: 선택된 개수/ 전체 개수 데이터 적용*/}
-                전체선택({'/' + data?.length})
+                전체선택({'/' + cartItems.length})
               </button>
               <div className=" text-gray_01">|{/* 가상요소 대체 */}</div>
             </div>
             {/* todo: 삭제 모달 연결 */}
-            <button className="ml-4 font-medium">선택삭제</button>
+            <button onClick={openModal} className="ml-4 font-medium">
+              선택삭제
+            </button>
           </div>
-          {data?.map((cartItem: CartItemType, index: number) => (
+          {cartItems.map((cartItem: CartItemType, index: number) => (
             <CartItem
               key={index}
               cartItem={cartItem}
@@ -70,13 +78,13 @@ export default function CartItemList({ items = [1] }: CartItemPropsType) {
 
           <CartPaymentAmountInfo
             // totalCost={data[0]?.regularPrice}
-            totalCost={getTotalCost(data)}
+            totalCost={getTotalCost(cartItems)}
             // totalDiscount={data[0]?.regularPrice - data[0]?.discountPrice}
-            totalDiscount={getDiscountCost(data)}
+            totalDiscount={getDiscountCost(cartItems)}
           />
-          <div className="btn-mobile center gap-[7px]">
+          <div className="center gap-[7px] mt-[76px]">
             {/* todo: 바로구매 페이지로 이동 */}
-            <Link href="/" className="w-[172px] h-[50px] btn-white grow py-[19px]">
+            <Link href="/products/categories/0?sort=newest" className="w-[172px] h-[50px] btn-white grow py-[19px]">
               다른 제품 보기
             </Link>
             {/* todo: 결제 페이지로 이동 */}
@@ -84,6 +92,7 @@ export default function CartItemList({ items = [1] }: CartItemPropsType) {
           </div>
         </div>
       )}
+      {showModal && createPortal(<CartDeleteModals.CartItemDeleteModal />, document.body)}
     </div>
   );
 }

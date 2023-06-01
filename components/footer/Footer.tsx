@@ -1,9 +1,11 @@
 import { logInModalState } from '@/atoms/modalAtoms';
+import useAccessTokenCookie from '@/hooks/useAccessTokenCookie';
 import Link from 'next/link';
 import { useSetRecoilState } from 'recoil';
 
 export default function Footer() {
   const setShowLogInModal = useSetRecoilState(logInModalState);
+  const accessToken = useAccessTokenCookie();
 
   const openModal = () => {
     setShowLogInModal(true);
@@ -13,9 +15,11 @@ export default function Footer() {
   return (
     <footer className="bg-main pt-5 pb-24 lg:py-10 lg:px-24 xl:px-48">
       <div className="flex flex-col lg:flex-row items-center gap-y-5 lg:gap-x-5 pb-5">
-        <button onClick={openModal} className="footer-btn">
-          로그인
-        </button>
+        {accessToken ? null : (
+          <button onClick={openModal} className="footer-btn">
+            로그인
+          </button>
+        )}
         <Link href={'/signup'} className="footer-btn">
           회원가입
         </Link>

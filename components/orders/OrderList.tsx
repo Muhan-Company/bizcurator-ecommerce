@@ -11,8 +11,8 @@ export default function OrderList() {
   const selectedDateFilter = useRecoilValue(selectedDateFilterState);
   const { query } = useRouter();
 
-  const { data } = useGetOrderList(query?.state, selectedDateFilter);
-  console.log(data);
+  const { data } = useGetOrderList(query.state as string, selectedDateFilter);
+
   return (
     <div className="pt-[26px] mx-3">
       <DateFilter />

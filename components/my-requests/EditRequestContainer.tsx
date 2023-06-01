@@ -2,23 +2,33 @@ import PurchaseForm from '@/components/request/PurchaseForm';
 import ManufactureForm from '../request/ManufactureForm';
 import { useRouter } from 'next/router';
 import RequestDetailInfo from './RequestDetailInfo';
-import { useGetMyInfo } from '@/apis/users';
+import useReqDetails from '@/hooks/useReqDetails';
+import PartnerForm from '../request/PartnerForm';
+import { useSetRecoilState } from 'recoil';
+import reqDetailsState from '@/atoms/reqDetailsAtom';
+import { useEffect } from 'react';
 
 export default function EditRequestContainer() {
-  const { pathname, query } = useRouter();
-  const info = useGetMyInfo();
+  const { query } = useRouter();
+  const reqId = Number(query.id);
+  const reqType = query.reqType as string;
+
+  const { data, isLoading, isError } = useReqDetails({ reqId, reqType });
+
+  const setReqDetails = useSetRecoilState(reqDetailsState);
+
+  useEffect(() => {
+    if (data) {
+      setReqDetails(data.result.details);
+    }
+  }, [data, setReqDetails]);
 
   return (
     <div>
-      <RequestDetailInfo title={'의뢰번호'} value={query.reqType![1]} />
-      {/* todo: 페이지 경로에 따라 다른 폼 보여주기 */}
-      {pathname.includes('purchase') ? (
-        <PurchaseForm {...info} />
-      ) : pathname.includes('manufacture') ? (
-        <ManufactureForm {...info} />
-      ) : (
-        <div>판매의뢰 폼</div>
-      )}
+      <RequestDetailInfo title={'의뢰번호'} value={query.id as string} />
+      {/* {reqType === 'make' && <ManufactureForm {...details} />}
+      {reqType === 'purchase' && <PurchaseForm {...details} />}
+      {reqType === 'sell' && <PartnerForm {...details} />} */}
     </div>
   );
 }

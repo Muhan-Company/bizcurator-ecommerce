@@ -1,6 +1,6 @@
-export default function Loader({ className = 'screen' }: { className?: string }) {
+export default function Loader({ className }: { className?: string }) {
   return (
-    <div className={`flex items-center justify-center ${className}`}>
+    <div className={`center ${className}`}>
       <div className="loader animate-spin"></div>
     </div>
   );

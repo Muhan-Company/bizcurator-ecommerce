@@ -6,8 +6,8 @@ interface CancelReFundPageLayout {
 }
 export default function CancelReFundPageLayout({ children }: CancelReFundPageLayout) {
   return (
-    <Layout>
-      <div className="mx-3">
+    <Layout className="bottom-2">
+      <div className="mx-3 mt-5">
         <DateFilter />
         {children}
       </div>

@@ -1,12 +1,12 @@
 import { ArrowUpIcon, KaKaoLogoIcon } from '../Icons';
 
-export default function FloatingButtons() {
+export default function FloatingButtons({ className }: { className: string }) {
   const scrollToTop = () => {
     window.scrollTo(0, 0);
   };
 
   return (
-    <div className="fixed bottom-20 sm:bottom-3 right-3 z-10 flex flex-col items-center gap-y-3">
+    <div className={`fixed ${className} sm:bottom-3 right-3 z-10 flex flex-col items-center gap-y-3`}>
       <a
         target="_blank"
         href="http://pf.kakao.com/_xoPaYxj"

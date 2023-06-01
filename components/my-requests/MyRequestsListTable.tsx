@@ -1,12 +1,17 @@
+import getReqType from '@/utils/getReqType';
 import { RequestsState } from './RequestsState';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-interface MyRequestsListTableData {
-  data: { requestId: number; createdAt: string; requestType: string; state: string; category: string }[];
+interface ReqDetail {
+  requestId: number;
+  createdAt: string;
+  requestType: string;
+  state: string;
+  category: string;
 }
 
-export default function MyRequestsListTable({ data }: MyRequestsListTableData) {
+export default function MyRequestsListTable({ reqDetails }: { reqDetails: ReqDetail[] }) {
   const router = useRouter();
   return (
     <table className="min-w-full mt-9">
@@ -21,14 +26,14 @@ export default function MyRequestsListTable({ data }: MyRequestsListTableData) {
         </tr>
       </thead>
       <tbody>
-        {data.map((row) => (
+        {reqDetails?.map((row, idx) => (
           // todo: requestType에 따라 상세페이지 경로 다르게 지정
           <tr
-            key={row.requestId}
+            key={idx}
             className="text-label-sm hover:bg-gray-100 hover:cursor-pointer"
-            onClick={() => router.push(`/my-requests/purchase/${row.requestId}`)}
+            onClick={() => router.push(`/my-requests/${getReqType(row.requestType)}/${row.requestId}`)}
           >
-            <TableData>{row.requestId}</TableData>
+            <TableData>{idx + 1}</TableData>
             <TableData>{row.createdAt}</TableData>
             <TableData className="center">
               <span className="grow">{row.requestType}</span>
@@ -41,7 +46,7 @@ export default function MyRequestsListTable({ data }: MyRequestsListTableData) {
               {row.state === '대기' && (
                 // todo: requestType에 따라 수정페이지 경로 다르게 지정
                 <Link
-                  href={`/my-requests/edit/${row.requestType}/${row.requestId}`}
+                  href={`/my-requests/edit/${getReqType(row.requestType)}?id=${row.requestId}`}
                   className="text-gray_01 hover:text-main hover:underline"
                   onClick={(e) => e.stopPropagation()}
                 >

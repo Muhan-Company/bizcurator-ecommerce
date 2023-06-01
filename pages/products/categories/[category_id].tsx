@@ -2,7 +2,6 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import searchBarState from '@/atoms/searchBarAtom';
 import Footer from '@/components/footer/Footer';
 import NavBar from '@/components/footer/NavBar';
-import DownHeader from '@/components/header/DownHeader';
 import Layout from '@/components/layout/Layout';
 import CategoryFilter from '@/components/products/CategoryFilter';
 import ProductList from '@/components/products/ProductList';
@@ -13,6 +12,7 @@ import { sortByList, sortByState } from '@/atoms/sortByAtom';
 import useCategories from '@/hooks/useCategories';
 import Loader from '@/components/products/Loader';
 import { useEffect } from 'react';
+import Header from '@/components/header/Header';
 
 export default function Products() {
   const showSearchBar = useRecoilValue(searchBarState);
@@ -31,7 +31,7 @@ export default function Products() {
 
   return (
     <Layout>
-      <DownHeader />
+      <Header />
       <CategoryFilter />
       {showSearchBar ? <SearchBar /> : <div className="h-[55px]"></div>}
       <Sort />

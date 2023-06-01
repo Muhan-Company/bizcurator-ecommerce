@@ -1,10 +1,12 @@
 import Layout from '@/components/layout/Layout';
 import CancelRefundDetailInfoContainer from '@/components/cancel-refund/CancelRefundDetailInfoContainer';
 import NavBar from '@/components/footer/NavBar';
+import ProtectRoute from '@/components/ProtectRoute';
 
 export default function CancelDetail() {
   return (
     <Layout>
+      <ProtectRoute />
       <div className="mx-3 pb-[64px]">
         <CancelRefundDetailInfoContainer />
       </div>
