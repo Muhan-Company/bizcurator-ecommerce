@@ -6,9 +6,9 @@ import { login } from '@/apis/users';
 import { loginFormSchema } from './formSchma';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useCustomMutation from '@/hooks/useCustomMutation';
-import useToast from '@/hooks/useToast';
 import { useEffect } from 'react';
 import { setTokensCookie } from '@/utils/cookie';
+import { AxiosError } from 'axios';
 
 export default function LoginForm({ closeModal }: { closeModal: () => void }) {
   const {
@@ -20,14 +20,11 @@ export default function LoginForm({ closeModal }: { closeModal: () => void }) {
     resolver: yupResolver(loginFormSchema),
   });
 
-  const showToast = useToast();
-
   const handleSuccess = () => {
     window.location.reload();
-    showToast('로그인 성공');
   };
 
-  const { mutate, data: userData, isLoading, isError, isSuccess } = useCustomMutation(login, handleSuccess);
+  const { mutate, data: userData, isLoading, error, isSuccess } = useCustomMutation(login, handleSuccess);
 
   const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
     mutate(data);
@@ -41,7 +38,7 @@ export default function LoginForm({ closeModal }: { closeModal: () => void }) {
 
       closeModal();
     }
-  }, [userData, isSuccess, closeModal]);
+  }, [userData, isSuccess, error, closeModal]);
 
   return (
     <div className="px-4 py-9">
@@ -70,7 +67,18 @@ export default function LoginForm({ closeModal }: { closeModal: () => void }) {
           <Link href={'/'}>아이디 찾기 </Link>/<Link href={'/'}> 비밀번호 찾기</Link>
         </div>
 
-        <input type="submit" value="로그인" className="mt-10 btn-large text-button-xs" />
+        {error instanceof AxiosError && (
+          <p className="text-red font-medium text-sm mt-3 break-keep">
+            {error.response?.data.errors ? error.response?.data.errors[0].message : error.response?.data.message}
+          </p>
+        )}
+
+        <input
+          type="submit"
+          value={`${isLoading ? '로그인 중...' : '로그인'}`}
+          className="mt-10 btn-large text-button-xs disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={isLoading}
+        />
         <Link href={'/signup'} className="h-[42px] mt-[10px] btn-white text-button-xs" onClick={closeModal}>
           회원가입
         </Link>
