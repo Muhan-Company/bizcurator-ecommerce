@@ -8,14 +8,8 @@ import NumTwo from './Numbers/NumTwo';
 import NumThree from './Numbers/NumThree';
 import useToast from '@/hooks/useToast';
 import { MyInfoProps } from './MyInfo';
-import useInvalidateQueries from '@/hooks/useInvalidateQueries';
-import { useSetRecoilState } from 'recoil';
-import reqSuccessState from '@/atoms/reqSuccessAtom';
-import { useRouter } from 'next/router';
-import useCustomMutation from '@/hooks/useCustomMutation';
-import { AxiosResponse } from 'axios';
-import { requestPartner } from '@/apis/requestApis';
 import { format } from 'date-fns';
+import usePartnerRequest from '@/hooks/usePartnerRequest';
 
 export interface FormInputs {
   product_detail: string;
@@ -53,21 +47,11 @@ export default function PartnerForm({ data: myInfo }: MyInfoProps) {
   const [fileTypeError, setFileTypeError] = useState<boolean>(false);
   const [fileSizeError, setFileSizeError] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
-
   const showToast = useToast();
-  const invalidateQueries = useInvalidateQueries();
-  const setReqSuccess = useSetRecoilState(reqSuccessState);
-  const { push } = useRouter();
 
-  const handleSuccess = () => {
-    invalidateQueries(['requests', 'partner']);
-    setReqSuccess(true);
-    push('/my-requests');
-  };
+  const partnerReqMutation = usePartnerRequest();
 
-  const { mutate, isLoading: loading } = useCustomMutation<AxiosResponse, FormData>(requestPartner, handleSuccess, () =>
-    showToast('제출 실패', true),
-  );
+  const { mutate, isLoading: loading } = partnerReqMutation;
 
   const onSubmit = (data: FormInputs) => {
     if (!file) {

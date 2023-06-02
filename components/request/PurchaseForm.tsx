@@ -1,12 +1,6 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 import useToast from '@/hooks/useToast';
-import useCustomMutation from '@/hooks/useCustomMutation';
-import { requestOrders } from '@/apis/requestApis';
-import useInvalidateQueries from '@/hooks/useInvalidateQueries';
-import { useSetRecoilState } from 'recoil';
 import { useForm } from 'react-hook-form';
-import reqSuccessState from '@/atoms/reqSuccessAtom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import One from './Numbers/One';
@@ -17,7 +11,7 @@ import Five from './Numbers/Five';
 import Six from './Numbers/Six';
 import { format } from 'date-fns';
 import { MyInfoProps } from './MyInfo';
-import { AxiosResponse } from 'axios';
+import useOrdersRequest from '@/hooks/useOrdersRequest';
 
 export interface IFormInputs {
   product_name: string;
@@ -102,19 +96,10 @@ export default function PurchaseForm({ data: myInfo }: MyInfoProps) {
   const [file, setFile] = useState<File | null>(null);
 
   const showToast = useToast();
-  const invalidateQueries = useInvalidateQueries();
-  const setReqSuccess = useSetRecoilState(reqSuccessState);
-  const { push } = useRouter();
 
-  const handleSuccess = () => {
-    invalidateQueries(['requests', 'orders']);
-    setReqSuccess(true);
-    push('/my-requests');
-  };
+  const buyReqMutation = useOrdersRequest();
 
-  const { mutate, isLoading: loading } = useCustomMutation<AxiosResponse, FormData>(requestOrders, handleSuccess, () =>
-    showToast('제출 실패', true),
-  );
+  const { mutate, isLoading: loading } = buyReqMutation;
 
   const onSubmit = (data: IFormInputs) => {
     if (!file) {

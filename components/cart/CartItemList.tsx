@@ -103,7 +103,9 @@ export default function CartItemList() {
                 다른 제품 보기
               </Link>
               {/* todo: 결제 페이지로 이동 */}
-              <button className="w-[172px] h-[50px] btn-primary grow py-[19px]">구매하기</button>
+              <Link href={'/'} className="w-[172px] h-[50px] btn-primary grow py-[19px]">
+                구매하기
+              </Link>
             </div>
           </div>
         )}

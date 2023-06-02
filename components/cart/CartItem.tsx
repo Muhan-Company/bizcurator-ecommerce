@@ -2,10 +2,9 @@ import Image from 'next/image';
 import { CheckBoxIcon, CheckedBoxIcon, CloseIcon } from '../Icons';
 import { CartItemType } from './CartItemList';
 import CartItemInfo from './CartItemInfo';
-import useCustomMutation from '@/hooks/useCustomMutation';
-import { removeCartItems } from '@/apis/cartApis';
-import useInvalidateQueries from '@/hooks/useInvalidateQueries';
+import useRemoveItems from '@/hooks/useRemoveItems';
 import useToast from '@/hooks/useToast';
+import useInvalidateQueries from '@/hooks/useInvalidateQueries';
 
 type CartItemProps = {
   item: CartItemType;
@@ -18,7 +17,6 @@ export default function CartItem({ item, toggleItem }: CartItemProps) {
   const handleCheckboxChange = () => {
     toggleItem(product_id, !selected);
   };
-
   const showToast = useToast();
   const invalidateQueries = useInvalidateQueries();
 
@@ -27,7 +25,9 @@ export default function CartItem({ item, toggleItem }: CartItemProps) {
     invalidateQueries(['carts']);
   };
 
-  const { mutate } = useCustomMutation(removeCartItems, handleSuccess);
+  const removeItemsMutation = useRemoveItems(handleSuccess);
+
+  const { mutate } = removeItemsMutation;
 
   return (
     <div className="flex md:items-center md:w-[800px] py-[22px] border-b-[1px] border-b-gray_02">

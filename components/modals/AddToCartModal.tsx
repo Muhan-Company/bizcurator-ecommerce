@@ -3,12 +3,9 @@ import Counter from '../cart/Counter';
 import AddCompleteModal from './AddCompleteModal';
 import { useRecoilValue } from 'recoil';
 import { addCompleteModalState } from '@/atoms/modalAtoms';
-import { AxiosResponse } from 'axios';
-import { AddToCartVariables } from '../products/Purchase';
-import useInvalidateQueries from '@/hooks/useInvalidateQueries';
-import useCustomMutation from '@/hooks/useCustomMutation';
-import useAddCompleteModal from '@/hooks/useAddCompleteModal';
-import useAxiosPrivate from '@/hooks/useAxiosPrivate';
+import useAddToCart from '@/hooks/useAddToCart';
+import useModal from '@/hooks/useModal';
+import { MouseEvent } from 'react';
 
 interface AddToCartProps {
   id: number;
@@ -36,29 +33,18 @@ export default function AddToCartModal({
 }: AddToCartProps) {
   const originalPrice = (regular_price * quantity).toLocaleString('ko-KR');
   const discountedPrice = (sale_price * quantity).toLocaleString('ko-KR');
-
   const showAddCompleteModal = useRecoilValue(addCompleteModalState);
 
-  const closeModal = (e: React.MouseEvent) => {
+  const closeModal = (e: MouseEvent) => {
     e.stopPropagation();
-    setShowAddToCartModal(false);
-    document.body.classList.remove('modal-open');
     setQuantity(min_quantity);
+    hideModal();
   };
-  const axiosPrivate = useAxiosPrivate();
+  const { hideModal } = useModal(setShowAddToCartModal);
 
-  const addToCart = ({ product_id, quantity }: { product_id: number; quantity: number }) =>
-    axiosPrivate.post('/api/carts', { product_id, quantity });
+  const addToCartMutation = useAddToCart();
 
-  const invalidateQueries = useInvalidateQueries();
-  const showModal = useAddCompleteModal();
-
-  const handleSuccess = () => {
-    showModal();
-    invalidateQueries(['carts']);
-  };
-
-  const { mutate, isLoading, isError } = useCustomMutation<AxiosResponse, AddToCartVariables>(addToCart, handleSuccess);
+  const { mutate, isLoading } = addToCartMutation;
 
   return (
     <>
@@ -97,8 +83,6 @@ export default function AddToCartModal({
               </div>
             </div>
 
-            <p className="text-red text-sm font-bold h-5">{isError && '장바구니 담기 실패'}</p>
-            {/* <p className="text-red text-sm font-bold"></p> */}
             <div className="center gap-2 py-6">
               {/* todo: 모달 닫기 기능 연결 */}
               <button className="btn-white w-[156px] h-[42px] py-[19px]" onClick={closeModal}>

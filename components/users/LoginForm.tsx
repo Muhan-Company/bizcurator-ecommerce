@@ -2,13 +2,12 @@ import Link from 'next/link';
 import LabeledInput from './LabeledInput';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { LoginFormValues } from './types';
-import { login } from '@/apis/users';
 import { loginFormSchema } from './formSchma';
 import { yupResolver } from '@hookform/resolvers/yup';
-import useCustomMutation from '@/hooks/useCustomMutation';
 import { useEffect } from 'react';
 import { setTokensCookie } from '@/utils/cookie';
 import { AxiosError } from 'axios';
+import useLogin from '@/hooks/uesLogin';
 
 export default function LoginForm({ closeModal }: { closeModal: () => void }) {
   const {
@@ -20,11 +19,9 @@ export default function LoginForm({ closeModal }: { closeModal: () => void }) {
     resolver: yupResolver(loginFormSchema),
   });
 
-  const handleSuccess = () => {
-    window.location.reload();
-  };
+  const loginMutation = useLogin();
 
-  const { mutate, data: userData, isLoading, error, isSuccess } = useCustomMutation(login, handleSuccess);
+  const { mutate, data: userData, isLoading, error, isSuccess } = loginMutation;
 
   const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
     mutate(data);
@@ -38,7 +35,7 @@ export default function LoginForm({ closeModal }: { closeModal: () => void }) {
 
       closeModal();
     }
-  }, [userData, isSuccess, error, closeModal]);
+  }, [userData, isSuccess, closeModal]);
 
   return (
     <div className="px-4 py-9">

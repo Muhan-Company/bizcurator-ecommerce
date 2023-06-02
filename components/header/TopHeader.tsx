@@ -6,7 +6,6 @@ import { logInModalState, searchModalState } from '@/atoms/modalAtoms';
 import LogInModal from '../modals/LogInModal';
 import SearchModal from '../modals/SearchModal';
 import searchBarState from '@/atoms/searchBarAtom';
-import useToast from '@/hooks/useToast';
 import useGetCarts from '@/hooks/useGetCarts';
 import { Cart, LogoIcon, MagnifyingGlassIcon, UserIcon } from '../Icons';
 import useAccessTokenCookie from '@/hooks/useAccessTokenCookie';
@@ -16,14 +15,11 @@ export default function TopHeader() {
   const [showSearchModal, setShowSearchModal] = useRecoilState(searchModalState);
   const [showLogInModal, setShowLogInModal] = useRecoilState(logInModalState);
   const setShowSearchBar = useSetRecoilState(searchBarState);
-  const showToast = useToast();
   const { asPath } = useRouter();
   const accessToken = useAccessTokenCookie();
 
-  const { data: cartItems, isLoading, isError } = useGetCarts();
+  const { data: cartItems, isLoading } = useGetCarts();
   const qty = cartItems?.length ?? 0;
-
-  isError && showToast('장바구니 불러오기 실패', true);
 
   const openLogInModal = () => {
     setShowLogInModal(true);

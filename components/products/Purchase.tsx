@@ -5,15 +5,10 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { createPortal } from 'react-dom';
 import AddCompleteModal from '../modals/AddCompleteModal';
 import BuyCompleteModal from '../modals/BuyCompleteModal';
-import { addToCart } from '@/apis/cartApis';
-import { AxiosResponse } from 'axios';
-import useInvalidation from '@/hooks/useInvalidateQueries';
-import useCustomMutation from '@/hooks/useCustomMutation';
-import useAddCompleteModal from '@/hooks/useAddCompleteModal';
-import useToast from '@/hooks/useToast';
 import { addCompleteModalState, buyCompleteModalState } from '@/atoms/modalAtoms';
 import { ProductDetail } from '@/pages';
-import useAxiosPrivate from '@/hooks/useAxiosPrivate';
+import useModal from '@/hooks/useModal';
+import useAddToCart from '@/hooks/useAddToCart';
 
 export interface AddToCartVariables {
   product_id: number;
@@ -31,33 +26,15 @@ export default function Purchase({ product_name, id, min_quantity, regular_price
     setQuantity(min_quantity);
   };
 
-  const axiosPrivate = useAxiosPrivate();
+  const { showModal: openModal } = useModal(setShowBuyCompleteModal);
 
-  const addToCart = ({ product_id, quantity }: { product_id: number; quantity: number }) =>
-    axiosPrivate.post('/api/carts', { product_id, quantity });
+  const addToCartMutation = useAddToCart();
 
-  const invalidateQueries = useInvalidation();
-  const showModal = useAddCompleteModal();
-
-  const showToast = useToast();
-
-  const handleSuccess = () => {
-    showModal();
-    invalidateQueries(['carts']);
-  };
-
-  const { mutate, isLoading } = useCustomMutation<AxiosResponse, AddToCartVariables>(addToCart, handleSuccess, () => {
-    showToast('장바구니 담기 실패', true);
-  });
+  const { mutate, isLoading } = addToCartMutation;
 
   const handleAddToCart = () => {
-    const variables = {
-      product_id: id,
-      quantity,
-    };
-
     if (open) {
-      mutate(variables);
+      mutate({ product_id: id, quantity });
     } else {
       setOpen(true);
     }
@@ -65,8 +42,7 @@ export default function Purchase({ product_name, id, min_quantity, regular_price
 
   const buyItem = () => {
     if (open) {
-      setShowBuyCompleteModal(true);
-      document.body.classList.add('modal-open');
+      openModal();
     } else {
       setOpen(true);
     }

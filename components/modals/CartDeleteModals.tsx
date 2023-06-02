@@ -1,11 +1,10 @@
-import { removeCartItems } from '@/apis/cartApis';
 import { removeCompleteModalState, removeItemModalState } from '@/atoms/modalAtoms';
-import useCustomMutation from '@/hooks/useCustomMutation';
 import useModal from '@/hooks/useModal';
 import { useSetRecoilState } from 'recoil';
 import { CartItemType } from '../cart/CartItemList';
 import useInvalidateQueries from '@/hooks/useInvalidateQueries';
 import { useEffect } from 'react';
+import useRemoveItems from '@/hooks/useRemoveItems';
 
 function CartItemDeleteModal({ selectedItems }: { selectedItems: CartItemType[] }) {
   const setShowRemoveItemModal = useSetRecoilState(removeItemModalState);
@@ -22,7 +21,10 @@ function CartItemDeleteModal({ selectedItems }: { selectedItems: CartItemType[] 
   };
 
   const itemIdList = selectedItems.map((item) => item.product_id);
-  const { mutate } = useCustomMutation(removeCartItems, handleSuccess);
+
+  const removeItemsMutation = useRemoveItems(handleSuccess);
+
+  const { mutate } = removeItemsMutation;
 
   return (
     <>
