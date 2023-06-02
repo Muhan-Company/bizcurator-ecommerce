@@ -1,25 +1,67 @@
-function CartItemDeleteModal() {
+import { removeCartItems } from '@/apis/cartApis';
+import { removeCompleteModalState, removeItemModalState } from '@/atoms/modalAtoms';
+import useCustomMutation from '@/hooks/useCustomMutation';
+import useModal from '@/hooks/useModal';
+import { useSetRecoilState } from 'recoil';
+import { CartItemType } from '../cart/CartItemList';
+import useInvalidateQueries from '@/hooks/useInvalidateQueries';
+import { useEffect } from 'react';
+
+function CartItemDeleteModal({ selectedItems }: { selectedItems: CartItemType[] }) {
+  const setShowRemoveItemModal = useSetRecoilState(removeItemModalState);
+  const setShowRemoveCompleteModal = useSetRecoilState(removeCompleteModalState);
+
+  const { hideModal } = useModal(setShowRemoveItemModal);
+  const { showModal } = useModal(setShowRemoveCompleteModal);
+  const invalidateQueries = useInvalidateQueries();
+
+  const handleSuccess = () => {
+    hideModal();
+    showModal();
+    invalidateQueries(['carts']);
+  };
+
+  const itemIdList = selectedItems.map((item) => item.product_id);
+  const { mutate } = useCustomMutation(removeCartItems, handleSuccess);
+
   return (
-    <div className="absolute center inset-0 bg-black/20 z-20">
-      <div className="modal-shape flex flex-col gap-[26px] pt-[18px] pb-[5px]">
-        선택한 제품을 삭제하시겠습니까?
-        <div className="center gap-2">
-          <button className="btn-white w-[156px] h-[50px] py-[19px]">취소</button>
-          <button className="btn-primary w-[156px] h-[50px] py-[19px]">확인</button>
+    <>
+      <div className="modal-contents w-[351px] h-[156px] center flex-col space-y-[26px]">
+        <p className="font-medium">선택한 제품을 삭제하시겠습니까?</p>
+        <div className="center space-x-2">
+          <button onClick={hideModal} className="btn-white w-[156px] h-[50px] py-[19px]">
+            취소
+          </button>
+          <button onClick={() => mutate(itemIdList)} className="btn-primary w-[156px] h-[50px] py-[19px]">
+            확인
+          </button>
         </div>
       </div>
-    </div>
+      <div className="modal-overlay"></div>
+    </>
   );
 }
 
 // todo: 3초 후에 자동으로 닫히는 기능
 function DeleteCompletedModal() {
+  const setShowRemoveCompleteModal = useSetRecoilState(removeCompleteModalState);
+
+  const { hideModal } = useModal(setShowRemoveCompleteModal);
+
+  useEffect(() => {
+    setTimeout(() => {
+      hideModal();
+    }, 3000);
+  }, [hideModal]);
+
   return (
     <div className="absolute center inset-0 bg-black/20 z-20">
       <div className="modal-shape flex flex-col gap-[26px] pt-[18px] pb-[5px]">
         삭제가 완료되었습니다.
         <div className="center gap-2">
-          <button className="btn-white w-[156px] h-[50px] py-[19px]">닫기</button>
+          <button onClick={hideModal} className="btn-white w-[156px] h-[50px] py-[19px]">
+            닫기
+          </button>
         </div>
       </div>
     </div>

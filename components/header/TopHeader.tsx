@@ -21,6 +21,8 @@ export default function TopHeader() {
   const accessToken = useAccessTokenCookie();
 
   const { data: cartItems, isLoading, isError } = useGetCarts();
+  const qty = cartItems?.length ?? 0;
+
   isError && showToast('장바구니 불러오기 실패', true);
 
   const openLogInModal = () => {
@@ -65,13 +67,13 @@ export default function TopHeader() {
             ) : (
               <Link href={'/cart'} className="center relative">
                 <Cart className="absolute w-5 lg:w-8 h-5 lg:h-8" />
-                {cartItems.length <= 99 && (
+                {qty >= 1 && qty <= 99 && (
                   <span className="absolute w-4 h-4 bg-main rounded-full text-white center text-[10px] -top-4 -right-4">
-                    {cartItems.length}
+                    {qty}
                   </span>
                 )}
 
-                {cartItems.length > 99 && (
+                {qty > 99 && (
                   <span className="absolute w-5 h-5 bg-main rounded-full text-white center text-[10px] -top-5 -right-5">
                     99+
                   </span>

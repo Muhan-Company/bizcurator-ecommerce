@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Counter from './Counter';
-import { CartItemType } from './CartItem';
+import { CartItemType } from './CartItemList';
 
-type CartItemInfoPropsType = {
-  cartItem: CartItemType;
-};
-
-export default function CartItemInfo({ cartItem }: CartItemInfoPropsType) {
-  const { quantity, regular_price, discount_price, name, minimum_quantity } = cartItem;
+export default function CartItemInfo({ item }: { item: CartItemType }) {
+  const { quantity, regular_price, discount_price, name, minimum_quantity } = item;
   const [qty, setQty] = useState(quantity);
 
   const originalPrice = (regular_price * qty).toLocaleString('ko-KR');

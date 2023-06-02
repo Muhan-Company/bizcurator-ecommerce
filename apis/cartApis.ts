@@ -24,7 +24,13 @@ const useGetCartList = () => {
 const getCarts = async () => {
   const { data } = await newAxios.get('/api/carts');
 
-  return data.result.cartsLists;
+  return data;
 };
 
-export { addToCart, useGetCartList, getCarts };
+const removeCartItems = async (itemIdList: number[]) => {
+  const { data } = await newAxios.post('/api/carts/delete', itemIdList);
+
+  return data;
+};
+
+export { addToCart, useGetCartList, getCarts, removeCartItems };

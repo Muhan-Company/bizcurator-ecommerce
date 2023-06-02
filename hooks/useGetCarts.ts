@@ -1,6 +1,13 @@
 import { getCarts } from '@/apis/cartApis';
 import { getAccessTokenCookie } from '@/utils/cookie';
 import { useQuery } from '@tanstack/react-query';
+import { CartItemType } from '@/components/cart/CartItemList';
+
+interface CartResult {
+  result: {
+    cartsLists: CartItemType[];
+  };
+}
 
 const useGetCarts = () => {
   const accessToken = getAccessTokenCookie();
@@ -9,6 +16,7 @@ const useGetCarts = () => {
     queryKey: ['carts'],
     queryFn: getCarts,
     enabled: !!accessToken,
+    select: (data: CartResult) => data.result.cartsLists,
   });
 };
 
