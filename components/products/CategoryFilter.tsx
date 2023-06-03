@@ -2,7 +2,7 @@ import CategoryLink from './CategoryLink';
 
 export default function CategoryFilter() {
   return (
-    <div className="mt-[80px] rounded-[10px] flex overflow-x-auto bg-gray_03 mx-3 p-3 gap-x-6 scrollbar-hidden">
+    <div className="mt-3 rounded-[10px] flex overflow-x-auto bg-gray_03 mx-3 p-3 gap-x-6 scrollbar-hidden">
       <CategoryLink id={0} name="전체" />
 
       <CategoryLink id={1} name="객실용품" />

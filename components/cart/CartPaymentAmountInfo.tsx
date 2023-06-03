@@ -14,13 +14,13 @@ gray_02"
         {/* 체크된 상품의 정가 * 수량 계산 금액 */}
         <Amount title="총 상품금액" price={totalCost} />
         {/* 체크된 상품의 할인 금액 * 수량 계산 금액 */}
-        <Amount title="할인금액" price={-1 * totalDiscount} />
+        <Amount title="할인금액" price={-1 * (totalCost - totalDiscount)} />
       </div>
       <div className="flex items-center justify-between py-6">
         <h2 className="text-title-xs font-medium">최종결제금액</h2>
         {/* 체크된 상품의 (정가 * 수량 - 할인 금액 * 수량) 계산 금액 */}
         <span className="text-red font-medium">
-          {(totalCost - totalDiscount).toLocaleString('ko-KR')}
+          {totalDiscount.toLocaleString('ko-KR')}
           <span className="text-main">원</span>
         </span>
       </div>

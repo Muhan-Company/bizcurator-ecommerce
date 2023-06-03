@@ -3,12 +3,9 @@ import Counter from '../cart/Counter';
 import AddCompleteModal from './AddCompleteModal';
 import { useRecoilValue } from 'recoil';
 import { addCompleteModalState } from '@/atoms/modalAtoms';
-import { addToCart } from '@/apis/cartApis';
-import { AxiosResponse } from 'axios';
-import { AddToCartVariables } from '../products/Purchase';
-import useInvalidateQueries from '@/hooks/useInvalidateQueries';
-import useCustomMutation from '@/hooks/useCustomMutation';
-import useAddCompleteModal from '@/hooks/useAddCompleteModal';
+import useAddToCart from '@/hooks/useAddToCart';
+import useModal from '@/hooks/useModal';
+import { MouseEvent } from 'react';
 
 interface AddToCartProps {
   id: number;
@@ -36,25 +33,18 @@ export default function AddToCartModal({
 }: AddToCartProps) {
   const originalPrice = (regular_price * quantity).toLocaleString('ko-KR');
   const discountedPrice = (sale_price * quantity).toLocaleString('ko-KR');
-
   const showAddCompleteModal = useRecoilValue(addCompleteModalState);
 
-  const closeModal = (e: React.MouseEvent) => {
+  const closeModal = (e: MouseEvent) => {
     e.stopPropagation();
-    setShowAddToCartModal(false);
-    document.body.classList.remove('modal-open');
     setQuantity(min_quantity);
+    hideModal();
   };
+  const { hideModal } = useModal(setShowAddToCartModal);
 
-  const invalidateQueries = useInvalidateQueries();
-  const showModal = useAddCompleteModal();
+  const addToCartMutation = useAddToCart();
 
-  const handleSuccess = () => {
-    showModal();
-    invalidateQueries(['carts']);
-  };
-
-  const { mutate, isLoading, isError } = useCustomMutation<AxiosResponse, AddToCartVariables>(addToCart, handleSuccess);
+  const { mutate, isLoading } = addToCartMutation;
 
   return (
     <>
@@ -83,7 +73,7 @@ export default function AddToCartModal({
             </div>
             {/* 수량 계산 */}
             <div className="w-full mb-5 px-2 py-[15px] flex items-center justify-between bg-gray_03">
-              <Counter min_quantity={min_quantity} quantity={quantity} setQuantity={setQuantity} />
+              <Counter minimum_quantity={min_quantity} qty={quantity} setQty={setQuantity} />
               <h4 className="font-medium text-main text-body-sm">총 금액</h4>
               <div className="flex flex-col text-end">
                 {/* 할인적용 가격 */}
@@ -93,8 +83,6 @@ export default function AddToCartModal({
               </div>
             </div>
 
-            <p className="text-red text-sm font-bold h-5">{isError && '장바구니 담기 실패'}</p>
-            {/* <p className="text-red text-sm font-bold"></p> */}
             <div className="center gap-2 py-6">
               {/* todo: 모달 닫기 기능 연결 */}
               <button className="btn-white w-[156px] h-[42px] py-[19px]" onClick={closeModal}>

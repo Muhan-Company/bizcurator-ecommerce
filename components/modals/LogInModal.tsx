@@ -1,10 +1,10 @@
+import { useSetRecoilState } from 'recoil';
 import LoginForm from '../users/LoginForm';
+import { logInModalState } from '@/atoms/modalAtoms';
 
-export default function LogInModal({
-  setShowLogInModal,
-}: {
-  setShowLogInModal: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export default function LogInModal() {
+  const setShowLogInModal = useSetRecoilState(logInModalState);
+
   const closeModal = () => {
     setShowLogInModal(false);
     document.body.classList.remove('modal-open');

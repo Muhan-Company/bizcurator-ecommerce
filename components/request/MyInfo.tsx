@@ -20,9 +20,10 @@ export interface MyInfoProps {
   data: MyInfo | undefined;
   isLoading: boolean;
   isError: boolean;
+  isSuccess: boolean;
 }
 
-export default function MyInfo({ data: info, isLoading, isError }: MyInfoProps) {
+export default function MyInfo({ data: myInfo, isLoading, isError, isSuccess }: MyInfoProps) {
   const showToast = useToast();
 
   return (
@@ -31,10 +32,10 @@ export default function MyInfo({ data: info, isLoading, isError }: MyInfoProps) 
       <h3 className="font-normal text-body-sm text-gray_01">구매 신청 및 담당 책임자의 직통 번호</h3>
       {isLoading && <Loader className="mt-4" />}
       {isError && <p className="text-body-md text-red font-medium mt-4">정보 불러오기 실패</p>}
-      {!isLoading && !isError && (
+      {isSuccess && (
         <section className="space-y-[10px] mt-4">
-          <h3 className="my-info">{info?.manager}</h3>
-          <h3 className="my-info">{info?.manager_phone_number}</h3>
+          <h3 className="my-info">{myInfo!.manager}</h3>
+          <h3 className="my-info">{myInfo!.manager_phone_number}</h3>
         </section>
       )}
     </div>

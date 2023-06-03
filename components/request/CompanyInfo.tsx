@@ -1,11 +1,11 @@
 import useToast from '@/hooks/useToast';
+import useGetUser from '@/hooks/useGetUser';
 import CompanyValue from './CompanyValue';
-import { useGetMyInfo } from '@/apis/users';
 import Loader from '../products/Loader';
 
 export default function CompanyInfo() {
   const showToast = useToast();
-  const { data: info, isLoading, isError } = useGetMyInfo();
+  const { data: info, isLoading, isError } = useGetUser();
 
   const companyInfo = [
     { id: 1, name: '상호명', value: info?.business_name },

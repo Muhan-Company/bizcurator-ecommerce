@@ -3,9 +3,11 @@ import NavBar from '@/components/footer/NavBar';
 import CancelRefundOrderInfo from '@/components/orders/cancel&refund/CancelRefundOrderInfo';
 import CancelRefundItemInfo from '@/components/orders/cancel&refund/CancelRefundItemInfo';
 import CancelInfo from '@/components/orders/cancel&refund/CancelInfo';
+import ProtectRoute from '@/components/ProtectRoute';
 export default function Cancel() {
   return (
     <Layout>
+      <ProtectRoute />
       <div className="mx-3 pb-[80px]">
         <CancelRefundOrderInfo total_cost={2000000} delivery_state={0} />
         <CancelRefundItemInfo

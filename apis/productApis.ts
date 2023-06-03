@@ -1,4 +1,4 @@
-import axiosInstance from './config';
+import newAxios from './config';
 
 export interface CategoryProducts {
   categoryId: number;
@@ -6,12 +6,12 @@ export interface CategoryProducts {
 }
 
 const getProductInfo = async (product_id: number) => {
-  const { data } = await axiosInstance.get(`/api/products/${product_id}`);
+  const { data } = await newAxios.get(`/api/products/${product_id}`);
   return data;
 };
 
 const getCategoryProducts = async ({ categoryId, sortBy }: CategoryProducts) => {
-  const { data } = await axiosInstance.get(`/api/products?categoryId=${categoryId}&sort=${sortBy}`);
+  const { data } = await newAxios.get(`/api/products?categoryId=${categoryId}&sort=${sortBy}`);
 
   return data;
 };

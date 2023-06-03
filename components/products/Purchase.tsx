@@ -5,15 +5,10 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { createPortal } from 'react-dom';
 import AddCompleteModal from '../modals/AddCompleteModal';
 import BuyCompleteModal from '../modals/BuyCompleteModal';
-
-import { addToCart } from '@/apis/cartApis';
-import { AxiosResponse } from 'axios';
-import useInvalidation from '@/hooks/useInvalidateQueries';
-import useCustomMutation from '@/hooks/useCustomMutation';
-import useAddCompleteModal from '@/hooks/useAddCompleteModal';
-import useToast from '@/hooks/useToast';
 import { addCompleteModalState, buyCompleteModalState } from '@/atoms/modalAtoms';
 import { ProductDetail } from '@/pages';
+import useModal from '@/hooks/useModal';
+import useAddToCart from '@/hooks/useAddToCart';
 
 export interface AddToCartVariables {
   product_id: number;
@@ -31,33 +26,15 @@ export default function Purchase({ product_name, id, min_quantity, regular_price
     setQuantity(min_quantity);
   };
 
-  const invalidateQueries = useInvalidation();
-  const showModal = useAddCompleteModal();
-  const showToast = useToast();
+  const { showModal: openModal } = useModal(setShowBuyCompleteModal);
 
-  const handleSuccess = () => {
-    showModal();
-    invalidateQueries(['cart']);
-  };
+  const addToCartMutation = useAddToCart();
 
-  const handleError = () => {
-    showToast('장바구니 담기 실패', true);
-  };
-
-  const { mutate, isLoading } = useCustomMutation<AxiosResponse, AddToCartVariables>(
-    addToCart,
-    handleSuccess,
-    handleError,
-  );
+  const { mutate, isLoading } = addToCartMutation;
 
   const handleAddToCart = () => {
-    const variables = {
-      product_id: id,
-      quantity,
-    };
-
     if (open) {
-      mutate(variables);
+      mutate({ product_id: id, quantity });
     } else {
       setOpen(true);
     }
@@ -65,8 +42,7 @@ export default function Purchase({ product_name, id, min_quantity, regular_price
 
   const buyItem = () => {
     if (open) {
-      setShowBuyCompleteModal(true);
-      document.body.classList.add('modal-open');
+      openModal();
     } else {
       setOpen(true);
     }
@@ -85,7 +61,7 @@ export default function Purchase({ product_name, id, min_quantity, regular_price
           <h3 className="px-[9px] font-normal text-title-xs">{product_name}</h3>
 
           <div className="px-2 py-[15px] center-between bg-gray_03">
-            <Counter min_quantity={min_quantity} quantity={quantity} setQuantity={setQuantity} />
+            <Counter minimum_quantity={min_quantity} qty={quantity} setQty={setQuantity} />
             <h4 className="font-medium text-main text-body-sm">총 금액</h4>
             <div className="flex flex-col text-end">
               <span className="font-bold text-main text-label-md">

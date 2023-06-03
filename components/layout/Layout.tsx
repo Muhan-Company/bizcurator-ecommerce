@@ -1,12 +1,16 @@
+import { ReactNode } from 'react';
 import FloatingButtons from '../home/FloatingButtons';
-import TopHeader from '../header/TopHeader';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+type LayoutProps = {
+  children: ReactNode;
+  className?: string;
+};
+
+export default function Layout({ children, className = 'bottom-20' }: LayoutProps) {
   return (
     <>
-      <TopHeader />
       {children}
-      <FloatingButtons />
+      <FloatingButtons className={className} />
     </>
   );
 }

@@ -8,4 +8,4 @@ const useProductInfo = (product_id: number) => {
   });
 };
 
-export { useProductInfo };
+export default useProductInfo;

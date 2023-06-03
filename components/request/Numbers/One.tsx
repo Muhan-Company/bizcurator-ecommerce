@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '../../Icons';
 import { Category, IFormInputs } from '../PurchaseForm';
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
+import { useRecoilValue } from 'recoil';
+import reqDetailsState from '@/atoms/reqDetailsAtom';
 
 export interface FormValues {
   title: string;
@@ -18,8 +20,8 @@ interface FormValues1 extends FormValues {
 
 export default function One({ formValues1 }: { formValues1: FormValues1 }) {
   const { title, description, register, errors, categories, selectedCategory, setSelectedCategory } = formValues1;
-
   const [open, setOpen] = useState<boolean>(false);
+  const reqDetails = useRecoilValue(reqDetailsState);
 
   const dropdownRef = useRef<HTMLUListElement>(null);
 
@@ -60,9 +62,9 @@ export default function One({ formValues1 }: { formValues1: FormValues1 }) {
                 <ChevronDownIcon color="#1C1C1C" width="20" height="20" />
               )}
             </li>
-            {categories.map((category) => (
+            {categories.map((category, idx) => (
               <li
-                key={category.id}
+                key={idx}
                 className={`last:border-none category ${
                   category.id === selectedCategory.id && 'text-gray-400 font-bold'
                 }`}

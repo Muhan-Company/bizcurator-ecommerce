@@ -3,8 +3,9 @@ import { Cart } from '../Icons';
 import React, { useState } from 'react';
 import AddToCartModal from '../modals/AddToCartModal';
 import { createPortal } from 'react-dom';
-import { useRouter } from 'next/router';
 import { ProductDetail } from '@/pages';
+import useAccessTokenCookie from '@/hooks/useAccessTokenCookie';
+import { useRouter } from 'next/router';
 
 export default function Product({
   id,
@@ -17,7 +18,8 @@ export default function Product({
 }: ProductDetail) {
   const [showAddToCartModal, setShowAddToCartModal] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(min_quantity);
-  const router = useRouter();
+  const accessToken = useAccessTokenCookie();
+  const { push } = useRouter();
 
   const openModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -27,8 +29,8 @@ export default function Product({
 
   return (
     <div
-      onClick={() => router.push(`/products/${category_id}?itemId=${id}`)}
-      className="w-full sm:space-y-3 lg:space-y-4"
+      onClick={() => push(`/products/${category_id}?itemId=${id}`)}
+      className="w-full inline-block space-y-1.5 sm:space-y-3 lg:space-y-4"
     >
       <div className="aspect-square relative rounded-lg overflow-hidden shadow-md hover:shadow-lg duration-300">
         <Image src={main_image_url} alt="Product" fill sizes="100%" className="object-cover" />
@@ -43,7 +45,7 @@ export default function Product({
       <div className="space-y-1">
         <h3 className="font-medium text-title-xs lg:text-title-md text-main">{product_name}</h3>
         <h3 className="font-noraml text-title-xs lg:text-title-md text-main">
-          {sale_price?.toLocaleString('ko-KR')}원
+          {accessToken ? sale_price?.toLocaleString('ko-KR') + '원' : '가격 비공개'}
         </h3>
       </div>
 

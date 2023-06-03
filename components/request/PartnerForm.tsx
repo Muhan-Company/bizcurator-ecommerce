@@ -8,14 +8,8 @@ import NumTwo from './Numbers/NumTwo';
 import NumThree from './Numbers/NumThree';
 import useToast from '@/hooks/useToast';
 import { MyInfoProps } from './MyInfo';
-import useInvalidateQueries from '@/hooks/useInvalidateQueries';
-import { useSetRecoilState } from 'recoil';
-import reqSuccessState from '@/atoms/reqSuccessAtom';
-import { useRouter } from 'next/router';
-import useCustomMutation from '@/hooks/useCustomMutation';
-import { AxiosResponse } from 'axios';
-import { requestPartner } from '@/apis/requestApis';
 import { format } from 'date-fns';
+import usePartnerRequest from '@/hooks/usePartnerRequest';
 
 export interface FormInputs {
   product_detail: string;
@@ -40,7 +34,7 @@ const PartnerSchema = yup
   })
   .required();
 
-export default function PartnerForm({ data: info }: MyInfoProps) {
+export default function PartnerForm({ data: myInfo }: MyInfoProps) {
   const {
     register,
     handleSubmit,
@@ -53,21 +47,11 @@ export default function PartnerForm({ data: info }: MyInfoProps) {
   const [fileTypeError, setFileTypeError] = useState<boolean>(false);
   const [fileSizeError, setFileSizeError] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
-
   const showToast = useToast();
-  const invalidateQueries = useInvalidateQueries();
-  const setReqSuccess = useSetRecoilState(reqSuccessState);
-  const { push } = useRouter();
 
-  const handleSuccess = () => {
-    invalidateQueries(['requests', 'partner']);
-    setReqSuccess(true);
-    push('/my-requests');
-  };
+  const partnerReqMutation = usePartnerRequest();
 
-  const { mutate, isLoading: loading } = useCustomMutation<AxiosResponse, FormData>(requestPartner, handleSuccess, () =>
-    showToast('제출 실패', true),
-  );
+  const { mutate, isLoading: loading } = partnerReqMutation;
 
   const onSubmit = (data: FormInputs) => {
     if (!file) {
@@ -77,10 +61,10 @@ export default function PartnerForm({ data: info }: MyInfoProps) {
 
     const post = {
       ...data,
-      business_name: info?.business_name,
-      ceo_name: info?.representative,
-      business_number: info?.business_number,
-      manager_phone_number: info?.manager_phone_number,
+      business_name: myInfo?.business_name,
+      ceo_name: myInfo?.representative,
+      business_number: myInfo?.business_number,
+      manager_phone_number: myInfo?.manager_phone_number,
       category: selectedCategory.id,
       established_year: format(data.established_year, 'yyyy-MM-dd'),
     };
@@ -135,7 +119,7 @@ export default function PartnerForm({ data: info }: MyInfoProps) {
         disabled={loading}
         value={loading ? '제출 중...' : '제출하기'}
         className="disabled:opacity-50 disabled:cursor-not-allowed submit-btn"
-      />{' '}
+      />
     </form>
   );
 }

@@ -1,12 +1,13 @@
-import { useGetMyInfo } from '@/apis/users';
+import ProtectRoute from '@/components/ProtectRoute';
 import Footer from '@/components/footer/Footer';
 import NavBar from '@/components/footer/NavBar';
-import DownHeader from '@/components/header/DownHeader';
+import Header from '@/components/header/Header';
 import Layout from '@/components/layout/Layout';
 import CompanyInfo from '@/components/request/CompanyInfo';
 import Description from '@/components/request/Description';
 import FormTitle from '@/components/request/FormTitle';
 import PartnerForm from '@/components/request/PartnerForm';
+import useGetUser from '@/hooks/useGetUser';
 
 export default function PartnerRequest() {
   const desc = {
@@ -15,11 +16,12 @@ export default function PartnerRequest() {
     p2: '비즈큐레이터의 파트너가 되어주세요',
   };
 
-  const info = useGetMyInfo();
+  const info = useGetUser();
 
   return (
     <Layout>
-      <DownHeader />
+      <ProtectRoute />
+      <Header />
       <FormTitle title="판매입점 의뢰서" />
       <Description desc={desc} />
       <CompanyInfo />

@@ -2,7 +2,6 @@ import useSearch from '@/hooks/useSearch';
 import { useRouter } from 'next/router';
 import ProductList from '@/components/products/ProductList';
 import Layout from '@/components/layout/Layout';
-import DownHeader from '@/components/header/DownHeader';
 import CategoryFilter from '@/components/products/CategoryFilter';
 import SearchBar from '@/components/products/SearchBar';
 import Sort from '@/components/products/Sort';
@@ -13,6 +12,7 @@ import searchBarState from '@/atoms/searchBarAtom';
 import { sortByList, sortByState } from '@/atoms/sortByAtom';
 import Loader from '@/components/products/Loader';
 import { useEffect } from 'react';
+import Header from '@/components/header/Header';
 
 export default function SearchResults() {
   const [sortBy, setSortBy] = useRecoilState(sortByState);
@@ -33,7 +33,7 @@ export default function SearchResults() {
   return (
     <>
       <Layout>
-        <DownHeader />
+        <Header />
         <CategoryFilter />
         {showSearchBar ? <SearchBar /> : <div className="h-[55px]"></div>}
         <Sort />

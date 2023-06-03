@@ -1,11 +1,11 @@
+import ProtectRoute from '@/components/ProtectRoute';
 import Footer from '@/components/footer/Footer';
-import DownHeader from '@/components/header/DownHeader';
-import TopHeader from '@/components/header/TopHeader';
+import Header from '@/components/header/Header';
 import Loader from '@/components/products/Loader';
 import ProductImage from '@/components/products/ProductImage';
 import ProductInfo from '@/components/products/ProductInfo';
 import Purchase from '@/components/products/Purchase';
-import { useProductInfo } from '@/hooks/useProductInfo';
+import useProductInfo from '@/hooks/useProductInfo';
 import { useRouter } from 'next/router';
 
 export default function Item() {
@@ -24,8 +24,8 @@ export default function Item() {
 
   return (
     <>
-      <TopHeader />
-      <DownHeader />
+      <ProtectRoute />
+      <Header />
       <ProductImage {...productInfo} />
       <ProductInfo {...productInfo} />
       <Purchase {...productInfo} id={Number(id)} />

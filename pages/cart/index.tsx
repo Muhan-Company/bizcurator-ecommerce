@@ -1,14 +1,15 @@
+import ProtectRoute from '@/components/ProtectRoute';
 import CartItemList from '@/components/cart/CartItemList';
 import NavBar from '@/components/footer/NavBar';
-import Layout from '@/components/layout/Layout';
+import Header2 from '@/components/header/Header2';
 
 export default function Cart() {
   return (
-    <Layout>
-      <div className="mx-3">
-        <CartItemList />
-      </div>
+    <>
+      <ProtectRoute />
+      <Header2 text="장바구니" />
+      <CartItemList />
       <NavBar />
-    </Layout>
+    </>
   );
 }

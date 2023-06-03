@@ -1,20 +1,19 @@
 import { SignupFormValues } from '@/components/users/types';
-import axiosInstance from './config';
+import axiosInstance, { newAxios } from './config';
 import { useQuery } from '@tanstack/react-query';
+import { AxiosInstance } from 'axios';
 
 interface LoginData {
   username: string;
   password: string;
 }
 // 로그인 API
+
 export const postLogin = async (loginData: LoginData) => {
   // const test = { username: 'user1@user.com', password: '@user123' };
   try {
     const { data } = await axiosInstance.post('/api/users/login', loginData);
     const { accessToken, refreshToken } = data.result.login.token_dto;
-
-    console.log(data);
-    console.log(data.result.login);
 
     window.localStorage.setItem('accessToken', accessToken);
     window.localStorage.setItem('refreshToken', refreshToken);
@@ -29,6 +28,12 @@ export const postLogin = async (loginData: LoginData) => {
     console.log(error);
     return error;
   }
+};
+
+export const login = async (loginData: LoginData) => {
+  const { data } = await newAxios.post('/api/users/login', loginData);
+
+  return data;
 };
 
 // refresh token 재발급 API (api 수정중)
@@ -66,7 +71,6 @@ export const getMyInfo = async () => {
   try {
     const { data } = await axiosInstance('/api/users/check');
 
-    console.log(data);
     return await data?.result?.info;
   } catch (error) {
     console.log(error);

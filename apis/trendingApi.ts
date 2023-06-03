@@ -1,13 +1,13 @@
-import axiosInstance from './config';
+import newAxios from './config';
 
 const getWeeklyTrending = async () => {
-  const { data } = await axiosInstance.get('/api/products/top-weekly');
+  const { data } = await newAxios.get('/api/products/top-weekly');
 
   return data;
 };
 
 const getMonthlyTrending = async () => {
-  const { data } = await axiosInstance.get('/api/products/top-monthly');
+  const { data } = await newAxios.get('/api/products/top-monthly');
 
   return data;
 };

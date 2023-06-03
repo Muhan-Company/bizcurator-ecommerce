@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import axiosInstance from './config';
+import axiosInstance, { newAxios } from './config';
 
 // 주문 리스트 조회 API
 const getOrderList = async (deliveryState: string | string[] | undefined, selectedDateFilter: number) => {

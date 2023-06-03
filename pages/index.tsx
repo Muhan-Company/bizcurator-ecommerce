@@ -5,10 +5,10 @@ import WeeklyTrending from '@/components/home/WeeklyTrending';
 import MonthlyTrending from '@/components/home/MonthlyTrending';
 import NavBar from '@/components/footer/NavBar';
 import RequestBanner from '@/components/home/RequestBanner';
-import DownHeader from '@/components/header/DownHeader';
 import Layout from '@/components/layout/Layout';
 import Footer from '@/components/footer/Footer';
 import { getMonthlyTrending, getWeeklyTrending } from '@/apis/trendingApi';
+import Header from '@/components/header/Header';
 
 export interface ProductDetail {
   id: number;
@@ -29,7 +29,7 @@ export default function Home({ weeklyTrending, monthlyTrending }: TrendingProps)
   return (
     <main>
       <Layout>
-        <DownHeader />
+        <Header />
         <MainBanner />
         <ProductCategoryList />
         <PromoBanner />

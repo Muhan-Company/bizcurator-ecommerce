@@ -2,7 +2,6 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import searchBarState from '@/atoms/searchBarAtom';
 import Footer from '@/components/footer/Footer';
 import NavBar from '@/components/footer/NavBar';
-import DownHeader from '@/components/header/DownHeader';
 import Layout from '@/components/layout/Layout';
 import CategoryFilter from '@/components/products/CategoryFilter';
 import ProductList from '@/components/products/ProductList';
@@ -13,6 +12,7 @@ import { sortByList, sortByState } from '@/atoms/sortByAtom';
 import useCategories from '@/hooks/useCategories';
 import Loader from '@/components/products/Loader';
 import { useEffect } from 'react';
+import Header from '@/components/header/Header';
 
 export default function Products() {
   const showSearchBar = useRecoilValue(searchBarState);
@@ -25,13 +25,16 @@ export default function Products() {
     setSortBy(sortByList[0]);
   }, [setSortBy]);
 
-  const { data, isLoading, isError } = useCategories({ categoryId, sortBy: sortBy.english });
-
-  const categoryProducts = data?.result.products;
+  const {
+    data: categoryProducts,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useCategories({ categoryId, sortBy: sortBy.english });
 
   return (
     <Layout>
-      <DownHeader />
+      <Header />
       <CategoryFilter />
       {showSearchBar ? <SearchBar /> : <div className="h-[55px]"></div>}
       <Sort />
@@ -43,7 +46,7 @@ export default function Products() {
 
       {isError && <p className="text-red font-bold text-center my-10">상품 조회 실패</p>}
 
-      {!isLoading && !isError && <ProductList products={categoryProducts} />}
+      {isSuccess && <ProductList products={categoryProducts} />}
       <NavBar />
       <Footer />
     </Layout>
