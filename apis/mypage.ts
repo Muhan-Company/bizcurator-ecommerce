@@ -20,9 +20,9 @@ export const useGetMyPageMain = () => {
 };
 
 export const getMyRequests = async (filter_month: number) => {
-  const res = await axiosInstance.get(`/api/mypages/requests/histories?filter-month=${filter_month}`);
+  const { data } = await axiosInstance.get(`/api/mypages/requests/histories?filter-month=${filter_month}`);
 
-  return res.data;
+  return data;
 };
 
 export const getReqDetails = async ({ reqId, reqType }: ReqArgs) => {

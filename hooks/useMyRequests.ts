@@ -6,6 +6,7 @@ const useMyRequests = (filter_month: number) => {
     queryKey: ['requests', 'orders'],
     queryFn: () => getMyRequests(filter_month),
     enabled: !!filter_month,
+    select: (data) => data.result.details,
   });
 };
 

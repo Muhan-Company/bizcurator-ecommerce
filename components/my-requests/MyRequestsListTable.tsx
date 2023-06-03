@@ -13,6 +13,7 @@ interface ReqDetail {
 
 export default function MyRequestsListTable({ reqDetails }: { reqDetails: ReqDetail[] }) {
   const router = useRouter();
+
   return (
     <table className="min-w-full mt-9">
       <thead>
@@ -26,7 +27,7 @@ export default function MyRequestsListTable({ reqDetails }: { reqDetails: ReqDet
         </tr>
       </thead>
       <tbody>
-        {reqDetails?.map((row, idx) => (
+        {reqDetails.map((row, idx) => (
           // todo: requestType에 따라 상세페이지 경로 다르게 지정
           <tr
             key={idx}
@@ -35,9 +36,9 @@ export default function MyRequestsListTable({ reqDetails }: { reqDetails: ReqDet
           >
             <TableData>{idx + 1}</TableData>
             <TableData>{row.createdAt}</TableData>
-            <TableData className="center">
-              <span className="grow">{row.requestType}</span>
+            <TableData className="flex flex-col justify-center">
               <RequestsState state={row.state} />
+              <span className="grow">{row.requestType}</span>
             </TableData>
             <TableData>{row.category}</TableData>
 
@@ -66,7 +67,7 @@ interface TableProps {
   className?: string;
 }
 function TableHeader({ children }: TableProps) {
-  return <th className="px-2 py-3 border-b border-main">{children}</th>;
+  return <th className="py-3 border-b border-main">{children}</th>;
 }
 
 function TableData({ children, className }: TableProps) {
