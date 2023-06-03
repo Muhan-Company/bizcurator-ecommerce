@@ -1,5 +1,5 @@
 import useToast from '@/hooks/useToast';
-import Loader from '../products/Loader';
+import Loader from '../Loader';
 
 export interface MyInfo {
   username: string;

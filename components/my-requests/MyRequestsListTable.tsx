@@ -32,7 +32,9 @@ export default function MyRequestsListTable({ reqDetails }: { reqDetails: ReqDet
           <tr
             key={idx}
             className="text-label-sm hover:bg-gray-100 hover:cursor-pointer"
-            onClick={() => router.push(`/my-requests/${getReqType(row.requestType)}/${row.requestId}`)}
+            onClick={() =>
+              router.push(`/my-requests/${getReqType(row.requestType)}/${row.requestId}?state=${row.state}`)
+            }
           >
             <TableData>{idx + 1}</TableData>
             <TableData>{row.createdAt}</TableData>

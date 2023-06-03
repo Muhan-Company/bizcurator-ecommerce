@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ChevronRightIcon, SettingIcon } from '../Icons';
 import useGetMyPage from '@/hooks/useGetMyPage';
 import useGetUser from '@/hooks/useGetUser';
-import Loader from '../products/Loader';
+import Loader from '../Loader';
 import useLogout from '@/hooks/useLogout';
 
 export default function MyPageMain() {

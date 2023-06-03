@@ -7,12 +7,13 @@ const useGetUser = () => {
   const getUser = async () => {
     const { data } = await axiosPrivate.get('/api/users/check');
 
-    return data.result.info;
+    return data;
   };
 
   return useQuery({
     queryKey: ['users', 'check'],
     queryFn: getUser,
+    select: (data) => data.result.info,
   });
 };
 

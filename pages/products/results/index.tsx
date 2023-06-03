@@ -10,7 +10,7 @@ import Footer from '@/components/footer/Footer';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import searchBarState from '@/atoms/searchBarAtom';
 import { sortByList, sortByState } from '@/atoms/sortByAtom';
-import Loader from '@/components/products/Loader';
+import Loader from '@/components/Loader';
 import { useEffect } from 'react';
 import Header from '@/components/header/Header';
 

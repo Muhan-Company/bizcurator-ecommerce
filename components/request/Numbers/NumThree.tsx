@@ -2,7 +2,7 @@ import { UploadIcon } from '@/components/Icons';
 import { FormValues } from './NumOne';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Loader from '@/components/products/Loader';
+import Loader from '@/components/Loader';
 
 interface FormValues3 extends FormValues {
   placeholder: string;

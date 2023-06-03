@@ -5,7 +5,7 @@ import Link from 'next/link';
 import CartDeleteModals from '../modals/CartDeleteModals';
 import { createPortal } from 'react-dom';
 import useGetCarts from '@/hooks/useGetCarts';
-import Loader from '../products/Loader';
+import Loader from '../Loader';
 import useModal from '@/hooks/useModal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { buyCompleteModalState, removeCompleteModalState, removeItemModalState } from '@/atoms/modalAtoms';

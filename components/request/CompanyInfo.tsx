@@ -1,7 +1,7 @@
 import useToast from '@/hooks/useToast';
 import useGetUser from '@/hooks/useGetUser';
 import CompanyValue from './CompanyValue';
-import Loader from '../products/Loader';
+import Loader from '../Loader';
 
 export default function CompanyInfo() {
   const showToast = useToast();

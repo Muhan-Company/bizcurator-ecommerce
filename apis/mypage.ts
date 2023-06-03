@@ -26,7 +26,7 @@ export const getMyRequests = async (filter_month: number) => {
 };
 
 export const getReqDetails = async ({ reqId, reqType }: ReqArgs) => {
-  const res = await axiosInstance.get(`/api/mypages/requests/histories/${reqId}?type=${reqType}`);
+  const { data } = await axiosInstance.get(`/api/mypages/requests/histories/${reqId}?type=${reqType}`);
 
-  return res.data;
+  return data;
 };

@@ -5,7 +5,7 @@ import Header2 from '@/components/header/Header2';
 import MyRequestsListTable from '@/components/my-requests/MyRequestsListTable';
 import { RequestsStateList } from '@/components/my-requests/RequestsState';
 import DateFilter from '@/components/orders/DateFilter';
-import Loader from '@/components/products/Loader';
+import Loader from '@/components/Loader';
 import useMyRequests from '@/hooks/useMyRequests';
 import useToast from '@/hooks/useToast';
 import { useRouter } from 'next/router';
