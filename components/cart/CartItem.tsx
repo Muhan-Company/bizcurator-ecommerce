@@ -9,9 +9,10 @@ import useInvalidateQueries from '@/hooks/useInvalidateQueries';
 type CartItemProps = {
   item: CartItemType;
   toggleItem: (itemId: number, selected: boolean) => void;
+  handleQtyChange: (itemId: number, quantity: number) => void;
 };
 
-export default function CartItem({ item, toggleItem }: CartItemProps) {
+export default function CartItem({ item, toggleItem, handleQtyChange }: CartItemProps) {
   const { product_image_url, product_id, selected } = item;
 
   const handleCheckboxChange = () => {
@@ -45,7 +46,7 @@ export default function CartItem({ item, toggleItem }: CartItemProps) {
           />
         </div>
         {/* todo: 상품 정보 props 내려주기 */}
-        <CartItemInfo item={item} />
+        <CartItemInfo item={item} handleQtyChange={handleQtyChange} />
       </div>
       {/* todo: 삭제기능 연결 */}
       <div onClick={() => mutate([product_id])} className="pr-[10px] md:ml-6 md:flex md:items-center">

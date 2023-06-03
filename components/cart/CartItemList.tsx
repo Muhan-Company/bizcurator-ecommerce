@@ -8,8 +8,10 @@ import useGetCarts from '@/hooks/useGetCarts';
 import Loader from '../products/Loader';
 import useModal from '@/hooks/useModal';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { removeCompleteModalState, removeItemModalState } from '@/atoms/modalAtoms';
+import { buyCompleteModalState, removeCompleteModalState, removeItemModalState } from '@/atoms/modalAtoms';
 import SelectAllCheckbox from './SelectAllCheckbox';
+import BuyCompleteModal from '../modals/BuyCompleteModal';
+import CartPaymentAmountInfo from './CartPaymentAmountInfo';
 
 export interface CartItemType {
   name: string;
@@ -23,13 +25,17 @@ export interface CartItemType {
 }
 
 export default function CartItemList() {
-  const { data: carts, isLoading, isError } = useGetCarts();
+  const { data: carts, isLoading, isError, isSuccess } = useGetCarts();
   const [showRemoveItemModal, setShowRemoveItemModal] = useRecoilState(removeItemModalState);
-  const showRemoveCompleteModal = useRecoilValue(removeCompleteModalState);
-  const { showModal } = useModal(setShowRemoveItemModal);
+  const [showBuyCompleteModal, setShowBuyCompleteModal] = useRecoilState(buyCompleteModalState);
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
   const [selectedItems, setSelectedItems] = useState<CartItemType[]>([]);
   const [selectAll, setSelectAll] = useState<boolean>(false);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [totalDiscountPrice, setTotalDiscountPrice] = useState<number>(0);
+  const showRemoveCompleteModal = useRecoilValue(removeCompleteModalState);
+  const { showModal: openModal } = useModal(setShowBuyCompleteModal);
+  const { showModal } = useModal(setShowRemoveItemModal);
 
   useEffect(() => {
     if (carts) {
@@ -72,9 +78,34 @@ export default function CartItemList() {
     }
   };
 
+  const handleQtyChange = (itemId: number, quantity: number) => {
+    const updatedCartItems = cartItems.map((item) => {
+      if (item.product_id === itemId) {
+        return { ...item, quantity };
+      }
+      return item;
+    });
+    setCartItems(updatedCartItems);
+
+    const updatedSelectedItems = selectedItems.map((item) => {
+      if (item.product_id === itemId) {
+        return { ...item, quantity };
+      }
+      return item;
+    });
+    setSelectedItems(updatedSelectedItems);
+
+    const totalPrice = updatedSelectedItems.reduce((acc, item) => acc + item.regular_price * item.quantity, 0);
+
+    const totalDiscountPrice = updatedSelectedItems.reduce((acc, item) => acc + item.discount_price * item.quantity, 0);
+
+    setTotalPrice(totalPrice);
+    setTotalDiscountPrice(totalDiscountPrice);
+  };
+
   if (isLoading) return <Loader className="h-[494px]" />;
   if (isError) return <p className="text-red center h-[494px] font-bold text-xl">장바구니 조회 실패</p>;
-  if (cartItems)
+  if (isSuccess)
     return (
       <div className="relative h-[494px]">
         {cartItems.length === 0 ? (
@@ -94,8 +125,10 @@ export default function CartItemList() {
               </button>
             </div>
             {cartItems.map((item) => (
-              <CartItem key={item.product_id} item={item} toggleItem={toggleItem} />
+              <CartItem key={item.product_id} item={item} toggleItem={toggleItem} handleQtyChange={handleQtyChange} />
             ))}
+
+            <CartPaymentAmountInfo totalCost={totalPrice} totalDiscount={totalDiscountPrice} />
 
             <div className="center gap-[7px] mt-[76px]">
               {/* todo: 바로구매 페이지로 이동 */}
@@ -103,15 +136,16 @@ export default function CartItemList() {
                 다른 제품 보기
               </Link>
               {/* todo: 결제 페이지로 이동 */}
-              <Link href={'/'} className="w-[172px] h-[50px] btn-primary grow py-[19px]">
+              <button onClick={openModal} className="w-[172px] h-[50px] btn-primary grow py-[19px]">
                 구매하기
-              </Link>
+              </button>
             </div>
           </div>
         )}
         {showRemoveItemModal &&
           createPortal(<CartDeleteModals.CartItemDeleteModal selectedItems={selectedItems} />, document.body)}
         {showRemoveCompleteModal && createPortal(<CartDeleteModals.DeleteCompletedModal />, document.body)}
+        {showBuyCompleteModal && createPortal(<BuyCompleteModal />, document.body)}
       </div>
     );
 }
