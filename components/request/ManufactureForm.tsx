@@ -2,16 +2,16 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Category, IFormInputs, RequestSchema } from './PurchaseForm';
+import useToast from '@/hooks/useToast';
+import { MyInfoProps } from './MyInfo';
+import { format } from 'date-fns';
+import useOrdersRequest from '@/hooks/useOrdersRequest';
 import One from './numbers/One';
 import Two from './numbers/Two';
 import Three from './numbers/Three';
 import Four from './numbers/Four';
 import Five from './numbers/Five';
 import Six from './numbers/Six';
-import useToast from '@/hooks/useToast';
-import { MyInfoProps } from './MyInfo';
-import { format } from 'date-fns';
-import useOrdersRequest from '@/hooks/useOrdersRequest';
 
 export default function ManufactureForm({ data: info }: MyInfoProps) {
   const {

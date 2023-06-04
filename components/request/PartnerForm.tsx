@@ -3,13 +3,13 @@ import { Category, categories } from './PurchaseForm';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useState } from 'react';
-import NumOne from './numbers/NumOne';
-import NumTwo from './numbers/NumTwo';
-import NumThree from './numbers/NumThree';
 import useToast from '@/hooks/useToast';
 import { MyInfoProps } from './MyInfo';
 import { format } from 'date-fns';
 import usePartnerRequest from '@/hooks/usePartnerRequest';
+import NumOne from './numbers/NumOne';
+import NumTwo from './numbers/NumTwo';
+import NumThree from './numbers/NumThree';
 
 export interface FormInputs {
   product_detail: string;
