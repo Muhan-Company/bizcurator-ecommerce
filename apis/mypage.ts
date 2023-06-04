@@ -18,15 +18,3 @@ export const useGetMyPageMain = () => {
     queryFn: async () => await getMyPageMain(),
   });
 };
-
-export const getMyRequests = async (filter_month: number) => {
-  const res = await axiosInstance.get(`/api/mypages/requests/histories?filter-month=${filter_month}`);
-
-  return res.data;
-};
-
-export const getReqDetails = async ({ reqId, reqType }: ReqArgs) => {
-  const res = await axiosInstance.get(`/api/mypages/requests/histories/${reqId}?type=${reqType}`);
-
-  return res.data;
-};

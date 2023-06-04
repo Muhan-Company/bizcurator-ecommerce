@@ -2,17 +2,15 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Category, IFormInputs, RequestSchema } from './PurchaseForm';
-import One from './Numbers/One';
-import Two from './Numbers/Two';
-import Three from './Numbers/Three';
-import Four from './Numbers/Four';
-import Five from './Numbers/Five';
-import Six from './Numbers/Six';
+import One from './numbers/One';
+import Two from './numbers/Two';
+import Three from './numbers/Three';
+import Four from './numbers/Four';
+import Five from './numbers/Five';
+import Six from './numbers/Six';
 import useToast from '@/hooks/useToast';
 import { MyInfoProps } from './MyInfo';
-import { useRecoilValue } from 'recoil';
 import { format } from 'date-fns';
-import reqDetailsState from '@/atoms/reqDetailsAtom';
 import useOrdersRequest from '@/hooks/useOrdersRequest';
 
 export default function ManufactureForm({ data: info }: MyInfoProps) {
@@ -31,11 +29,7 @@ export default function ManufactureForm({ data: info }: MyInfoProps) {
     { id: 3, name: '개인적인 목적' },
   ];
 
-  const reqDetails = useRecoilValue(reqDetailsState);
-
-  const [selectedCategory, setSelectedCategory] = useState<Category>(
-    reqDetails ? { id: reqDetails.categoryId, name: reqDetails.category } : categories[0],
-  );
+  const [selectedCategory, setSelectedCategory] = useState<Category>(categories[0]);
   const [fileTypeError, setFileTypeError] = useState<boolean>(false);
   const [fileSizeError, setFileSizeError] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);

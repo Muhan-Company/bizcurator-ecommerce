@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '../../Icons';
 import { Category, IFormInputs } from '../PurchaseForm';
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
-import { useRecoilValue } from 'recoil';
-import reqDetailsState from '@/atoms/reqDetailsAtom';
 
 export interface FormValues {
   title: string;
@@ -21,7 +19,6 @@ interface FormValues1 extends FormValues {
 export default function One({ formValues1 }: { formValues1: FormValues1 }) {
   const { title, description, register, errors, categories, selectedCategory, setSelectedCategory } = formValues1;
   const [open, setOpen] = useState<boolean>(false);
-  const reqDetails = useRecoilValue(reqDetailsState);
 
   const dropdownRef = useRef<HTMLUListElement>(null);
 

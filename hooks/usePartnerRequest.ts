@@ -20,7 +20,7 @@ const usePartnerRequest = () => {
 
   const mutationOptions = {
     onSuccess: () => {
-      invalidateQueries(['requests', 'partner']);
+      invalidateQueries(['requests', 'histories']);
       setReqSuccess(true);
       push('/my-requests');
     },

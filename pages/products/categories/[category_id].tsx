@@ -10,7 +10,7 @@ import Sort from '@/components/products/Sort';
 import { useRouter } from 'next/router';
 import { sortByList, sortByState } from '@/atoms/sortByAtom';
 import useCategories from '@/hooks/useCategories';
-import Loader from '@/components/products/Loader';
+import Loader from '@/components/Loader';
 import { useEffect } from 'react';
 import Header from '@/components/header/Header';
 

@@ -2,7 +2,7 @@ import { UploadIcon } from '@/components/Icons';
 import { FormValues } from './One';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import Loader from '@/components/products/Loader';
+import Loader from '@/components/Loader';
 
 interface FormValues6 extends FormValues {
   file: File | null;

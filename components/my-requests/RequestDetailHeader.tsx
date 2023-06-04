@@ -4,8 +4,10 @@ import RequestDetailInfo from '@/components/my-requests/RequestDetailInfo';
 interface RequestDetailHeader {
   state: string;
 }
+
 export default function RequestDetailHeader({ state }: RequestDetailHeader) {
   const { query } = useRouter();
+
   return (
     <div className="pb-8">
       <RequestDetailInfo title="의뢰번호" value={query.id as string} />

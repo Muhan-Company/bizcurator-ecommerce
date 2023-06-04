@@ -16,13 +16,15 @@ export default function Footer() {
     <footer className="bg-main pt-5 pb-24 lg:py-10 lg:px-24 xl:px-48">
       <div className="flex flex-col lg:flex-row items-center gap-y-5 lg:gap-x-5 pb-5">
         {accessToken ? null : (
-          <button onClick={openModal} className="footer-btn">
-            로그인
-          </button>
+          <>
+            <button onClick={openModal} className="footer-btn">
+              로그인
+            </button>
+            <Link href={'/signup'} className="footer-btn">
+              회원가입
+            </Link>
+          </>
         )}
-        <Link href={'/signup'} className="footer-btn">
-          회원가입
-        </Link>
         <Link href={'/customer'} className="footer-btn">
           고객센터
         </Link>
