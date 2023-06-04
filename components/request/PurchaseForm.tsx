@@ -97,9 +97,9 @@ export default function PurchaseForm({ data: myInfo }: MyInfoProps) {
 
   const showToast = useToast();
 
-  const buyReqMutation = useOrdersRequest();
+  const purchaseReqMutation = useOrdersRequest();
 
-  const { mutate, isLoading: loading } = buyReqMutation;
+  const { mutate, isLoading: loading } = purchaseReqMutation;
 
   const onSubmit = (data: IFormInputs) => {
     if (!file) {

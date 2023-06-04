@@ -20,11 +20,6 @@ interface ReqDetails {
   requestId: number;
 }
 
-export interface FormValues {
-  title: string;
-  description: string;
-}
-
 export default function Purchaseform({
   category,
   productName,
@@ -34,10 +29,12 @@ export default function Purchaseform({
   desiredEstimateDate,
   image,
   requestContext,
+  companyIntroduction,
 }: ReqDetails) {
   const formValues1 = {
     category,
     productName,
+    productDetail,
     title: '구매 희망 품목',
     description: '구매하고자 하는 상품의 카테고리를 선택하시고 상품명을 입력하세요',
   };
@@ -72,6 +69,7 @@ export default function Purchaseform({
       '요청사항이나 유사 컨셉의 제품 혹은 현재 사용 중인 제품의 이미지나 스케치를 첨부해주세요. (상세한 요청사항을 적어주시면 요청하신 부분과 일치하는 제품의 견적을 받을 확률이 높아집니다. 상세하게 작성 부탁드립니다)',
     requestContext,
     image,
+    companyIntroduction,
   };
 
   return (

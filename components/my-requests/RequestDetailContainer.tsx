@@ -29,13 +29,9 @@ export default function RequestDetailContainer() {
           <RequestDetailHeader state={reqState} />
           <div className="opacity-50 cursor-not-allowed">
             {/* todo: 페이지 경로에 따라 다른 폼 보여주기 */}
-            {pathname.includes('purchase') ? (
-              <Purchaseform {...reqDetails} />
-            ) : pathname.includes('make') ? (
-              <Manufactureform {...reqDetails} />
-            ) : (
-              <PartnerForm {...reqDetails} />
-            )}
+            {pathname.includes('purchase') && <Purchaseform {...reqDetails} />}
+            {pathname.includes('make') && <Manufactureform {...reqDetails} />}
+            {pathname.includes('sell') && <PartnerForm {...reqDetails} />}
           </div>
         </>
       )}

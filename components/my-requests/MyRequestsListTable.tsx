@@ -3,7 +3,7 @@ import { RequestsState } from './RequestsState';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-interface ReqDetail {
+export interface ReqDetail {
   requestId: number;
   createdAt: string;
   requestType: string;

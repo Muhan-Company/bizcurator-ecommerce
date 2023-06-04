@@ -5,7 +5,7 @@ import Six from './numbers/Six';
 import Three from './numbers/Three';
 import Two from './numbers/Two';
 
-interface ReqDetails {
+export interface ReqDetails {
   category: string;
   categoryId: number;
   companyIntroduction: string;
@@ -22,7 +22,7 @@ interface ReqDetails {
 
 export interface FormValues {
   title: string;
-  description: string;
+  description?: string;
 }
 
 export default function Manufactureform({
@@ -34,10 +34,12 @@ export default function Manufactureform({
   desiredEstimateDate,
   image,
   requestContext,
+  companyIntroduction,
 }: ReqDetails) {
   const formValues1 = {
     category,
     productName,
+    productDetail,
     title: '제품제작 의뢰',
     description: '제품을 만들고자 하는 목적을 고르고 제품 이름을 입력해주세요',
   };
@@ -72,6 +74,7 @@ export default function Manufactureform({
       '요청사항이나 유사 컨셉의 제품 혹은 이미지나 스케치를 첨부해주세요. 만들고자 하는 제품의 크기, 두께, 재질, 특징들을 상세하게 입력해주세요(e.g, 실리콘, 아크릴7mm, 가로세로 높이: ...mm 등, 상세한 요청사항을 적어주시면 요청하신 부분을 잘 반영하여 제품을 제작할 확률이 높아집니다. 상세하게 작성 부탁드립니다)',
     requestContext,
     image,
+    companyIntroduction,
   };
 
   return (

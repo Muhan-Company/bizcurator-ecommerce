@@ -4,10 +4,11 @@ import { FormValues } from '../Manufactureform';
 interface FormValues6 extends FormValues {
   image: string;
   requestContext: string;
+  companyIntroduction: string;
 }
 
 export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
-  const { title, description, image, requestContext } = formValues6;
+  const { title, description, image, requestContext, companyIntroduction } = formValues6;
 
   return (
     <div className="mt-12 gap-y-1.5 flex flex-col">
@@ -17,7 +18,7 @@ export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
       </label>
       <div className="grid grid-cols-3 h-[197px] gap-x-2">
         <section className="h-full bg-gray-100 p-2 text-main rounded-lg font-normal text-body-sm col-span-1">
-          {requestContext}
+          {requestContext || companyIntroduction}
         </section>
 
         <div className="col-span-2 h-full relative rounded-lg overflow-hidden">

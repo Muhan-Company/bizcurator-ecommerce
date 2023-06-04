@@ -6,7 +6,7 @@ const getReqType = (req: string) => {
     case '제품제작 의뢰':
       return 'make';
 
-    case '판매입점 의뢰':
+    case '제품입점 의뢰':
       return 'sell';
 
     default:
