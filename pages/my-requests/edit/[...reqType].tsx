@@ -4,8 +4,6 @@ import Layout from '@/components/layout/Layout';
 import EditRequestContainer from '@/components/my-requests/EditRequestContainer';
 
 export default function EditRequestPage({ paths }: { paths: any }) {
-  console.log(paths);
-
   return (
     <Layout>
       <ProtectRoute />
@@ -31,7 +29,6 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: any) {
-  console.log(params);
   return {
     props: {
       reqType: params.reqType,

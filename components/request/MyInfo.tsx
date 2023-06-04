@@ -2,9 +2,6 @@ import useToast from '@/hooks/useToast';
 import Loader from '../Loader';
 
 export interface MyInfo {
-  username: string;
-  password: string;
-  password_confirm: string;
   business_name: string;
   business_number: string;
   business_registration: string;

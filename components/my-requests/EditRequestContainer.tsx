@@ -19,7 +19,7 @@ export default function EditRequestContainer() {
 
   useEffect(() => {
     if (data) {
-      setReqDetails(data.result.details);
+      setReqDetails(data);
     }
   }, [data, setReqDetails]);
 
