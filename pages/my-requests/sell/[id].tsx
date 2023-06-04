@@ -5,12 +5,10 @@ import RequestDetailContainer from '@/components/my-requests/RequestDetailContai
 
 export default function SellDetailPage() {
   return (
-    <div>
-      <Layout>
-        <ProtectRoute />
-        <RequestDetailContainer />
-        <NavBar />
-      </Layout>
-    </div>
+    <Layout>
+      <ProtectRoute />
+      <RequestDetailContainer />
+      <NavBar />
+    </Layout>
   );
 }
