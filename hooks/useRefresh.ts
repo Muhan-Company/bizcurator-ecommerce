@@ -4,15 +4,17 @@ import { useSetRecoilState } from 'recoil';
 import useToast from './useToast';
 import { logInModalState } from '@/atoms/modalAtoms';
 import { useRouter } from 'next/router';
+import useRefreshTokenCookie from './useRefreshTokenCookie';
+import useModal from './useModal';
 
 const useRefresh = () => {
   const showToast = useToast();
   const { push } = useRouter();
   const setShowLogInModal = useSetRecoilState(logInModalState);
+  const refreshToken = useRefreshTokenCookie();
+  const { showModal } = useModal(setShowLogInModal);
 
   const refresh = async () => {
-    const refreshToken = getRefreshTokenCookie();
-
     if (refreshToken) {
       try {
         const { data } = await newAxios.get('/api/users/refresh', {
@@ -28,11 +30,10 @@ const useRefresh = () => {
         return newAccessToken;
       } catch (error) {
         console.error(error);
-        push('/');
         removeTokensCookie();
+        push('/');
+        showModal();
         showToast('로그인을 해주세요', true);
-        setShowLogInModal(true);
-        document.body.classList.add('modal-open');
       }
     }
   };

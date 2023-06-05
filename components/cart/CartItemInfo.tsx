@@ -10,14 +10,14 @@ export default function CartItemInfo({
   handleQtyChange: (itemId: number, quantity: number) => void;
 }) {
   const { quantity, regular_price, discount_price, name, minimum_quantity, product_id } = item;
-  const [qty, setQty] = useState(quantity);
+  const [qty, setQty] = useState<number>(quantity);
 
   const regularPrice = (regular_price * qty).toLocaleString('ko-KR');
   const discountPrice = (discount_price * qty).toLocaleString('ko-KR');
 
   useEffect(() => {
     handleQtyChange(product_id, qty);
-  }, [handleQtyChange, product_id, qty]);
+  }, [product_id, qty]);
 
   return (
     <div className="pl-3 flex flex-col md:grow md:flex-row md:items-center justify-between md:justify-around">

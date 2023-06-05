@@ -25,7 +25,7 @@ export interface CartItemType {
 }
 
 export default function CartItemList() {
-  const { data: carts, isLoading, isError, isSuccess } = useGetCarts();
+  const { data: carts, isLoading, isError } = useGetCarts();
   const [showRemoveItemModal, setShowRemoveItemModal] = useRecoilState(removeItemModalState);
   const [showBuyCompleteModal, setShowBuyCompleteModal] = useRecoilState(buyCompleteModalState);
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
