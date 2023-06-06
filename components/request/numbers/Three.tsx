@@ -1,6 +1,10 @@
 import { FormValues } from './One';
 
-export default function Three({ formValues3 }: { formValues3: FormValues }) {
+interface FormValues3 extends FormValues {
+  quantity?: number;
+}
+
+export default function Three({ formValues3 }: { formValues3: FormValues3 }) {
   const { title, description, register, errors, quantity } = formValues3;
 
   return (
