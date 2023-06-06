@@ -6,6 +6,7 @@ import Header2 from '../header/Header2';
 import getKorReqType from '@/utils/getKorReqType';
 import Loader from '../Loader';
 import ManufactureForm from '../request/read-write/ManufactureForm';
+import PartnerForm from '../request/read-write/PartnerForm';
 
 export default function EditRequestContainer() {
   const { query } = useRouter();
@@ -25,8 +26,7 @@ export default function EditRequestContainer() {
       {isError && <p className="text-red font-medium text-lg">수정 내역 조회 실패</p>}
       {isSuccess && reqType[0] === 'purchase' && <PurchaseForm {...reqDetails} />}
       {isSuccess && reqType[0] === 'make' && <ManufactureForm {...reqDetails} />}
-
-      {/* {reqType === 'sell' && <PartnerForm {...reqDetails} />} */}
+      {isSuccess && reqType[0] === 'sell' && <PartnerForm {...reqDetails} />}
     </>
   );
 }

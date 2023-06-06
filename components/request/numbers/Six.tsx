@@ -24,7 +24,6 @@ export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
     description,
     placeholder,
     requestContext,
-    image,
     file,
     setFile,
     fileSizeError,

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Category, IFormInputs, RequestSchema } from './PurchaseForm';
+import { Category, RequestSchema } from './PurchaseForm';
 import useToast from '@/hooks/useToast';
 import { format } from 'date-fns';
 import One from '../numbers/One';
@@ -16,13 +16,13 @@ import EditCompleteModal from '@/components/modals/EditCompleteModal';
 import { createPortal } from 'react-dom';
 import { useRecoilValue } from 'recoil';
 import { editCompleteModalState } from '@/atoms/modalAtoms';
+import { IFormInputs } from '../PurchaseForm';
 
 export default function ManufactureForm({
   category,
   categoryId,
   desiredDeliveryDate,
   desiredEstimateDate,
-  image,
   productDetail,
   productName,
   quantity,
@@ -169,7 +169,6 @@ export default function ManufactureForm({
       '요청사항이나 유사 컨셉의 제품 혹은 이미지나 스케치를 첨부해주세요. 만들고자 하는 제품의 크기, 두께, 재질, 특징들을 상세하게 입력해주세요(e.g, 실리콘, 아크릴7mm, 가로세로 높이: ...mm 등, 상세한요청사항을 적어주시면 요청하신 부분을 잘 반영하여 제품을 제작할 확률이 높아집니다. 상세하게 작성 부탁드립니다)',
     placeholder: '요청사항을 적어주세요',
     requestContext,
-    image,
     file,
     setFile,
     fileSizeError,

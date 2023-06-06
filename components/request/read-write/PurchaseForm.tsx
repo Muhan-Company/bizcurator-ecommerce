@@ -16,15 +16,7 @@ import { editCompleteModalState } from '@/atoms/modalAtoms';
 import { createPortal } from 'react-dom';
 import EditCompleteModal from '@/components/modals/EditCompleteModal';
 import useEditRequest from '@/hooks/useEditRequest';
-
-export interface IFormInputs {
-  product_name: string;
-  product_detail: string;
-  quantity: number;
-  desired_estimate_date: Date | string;
-  desired_delivery_date: Date | string;
-  request_message: string;
-}
+import { IFormInputs } from '../PurchaseForm';
 
 export interface Category {
   id: number;
@@ -90,7 +82,6 @@ export default function PurchaseForm({
   categoryId,
   desiredDeliveryDate,
   desiredEstimateDate,
-  image,
   productDetail,
   productName,
   quantity,
@@ -233,7 +224,6 @@ export default function PurchaseForm({
       '요청사항이나 유사 컨셉의 제품 혹은 현재 사용 중인 제품의 이미지나 스케치를 첨부해주세요. (상세한 요청사항을 적어주시면 요청하신 부분과 일치하는 제품의 견적을 받을 확률이 높아집니다. 상세하게 작성 부탁드립니다)',
     placeholder: '요청사항을 적어주세요',
     requestContext,
-    image,
     file,
     setFile,
     fileSizeError,
