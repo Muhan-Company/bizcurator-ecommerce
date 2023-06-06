@@ -5,7 +5,6 @@ import * as yup from 'yup';
 import { useState } from 'react';
 import useToast from '@/hooks/useToast';
 import { MyInfoProps } from './MyInfo';
-import { format } from 'date-fns';
 import usePartnerRequest from '@/hooks/usePartnerRequest';
 import NumOne from './numbers/NumOne';
 import NumTwo from './numbers/NumTwo';
@@ -13,14 +12,14 @@ import NumThree from './numbers/NumThree';
 
 export interface FormInputs {
   product_detail: string;
-  established_year: number;
+  establish_year: number;
   introduction: string;
 }
 
 const PartnerSchema = yup
   .object({
     product_detail: yup.string().required('생산제품을 입력하세요'),
-    established_year: yup
+    establish_year: yup
       .number()
       .typeError('설립연도를 입력하세요')
       .positive('양수를 입력하세요')
@@ -66,7 +65,7 @@ export default function PartnerForm({ data: myInfo }: MyInfoProps) {
       business_number: myInfo?.business_number,
       manager_phone_number: myInfo?.manager_phone_number,
       category: selectedCategory.id,
-      established_year: format(data.established_year, 'yyyy-MM-dd'),
+      establish_year: data.establish_year,
     };
 
     const formData = new FormData();

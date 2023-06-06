@@ -157,10 +157,6 @@
     @apply border-b-[1px] border-gray_01 pb-2.5;
   }
 
-  .rdrDayPassive > span > div {
-    @apply text-neutral-400 !important;
-  }
-
   .loader {
     width: 50px;
     height: 50px;

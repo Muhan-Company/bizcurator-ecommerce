@@ -8,22 +8,22 @@ import { useMutation } from '@tanstack/react-query';
 
 const useOrdersRequest = () => {
   const axiosPrivate = useAxiosPrivate();
+  const invalidateQueries = useInvalidateQueries();
+  const setReqSuccess = useSetRecoilState(reqSuccessState);
+  const { push } = useRouter();
+  const showToast = useToast();
 
   const requestOrders = async (formData: FormData) => {
     const { data } = await axiosPrivate.post('/api/requests/orders', formData);
     return data;
   };
 
-  const invalidateQueries = useInvalidateQueries();
-  const setReqSuccess = useSetRecoilState(reqSuccessState);
-  const { push } = useRouter();
-  const showToast = useToast();
-
   const mutationOptions = {
     onSuccess: () => {
       invalidateQueries(['requests', 'histories']);
+      invalidateQueries(['histories', 'details']);
       setReqSuccess(true);
-      push('/my-requests');
+      push('/my-requests?filterMonth=30');
     },
     onError: () => showToast('제출 실패', true),
   };

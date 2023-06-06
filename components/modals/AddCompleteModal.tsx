@@ -1,5 +1,7 @@
 import { addCompleteModalState } from '@/atoms/modalAtoms';
+import useModal from '@/hooks/useModal';
 import Link from 'next/link';
+import { MouseEvent } from 'react';
 import { useSetRecoilState } from 'recoil';
 
 interface AddCompleteModalPropsType {
@@ -10,10 +12,11 @@ interface AddCompleteModalPropsType {
 export default function AddCompleteModal({ setShowAddToCartModal, closeAccordion }: AddCompleteModalPropsType) {
   const setShowAddCompleteModal = useSetRecoilState(addCompleteModalState);
 
-  const closeModal = (e: React.MouseEvent) => {
+  const { hideModal } = useModal(setShowAddCompleteModal);
+
+  const closeModal = (e: MouseEvent) => {
     e.stopPropagation();
-    setShowAddCompleteModal(false);
-    document.body.classList.remove('modal-open');
+    hideModal();
 
     if (closeAccordion) {
       closeAccordion();
@@ -27,7 +30,7 @@ export default function AddCompleteModal({ setShowAddToCartModal, closeAccordion
   return (
     <>
       <div
-        onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
+        onClick={(e: MouseEvent<HTMLDivElement>) => e.stopPropagation()}
         className="w-[351px] h-auto pt-[30px] px-3 center modal-box-shadow modal-contents flex-col gap-0.5"
       >
         장바구니에 담았습니다.

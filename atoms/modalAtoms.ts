@@ -35,6 +35,11 @@ const removeCompleteModalState = atom<boolean>({
   default: false,
 });
 
+const editCompleteModalState = atom<boolean>({
+  key: 'editCompleteModalState',
+  default: true,
+});
+
 export {
   logInModalState,
   searchModalState,
@@ -43,4 +48,5 @@ export {
   ConfirmModalState,
   removeItemModalState,
   removeCompleteModalState,
+  editCompleteModalState,
 };

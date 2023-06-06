@@ -1,17 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useToast from '@/hooks/useToast';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { format } from 'date-fns';
-import { MyInfoProps } from './MyInfo';
-import useOrdersRequest from '@/hooks/useOrdersRequest';
-import One from './numbers/One';
-import Two from './numbers/Two';
-import Three from './numbers/Three';
-import Four from './numbers/Four';
-import Five from './numbers/Five';
-import Six from './numbers/Six';
+import One from '../numbers/One';
+import { ReqDetails } from '../read-only/Manufactureform';
+import Two from '../numbers/Two';
+import Three from '../numbers/Three';
+import Four from '../numbers/Four';
+import Five from '../numbers/Five';
+import Six from '../numbers/Six';
+import { useRecoilValue } from 'recoil';
+import { editCompleteModalState } from '@/atoms/modalAtoms';
+import { createPortal } from 'react-dom';
+import EditCompleteModal from '@/components/modals/EditCompleteModal';
+import useEditRequest from '@/hooks/useEditRequest';
 
 export interface IFormInputs {
   product_name: string;
@@ -81,45 +85,94 @@ export const categories = [
   },
 ];
 
-export default function PurchaseForm({ data: myInfo }: MyInfoProps) {
+export default function PurchaseForm({
+  category,
+  categoryId,
+  desiredDeliveryDate,
+  desiredEstimateDate,
+  image,
+  productDetail,
+  productName,
+  quantity,
+  requestContext,
+  requestId,
+}: ReqDetails) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<IFormInputs>({
+    defaultValues: {
+      product_name: productName,
+      product_detail: productDetail,
+      quantity,
+      desired_estimate_date: desiredEstimateDate,
+      desired_delivery_date: desiredDeliveryDate,
+      request_message: requestContext,
+    },
     resolver: yupResolver(RequestSchema),
   });
 
-  const [selectedCategory, setSelectedCategory] = useState<Category>({ id: 0, name: '카테고리 선택' });
+  useEffect(() => {
+    reset({
+      product_name: productName,
+      product_detail: productDetail,
+      quantity,
+      desired_estimate_date: desiredEstimateDate,
+      desired_delivery_date: desiredDeliveryDate,
+      request_message: requestContext,
+    });
+  }, [reset, productName, productDetail, quantity, desiredEstimateDate, desiredDeliveryDate, requestContext]);
+
+  useEffect(() => {
+    if (category && categoryId) {
+      setSelectedCategory({
+        id: categoryId,
+        name: category,
+      });
+    }
+  }, [category, categoryId]);
+
+  const [selectedCategory, setSelectedCategory] = useState<Category>({
+    id: 0,
+    name: '카테고리 선택',
+  });
   const [fileTypeError, setFileTypeError] = useState<boolean>(false);
   const [fileSizeError, setFileSizeError] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
 
   const showToast = useToast();
+  const showEditCompleteModal = useRecoilValue(editCompleteModalState);
 
-  const purchaseReqMutation = useOrdersRequest();
+  const editReqMutation = useEditRequest({ reqId: requestId, reqType: 'purchase' });
 
-  const { mutate, isLoading: loading } = purchaseReqMutation;
+  const { mutate, isLoading: loading } = editReqMutation;
 
   const onSubmit = (data: IFormInputs) => {
     if (!file) {
       showToast('이미지를 업로드하세요', true);
       return;
     }
-
-    if (!myInfo) {
-      showToast('제출 불가', true);
-      return;
-    }
+    const estimateDate =
+      typeof data.desired_estimate_date === 'object'
+        ? format(data.desired_estimate_date as Date, 'yyyy-MM-dd')
+        : data.desired_estimate_date;
+    const deliveryDate =
+      typeof data.desired_delivery_date === 'object'
+        ? format(data.desired_delivery_date as Date, 'yyyy-MM-dd')
+        : data.desired_delivery_date;
 
     const post = {
-      ...data,
-      desired_estimate_date: format(data.desired_estimate_date as Date, 'yyyy-MM-dd'),
-      desired_delivery_date: format(data.desired_delivery_date as Date, 'yyyy-MM-dd'),
-      document_type: 'purchase',
-      manager_name: myInfo.manager,
-      manager_call: myInfo.manager_phone_number,
-      category: selectedCategory.id,
+      category: selectedCategory.name,
+      productName: data.product_name,
+      productDetail: data.product_detail,
+      desiredEstimateDate: estimateDate,
+      desiredDeliveryDate: deliveryDate,
+      quantity: data.quantity,
+      establishYear: 0,
+      companyIntroduction: '',
+      requestContext: data.request_message,
     };
 
     const formData = new FormData();
@@ -142,30 +195,35 @@ export default function PurchaseForm({ data: myInfo }: MyInfoProps) {
     categories,
     selectedCategory,
     setSelectedCategory,
+    productName,
   };
 
   const formValues2 = {
     ...formValues,
     title: '제품 성분명',
     description: '구매하고자 하는 제품의 성분 및 색상을 간단하게 설명해주세요( e.g., 액체형 샴푸, 흰색 슬리퍼)',
+    productDetail,
   };
 
   const formValues3 = {
     ...formValues,
     title: '3. 구매 수량',
     description: '구매하고자 하는 제품 예상 수량을 작성해주세요',
+    quantity,
   };
 
   const formValues4 = {
     ...formValues,
     title: '견적 수령 희망일',
     description: '신청 문의 후, 견적을 받아보고 싶은 날짜를 작성해주세요',
+    desiredEstimateDate,
   };
 
   const formValues5 = {
     ...formValues,
     title: '제품 배송 희망일',
     description: '판매사의 제품이 최종 낙찰된 후, 희망 납품(예상)일 혹은 기한을 작성해주세요',
+    desiredDeliveryDate,
   };
 
   const formValues6 = {
@@ -174,6 +232,8 @@ export default function PurchaseForm({ data: myInfo }: MyInfoProps) {
     description:
       '요청사항이나 유사 컨셉의 제품 혹은 현재 사용 중인 제품의 이미지나 스케치를 첨부해주세요. (상세한 요청사항을 적어주시면 요청하신 부분과 일치하는 제품의 견적을 받을 확률이 높아집니다. 상세하게 작성 부탁드립니다)',
     placeholder: '요청사항을 적어주세요',
+    requestContext,
+    image,
     file,
     setFile,
     fileSizeError,
@@ -183,20 +243,23 @@ export default function PurchaseForm({ data: myInfo }: MyInfoProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mx-3 mb-40">
-      <One formValues1={formValues1} />
-      <Two formValues2={formValues2} />
-      <Three formValues3={formValues3} />
-      <Four formValues4={formValues4} />
-      <Five formValues5={formValues5} />
-      <Six formValues6={formValues6} />
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className="mx-3 mb-40 mt-8">
+        <One formValues1={formValues1} />
+        <Two formValues2={formValues2} />
+        <Three formValues3={formValues3} />
+        <Four formValues4={formValues4} />
+        <Five formValues5={formValues5} />
+        <Six formValues6={formValues6} />
 
-      <input
-        type="submit"
-        disabled={loading}
-        value={loading ? '제출 중...' : '제출하기'}
-        className="disabled:opacity-50 disabled:cursor-not-allowed submit-btn"
-      />
-    </form>
+        <input
+          type="submit"
+          disabled={loading}
+          value={loading ? '제출 중...' : '제출하기'}
+          className="disabled:opacity-50 disabled:cursor-not-allowed submit-btn"
+        />
+      </form>
+      {showEditCompleteModal && createPortal(<EditCompleteModal />, document.body)}
+    </>
   );
 }

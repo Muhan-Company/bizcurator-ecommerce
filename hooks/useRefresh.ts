@@ -4,15 +4,14 @@ import { useSetRecoilState } from 'recoil';
 import useToast from './useToast';
 import { logInModalState } from '@/atoms/modalAtoms';
 import { useRouter } from 'next/router';
-import useRefreshTokenCookie from './useRefreshTokenCookie';
 import useModal from './useModal';
 
 const useRefresh = () => {
   const showToast = useToast();
   const { push } = useRouter();
   const setShowLogInModal = useSetRecoilState(logInModalState);
-  const refreshToken = useRefreshTokenCookie();
   const { showModal } = useModal(setShowLogInModal);
+  const refreshToken = getRefreshTokenCookie();
 
   const refresh = async () => {
     if (refreshToken) {
