@@ -1,7 +1,7 @@
 import { FormValues } from './One';
 
 export default function Three({ formValues3 }: { formValues3: FormValues }) {
-  const { title, description, register, errors } = formValues3;
+  const { title, description, register, errors, quantity } = formValues3;
 
   return (
     <div className="mt-12 gap-y-1.5 flex flex-col">
@@ -12,6 +12,7 @@ export default function Three({ formValues3 }: { formValues3: FormValues }) {
       <input
         type="number"
         {...register('quantity', { valueAsNumber: true })}
+        defaultValue={quantity}
         className="bg-gray-100 px-4 font-normal text-main text-body-xs rounded-lg h-[50px] w-full outline-none"
       />
       {errors.quantity && <p className="err-msg">{errors.quantity.message}</p>}

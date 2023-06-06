@@ -1,7 +1,11 @@
 import { FormValues } from './One';
 
-export default function Four({ formValues4 }: { formValues4: FormValues }) {
-  const { title, description, register, errors } = formValues4;
+interface FormValues4 extends FormValues {
+  desiredEstimateDate?: string;
+}
+
+export default function Four({ formValues4 }: { formValues4: FormValues4 }) {
+  const { title, description, register, errors, desiredEstimateDate } = formValues4;
 
   return (
     <div className="mt-12 gap-y-1.5 flex flex-col">
@@ -14,8 +18,9 @@ export default function Four({ formValues4 }: { formValues4: FormValues }) {
         {...register('desired_estimate_date')}
         type="date"
         data-placeholder="YYYY-MM-DD"
+        defaultValue={desiredEstimateDate}
         className="outline-none bg-gray-100 pl-12 leading-[50px] font-normal text-main
-text-body-xs rounded-lg h-[50px]"
+        text-body-xs rounded-lg h-[50px]"
       />
       {errors.desired_estimate_date && <p className="err-msg">{errors.desired_estimate_date.message}</p>}
     </div>

@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { addCompleteModalState } from '@/atoms/modalAtoms';
 import useAddToCart from '@/hooks/useAddToCart';
 import useModal from '@/hooks/useModal';
-import { MouseEvent } from 'react';
+import { Dispatch, MouseEvent, SetStateAction } from 'react';
 
 interface AddToCartProps {
   id: number;
@@ -14,7 +14,8 @@ interface AddToCartProps {
   sale_price: number;
   regular_price: number;
   min_quantity: number;
-  setShowAddToCartModal: React.Dispatch<React.SetStateAction<boolean>>;
+  showAddToCartModal: boolean;
+  setShowAddToCartModal: Dispatch<SetStateAction<boolean>>;
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -27,6 +28,7 @@ export default function AddToCartModal({
   sale_price,
   regular_price,
   min_quantity,
+  showAddToCartModal,
   setShowAddToCartModal,
   quantity,
   setQuantity,
@@ -35,12 +37,12 @@ export default function AddToCartModal({
   const discountedPrice = (sale_price * quantity).toLocaleString('ko-KR');
   const showAddCompleteModal = useRecoilValue(addCompleteModalState);
 
-  const closeModal = (e: MouseEvent) => {
+  const handleCloseModal = (e: MouseEvent) => {
     e.stopPropagation();
     setQuantity(min_quantity);
-    hideModal();
+    closeModal();
   };
-  const { hideModal } = useModal(setShowAddToCartModal);
+  const { closeModal } = useModal(showAddToCartModal, setShowAddToCartModal);
 
   const addToCartMutation = useAddToCart();
 
@@ -53,7 +55,7 @@ export default function AddToCartModal({
       ) : (
         <>
           <div
-            onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
             className="w-[351px] modal-contents h-auto pt-[30px] px-3 flex-col center modal-box-shadow"
           >
             <div className="flex w-full space-x-[22px] py-[18px]">
@@ -85,7 +87,7 @@ export default function AddToCartModal({
 
             <div className="center gap-2 py-6">
               {/* todo: 모달 닫기 기능 연결 */}
-              <button className="btn-white w-[156px] h-[42px] py-[19px]" onClick={closeModal}>
+              <button className="btn-white w-[156px] h-[42px] py-[19px]" onClick={handleCloseModal}>
                 취소
               </button>
               {/* todo: 장바구니 담기 API 연결 및 장바구니 담기 성공 모달 연결 */}
@@ -98,7 +100,7 @@ export default function AddToCartModal({
               </button>
             </div>
           </div>
-          <div className="modal-overlay" onClick={closeModal}></div>
+          <div className="modal-overlay" onClick={handleCloseModal}></div>
         </>
       )}
     </>

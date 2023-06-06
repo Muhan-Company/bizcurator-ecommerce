@@ -32,7 +32,7 @@ export default function PartnerForm({
     companyIntroduction,
     requestContext,
   };
-  console.log(establishYear, image);
+
   return (
     <div className="mx-3 mb-40">
       <One formValues1={formValues1} />

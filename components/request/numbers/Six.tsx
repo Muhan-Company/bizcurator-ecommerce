@@ -1,7 +1,7 @@
 import { UploadIcon } from '@/components/Icons';
 import { FormValues } from './One';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import Loader from '@/components/Loader';
 
 interface FormValues6 extends FormValues {
@@ -11,7 +11,8 @@ interface FormValues6 extends FormValues {
   setFileSizeError: React.Dispatch<React.SetStateAction<boolean>>;
   fileTypeError: boolean;
   setFileTypeError: React.Dispatch<React.SetStateAction<boolean>>;
-
+  requestContext?: string;
+  image?: string;
   placeholder: string;
 }
 
@@ -22,6 +23,7 @@ export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
     title,
     description,
     placeholder,
+    requestContext,
     file,
     setFile,
     fileSizeError,
@@ -33,7 +35,7 @@ export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
   const [preview, setPreview] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedfile = event.target.files && event.target.files[0];
 
     if (selectedfile && selectedfile.type.substring(0, 5) !== 'image') {
@@ -67,10 +69,8 @@ export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
       reader.onloadend = () => {
         setPreview(reader.result as string);
       };
-    } else {
-      setPreview('');
     }
-  }, [file, setPreview]);
+  }, [file, setFile]);
 
   useEffect(() => {
     if (preview) {
@@ -87,6 +87,7 @@ export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
       <div className="grid grid-cols-3 h-[197px] gap-x-2">
         <section className="h-full col-span-1">
           <textarea
+            defaultValue={requestContext}
             className="h-full max-w-full bg-gray-100 p-2 resize-none text-main rounded-lg outline-none font-normal text-body-sm placeholder:text-gray_01"
             placeholder={placeholder}
             {...register('request_message')}

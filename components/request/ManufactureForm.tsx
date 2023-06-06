@@ -48,8 +48,8 @@ export default function ManufactureForm({ data: info }: MyInfoProps) {
 
     const post = {
       ...data,
-      desired_estimate_date: format(data.desired_estimate_date, 'yyyy-MM-dd'),
-      desired_delivery_date: format(data.desired_delivery_date, 'yyyy-MM-dd'),
+      desired_estimate_date: format(data.desired_estimate_date as Date, 'yyyy-MM-dd'),
+      desired_delivery_date: format(data.desired_delivery_date as Date, 'yyyy-MM-dd'),
       document_type: 'make',
       manager_name: info?.manager,
       manager_call: info?.manager_phone_number,

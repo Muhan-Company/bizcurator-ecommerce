@@ -26,7 +26,7 @@ export default function Purchase({ product_name, id, min_quantity, regular_price
     setQuantity(min_quantity);
   };
 
-  const { showModal: openModal } = useModal(setShowBuyCompleteModal);
+  const { openModal } = useModal(showBuyCompleteModal, setShowBuyCompleteModal);
 
   const addToCartMutation = useAddToCart();
 

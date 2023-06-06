@@ -21,8 +21,9 @@ const usePartnerRequest = () => {
   const mutationOptions = {
     onSuccess: () => {
       invalidateQueries(['requests', 'histories']);
+      invalidateQueries(['histories', 'details']);
       setReqSuccess(true);
-      push('/my-requests');
+      push('/my-requests?filterMonth=30');
     },
     onError: () => showToast('제출 실패', true),
   };

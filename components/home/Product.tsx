@@ -52,6 +52,7 @@ export default function Product({
       {showAddToCartModal &&
         createPortal(
           <AddToCartModal
+            showAddToCartModal={showAddToCartModal}
             setShowAddToCartModal={setShowAddToCartModal}
             quantity={quantity}
             setQuantity={setQuantity}

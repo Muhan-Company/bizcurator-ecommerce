@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '../../Icons';
 import { Category, IFormInputs } from '../PurchaseForm';
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
@@ -13,11 +13,13 @@ export interface FormValues {
 interface FormValues1 extends FormValues {
   categories: Category[];
   selectedCategory: Category;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<Category>>;
+  setSelectedCategory: Dispatch<SetStateAction<Category>>;
+  productName?: string;
 }
 
 export default function One({ formValues1 }: { formValues1: FormValues1 }) {
-  const { title, description, register, errors, categories, selectedCategory, setSelectedCategory } = formValues1;
+  const { title, description, register, errors, categories, selectedCategory, setSelectedCategory, productName } =
+    formValues1;
   const [open, setOpen] = useState<boolean>(false);
 
   const dropdownRef = useRef<HTMLUListElement>(null);
@@ -82,6 +84,7 @@ export default function One({ formValues1 }: { formValues1: FormValues1 }) {
             selectedCategory.name === '생산종류카테고리'
           }
           {...register('product_name')}
+          defaultValue={productName}
           className="disabled:cursor-not-allowed bg-gray-100 px-4 font-normal text-main text-body-xs disabled:bg-gray_04 rounded-lg h-[50px] w-full outline-none"
         />
         {errors.product_name && <p className="err-msg">{errors.product_name.message}</p>}

@@ -1,7 +1,11 @@
 import { FormValues } from './One';
 
-export default function Five({ formValues5 }: { formValues5: FormValues }) {
-  const { title, description, register, errors } = formValues5;
+interface FormValues5 extends FormValues {
+  desiredDeliveryDate?: string;
+}
+
+export default function Five({ formValues5 }: { formValues5: FormValues5 }) {
+  const { title, description, register, errors, desiredDeliveryDate } = formValues5;
 
   return (
     <div className="mt-12 gap-y-1.5 flex flex-col">
@@ -13,6 +17,7 @@ export default function Five({ formValues5 }: { formValues5: FormValues }) {
         {...register('desired_delivery_date')}
         type="date"
         data-placeholder="YYYY-MM-DD"
+        defaultValue={desiredDeliveryDate}
         className="outline-none bg-gray-100 pl-12 leading-[50px] font-normal text-main
 text-body-xs rounded-lg h-[50px]"
       />

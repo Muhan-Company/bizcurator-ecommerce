@@ -1,24 +1,10 @@
+import { ReqDetails } from './Manufactureform';
 import Five from './numbers/Five';
 import Four from './numbers/Four';
 import One from './numbers/One';
 import Six from './numbers/Six';
 import Three from './numbers/Three';
 import Two from './numbers/Two';
-
-interface ReqDetails {
-  category: string;
-  categoryId: number;
-  companyIntroduction: string;
-  desiredDeliveryDate: string;
-  desiredEstimateDate: string;
-  establishYear: number;
-  image: string;
-  productDetail: string;
-  productName: string;
-  quantity: number;
-  requestContext: string;
-  requestId: number;
-}
 
 export default function Purchaseform({
   category,

@@ -1,16 +1,14 @@
 import { logInModalState } from '@/atoms/modalAtoms';
 import useAccessTokenCookie from '@/hooks/useAccessTokenCookie';
+import useModal from '@/hooks/useModal';
 import Link from 'next/link';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 export default function Footer() {
-  const setShowLogInModal = useSetRecoilState(logInModalState);
+  const [showLogInModal, setShowLogInModal] = useRecoilState(logInModalState);
   const accessToken = useAccessTokenCookie();
 
-  const openModal = () => {
-    setShowLogInModal(true);
-    document.body.classList.add('modal-open');
-  };
+  const { openModal } = useModal(showLogInModal, setShowLogInModal);
 
   return (
     <footer className="bg-main pt-5 pb-24 lg:py-10 lg:px-24 xl:px-48">

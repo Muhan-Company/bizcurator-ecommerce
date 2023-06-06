@@ -2,19 +2,18 @@ import { useForm } from 'react-hook-form';
 import { Category, categories } from './PurchaseForm';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useToast from '@/hooks/useToast';
-import { MyInfoProps } from './MyInfo';
-import usePartnerRequest from '@/hooks/usePartnerRequest';
-import NumOne from './numbers/NumOne';
-import NumTwo from './numbers/NumTwo';
-import NumThree from './numbers/NumThree';
-
-export interface FormInputs {
-  product_detail: string;
-  establish_year: number;
-  introduction: string;
-}
+import NumOne from '../numbers/NumOne';
+import { ReqDetails } from '../read-only/Manufactureform';
+import { FormInputs } from '../PartnerForm';
+import NumTwo from '../numbers/NumTwo';
+import NumThree from '../numbers/NumThree';
+import { useRecoilValue } from 'recoil';
+import { editCompleteModalState } from '@/atoms/modalAtoms';
+import useEditRequest from '@/hooks/useEditRequest';
+import { createPortal } from 'react-dom';
+import EditCompleteModal from '@/components/modals/EditCompleteModal';
 
 const PartnerSchema = yup
   .object({
@@ -33,10 +32,24 @@ const PartnerSchema = yup
   })
   .required();
 
-export default function PartnerForm({ data: myInfo }: MyInfoProps) {
+export default function PartnerForm({
+  category,
+  categoryId,
+  desiredDeliveryDate,
+  desiredEstimateDate,
+  image,
+  productDetail,
+  productName,
+  quantity,
+  requestContext,
+  requestId,
+  establishYear,
+  companyIntroduction,
+}: ReqDetails) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormInputs>({
     resolver: yupResolver(PartnerSchema),
@@ -48,9 +61,27 @@ export default function PartnerForm({ data: myInfo }: MyInfoProps) {
   const [file, setFile] = useState<File | null>(null);
   const showToast = useToast();
 
-  const partnerReqMutation = usePartnerRequest();
+  useEffect(() => {
+    reset({
+      product_detail: productDetail,
+      establish_year: establishYear,
+      introduction: companyIntroduction,
+    });
+  }, [reset, productDetail, establishYear, companyIntroduction]);
 
-  const { mutate, isLoading: loading } = partnerReqMutation;
+  useEffect(() => {
+    if (category && categoryId) {
+      setSelectedCategory({
+        id: categoryId,
+        name: category,
+      });
+    }
+  }, [category, categoryId]);
+
+  const showEditCompleteModal = useRecoilValue(editCompleteModalState);
+  const editReqMutation = useEditRequest({ reqId: requestId, reqType: 'sell' });
+
+  const { mutate, isLoading: loading } = editReqMutation;
 
   const onSubmit = (data: FormInputs) => {
     if (!file) {
@@ -59,13 +90,15 @@ export default function PartnerForm({ data: myInfo }: MyInfoProps) {
     }
 
     const post = {
-      ...data,
-      business_name: myInfo?.business_name,
-      ceo_name: myInfo?.representative,
-      business_number: myInfo?.business_number,
-      manager_phone_number: myInfo?.manager_phone_number,
-      category: selectedCategory.id,
-      establish_year: data.establish_year,
+      category: selectedCategory.name,
+      productName,
+      productDetail: data.product_detail,
+      desiredEstimateDate,
+      desiredDeliveryDate,
+      quantity,
+      establishYear: data.establish_year,
+      companyIntroduction: data.introduction,
+      requestContext,
     };
 
     const formData = new FormData();
@@ -93,6 +126,7 @@ export default function PartnerForm({ data: myInfo }: MyInfoProps) {
     ...formValues,
     title: '2. 설립연도',
     description: '회사를 설립한 년도를 기입해주세요',
+    establish_year: establishYear,
   };
 
   const formValues3 = {
@@ -100,6 +134,7 @@ export default function PartnerForm({ data: myInfo }: MyInfoProps) {
     title: '3. 회사 소개글',
     description: '회사 소개글을 적어주세요',
     placeholder: '회사 소개글을 적어주세요',
+    introduction: companyIntroduction,
     file,
     setFile,
     fileSizeError,
@@ -109,16 +144,19 @@ export default function PartnerForm({ data: myInfo }: MyInfoProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mx-3 mb-40">
-      <NumOne formValues1={formValues1} />
-      <NumTwo formValues2={formValues2} />
-      <NumThree formValues3={formValues3} />
-      <input
-        type="submit"
-        disabled={loading}
-        value={loading ? '제출 중...' : '제출하기'}
-        className="disabled:opacity-50 disabled:cursor-not-allowed submit-btn"
-      />
-    </form>
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className="mx-3 mb-40 mt-8">
+        <NumOne formValues1={formValues1} />
+        <NumTwo formValues2={formValues2} />
+        <NumThree formValues3={formValues3} />
+        <input
+          type="submit"
+          disabled={loading}
+          value={loading ? '제출 중...' : '제출하기'}
+          className="disabled:opacity-50 disabled:cursor-not-allowed submit-btn"
+        />
+      </form>
+      {showEditCompleteModal && createPortal(<EditCompleteModal />, document.body)}
+    </>
   );
 }

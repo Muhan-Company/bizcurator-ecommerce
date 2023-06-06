@@ -3,7 +3,7 @@ import { ChevronLeftIcon } from '../Icons';
 import { useSetRecoilState } from 'recoil';
 import { addCompleteModalState } from '@/atoms/modalAtoms';
 
-export default function SubHeader({ text }: { text: string }) {
+export default function SubHeader({ text }: { text: string | undefined }) {
   const { back } = useRouter();
   const setShowAddCompleteModal = useSetRecoilState(addCompleteModalState);
 
