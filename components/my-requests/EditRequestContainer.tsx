@@ -15,8 +15,6 @@ export default function EditRequestContainer() {
 
   const { data: reqDetails, isLoading, isError, isSuccess } = useReqDetails({ reqId, reqType });
 
-  console.log(reqDetails);
-
   const text = getKorReqType(reqType[0])?.replace('확인', '수정 및 확인');
   return (
     <>
