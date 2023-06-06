@@ -34,8 +34,8 @@ export default function CartItemList() {
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalDiscountPrice, setTotalDiscountPrice] = useState<number>(0);
   const showRemoveCompleteModal = useRecoilValue(removeCompleteModalState);
-  const { showModal: openModal } = useModal(setShowBuyCompleteModal);
-  const { showModal } = useModal(setShowRemoveItemModal);
+  const { openModal } = useModal(showBuyCompleteModal, setShowBuyCompleteModal);
+  const { openModal: showModal } = useModal(showRemoveCompleteModal, setShowRemoveItemModal);
 
   useEffect(() => {
     if (carts) {

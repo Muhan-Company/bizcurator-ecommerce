@@ -1,22 +1,22 @@
 import { addCompleteModalState } from '@/atoms/modalAtoms';
 import useModal from '@/hooks/useModal';
 import Link from 'next/link';
-import { MouseEvent } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { Dispatch, MouseEvent, SetStateAction } from 'react';
+import { useRecoilState } from 'recoil';
 
 interface AddCompleteModalPropsType {
-  setShowAddToCartModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowAddToCartModal?: Dispatch<SetStateAction<boolean>>;
   closeAccordion?: () => void;
 }
 
 export default function AddCompleteModal({ setShowAddToCartModal, closeAccordion }: AddCompleteModalPropsType) {
-  const setShowAddCompleteModal = useSetRecoilState(addCompleteModalState);
+  const [showAddCompleteModal, setShowAddCompleteModal] = useRecoilState(addCompleteModalState);
 
-  const { hideModal } = useModal(setShowAddCompleteModal);
+  const { closeModal } = useModal(showAddCompleteModal, setShowAddCompleteModal);
 
-  const closeModal = (e: MouseEvent) => {
+  const handleCloseModal = (e: MouseEvent) => {
     e.stopPropagation();
-    hideModal();
+    closeModal();
 
     if (closeAccordion) {
       closeAccordion();
@@ -30,13 +30,13 @@ export default function AddCompleteModal({ setShowAddToCartModal, closeAccordion
   return (
     <>
       <div
-        onClick={(e: MouseEvent<HTMLDivElement>) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
         className="w-[351px] h-auto pt-[30px] px-3 center modal-box-shadow modal-contents flex-col gap-0.5"
       >
         장바구니에 담았습니다.
         <div className="center gap-2 py-6">
           {/* todo: 모달 닫기 기능 연결 */}
-          <button className="btn-white w-[156px] h-[42px] py-[16px]" onClick={closeModal}>
+          <button className="btn-white w-[156px] h-[42px] py-[16px]" onClick={handleCloseModal}>
             닫기
           </button>
           {/* todo: 장바구니 페이지 연결 & 모달 닫기 */}
@@ -49,7 +49,7 @@ export default function AddCompleteModal({ setShowAddToCartModal, closeAccordion
           </Link>
         </div>
       </div>
-      <div className="modal-overlay" onClick={closeModal}></div>
+      <div className="modal-overlay" onClick={handleCloseModal}></div>
     </>
   );
 }

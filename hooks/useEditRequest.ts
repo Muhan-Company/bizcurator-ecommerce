@@ -2,15 +2,15 @@ import { ReqArgs } from '@/apis/mypage';
 import useAxiosPrivate from './useAxiosPrivate';
 import { useMutation } from '@tanstack/react-query';
 import useModal from './useModal';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { editCompleteModalState } from '@/atoms/modalAtoms';
 import useToast from './useToast';
 import useInvalidateQueries from './useInvalidateQueries';
 
 const useEditRequest = ({ reqId, reqType }: ReqArgs) => {
   const axiosPrivate = useAxiosPrivate();
-  const setShowEditCompleteModal = useSetRecoilState(editCompleteModalState);
-  const { showModal } = useModal(setShowEditCompleteModal);
+  const [showEditCompleteModal, setShowEditCompleteModal] = useRecoilState(editCompleteModalState);
+  const { openModal } = useModal(showEditCompleteModal, setShowEditCompleteModal);
   const showToast = useToast();
   const invalidateQueries = useInvalidateQueries();
 
@@ -24,7 +24,7 @@ const useEditRequest = ({ reqId, reqType }: ReqArgs) => {
     onSuccess: () => {
       invalidateQueries(['requests', 'histories']);
       invalidateQueries(['histories', 'details']);
-      showModal();
+      openModal();
     },
     onError: () => showToast('수정 실패', true),
   };

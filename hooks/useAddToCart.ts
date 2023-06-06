@@ -3,14 +3,14 @@ import useAxiosPrivate from './useAxiosPrivate';
 import { useMutation } from '@tanstack/react-query';
 import useInvalidateQueries from './useInvalidateQueries';
 import useModal from './useModal';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { addCompleteModalState } from '@/atoms/modalAtoms';
 import useToast from './useToast';
 
 const useAddToCart = () => {
   const axiosPrivate = useAxiosPrivate();
-  const setShowAddCompleteModal = useSetRecoilState(addCompleteModalState);
-  const { showModal } = useModal(setShowAddCompleteModal);
+  const [showAddCompleteModal, setShowAddCompleteModal] = useRecoilState(addCompleteModalState);
+  const { openModal } = useModal(showAddCompleteModal, setShowAddCompleteModal);
   const invalidateQueries = useInvalidateQueries();
   const showToast = useToast();
 
@@ -21,7 +21,7 @@ const useAddToCart = () => {
 
   const mutationOptions = {
     onSuccess: () => {
-      showModal();
+      openModal();
       invalidateQueries(['carts']);
     },
     onError: () => {

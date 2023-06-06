@@ -1,16 +1,16 @@
 import { editCompleteModalState } from '@/atoms/modalAtoms';
 import useModal from '@/hooks/useModal';
 import { useRouter } from 'next/router';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 export default function EditCompleteModal() {
-  const setShowEditCompleteModal = useSetRecoilState(editCompleteModalState);
+  const [showEditCompleteModal, setShowEditCompleteModal] = useRecoilState(editCompleteModalState);
 
-  const { hideModal } = useModal(setShowEditCompleteModal);
+  const { closeModal } = useModal(showEditCompleteModal, setShowEditCompleteModal);
   const { push } = useRouter();
 
   const handleHideModal = () => {
-    hideModal();
+    closeModal();
     push('/my-requests?filterMonth=30');
   };
 
@@ -26,7 +26,7 @@ export default function EditCompleteModal() {
           닫기
         </button>
       </div>
-      <div className="modal-overlay" onClick={hideModal}></div>
+      <div className="modal-overlay" onClick={closeModal}></div>
     </>
   );
 }
