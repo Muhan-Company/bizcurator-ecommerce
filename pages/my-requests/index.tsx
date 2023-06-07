@@ -28,7 +28,7 @@ export default function MyRequestsPage() {
   const { data: reqDetails, isLoading, isError, isSuccess } = useMyRequests(Number(filterMonth));
 
   return (
-    <>
+    <div className="layout">
       <ProtectRoute />
       <Header2 text="내 의뢰 내역" />
       {isLoading && <Loader className="h-[494px]" />}
@@ -41,6 +41,6 @@ export default function MyRequestsPage() {
         </div>
       )}
       <NavBar />
-    </>
+    </div>
   );
 }

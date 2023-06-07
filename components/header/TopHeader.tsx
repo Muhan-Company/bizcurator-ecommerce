@@ -36,27 +36,29 @@ export default function TopHeader() {
   };
 
   return (
-    <div className="pr-6 pl-3 flex justify-between items-center pt-2 lg:pt-5 lg:px-24 xl:px-48">
+    <div className="pr-6 pl-3 flex justify-between items-center pt-2 lg:pt-5">
       <Link href={'/'} className="flex items-center">
         <h1 className="text-[20px] lg:text-head-xl font-bold">BIZ CURATOR</h1>
         <LogoIcon />
       </Link>
       <div className="lg:flex flex-col lg:space-y-10">
-        <div className="hidden lg:block space-x-5">
-          <Link href={'/signup'}>회원가입</Link>
-          <button onClick={openLogInModal}>로그인</button>
-          {showLogInModal && createPortal(<LogInModal />, document.body)}
-          <Link href={'/customer'}>고객센터</Link>
-        </div>
-        <div className="flex items-center justify-end space-x-5">
-          <button className="center" onClick={showSearch}>
+        {accessToken ? null : (
+          <div className="hidden lg:block lg:space-x-5">
+            <Link href={'/signup'}>회원가입</Link>
+            <button onClick={openLogInModal}>로그인</button>
+            {showLogInModal && createPortal(<LogInModal />, document.body)}
+            <Link href={'/customer'}>고객센터</Link>
+          </div>
+        )}
+        <div className="flex items-center justify-end">
+          <button className="center mr-3" onClick={showSearch}>
             <MagnifyingGlassIcon color="main" />
           </button>
           {showSearchModal && createPortal(<SearchModal />, document.body)}
 
-          <button className="hidden lg:inline center">
+          <Link href={'/mypage'} className="hidden lg:inline center mr-6">
             <UserIcon color="main" />
-          </button>
+          </Link>
           {accessToken ? (
             isLoading ? (
               <Skeleton />

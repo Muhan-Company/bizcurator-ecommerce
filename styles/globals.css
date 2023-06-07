@@ -9,25 +9,25 @@
 
 @layer components {
   .header-link {
-    @apply text-button-xs md:text-button-sm lg:text-button-md font-normal text-gray_01 w-32 h-14 leading-[56px] text-center;
+    @apply text-button-xs md:text-button-sm lg:text-button-sm font-normal text-gray_01 w-32 h-14 leading-[56px] text-center;
   }
 
   .btn-white {
-    @apply center border border-[#DDDDDD] rounded-[8px] bg-white box-border cursor-pointer font-normal;
+    @apply center border border-[#DDDDDD] rounded-lg bg-white font-normal;
   }
   .btn-primary {
-    @apply center rounded-[8px] bg-primary text-white cursor-pointer font-normal;
+    @apply center rounded-lg bg-primary text-white font-normal;
   }
 
   .btn-mobile {
     @apply absolute bottom-[90px] w-full;
   }
   .btn-large {
-    @apply w-full h-[42px] center rounded-[8px] bg-primary text-white cursor-pointer font-medium;
+    @apply w-full h-[42px] center rounded-lg bg-primary text-white font-medium;
   }
 
   .btn-order-detail {
-    @apply w-[65px] h-[32px] ml-[6px] center border border-[#DDDDDD] rounded-[8px] bg-white box-border cursor-pointer font-normal;
+    @apply w-[65px] h-[32px] ml-[6px] center border border-[#DDDDDD] rounded-lg bg-white box-border cursor-pointer font-normal;
   }
 
   .btn-disabled {
@@ -187,5 +187,15 @@
 
   .sticky-header {
     @apply top-0 sticky z-20 bg-white;
+  }
+
+  .layout {
+    @apply sm:max-w-md md:max-w-xl lg:max-w-3xl sm:mx-auto;
+  }
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }

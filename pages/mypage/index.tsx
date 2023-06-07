@@ -5,11 +5,11 @@ import ProtectRoute from '@/components/ProtectRoute';
 
 export default function MyPage() {
   return (
-    <>
+    <div className="layout">
       <ProtectRoute />
       <Header2 text="마이페이지" />
       <MyPageMain />
       <NavBar />
-    </>
+    </div>
   );
 }

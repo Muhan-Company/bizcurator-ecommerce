@@ -8,9 +8,9 @@ type LayoutProps = {
 
 export default function Layout({ children, className = 'bottom-20' }: LayoutProps) {
   return (
-    <>
+    <div className="layout">
       {children}
       <FloatingButtons className={className} />
-    </>
+    </div>
   );
 }

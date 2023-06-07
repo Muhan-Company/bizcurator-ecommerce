@@ -5,11 +5,11 @@ import Header2 from '@/components/header/Header2';
 
 export default function Cart() {
   return (
-    <>
+    <div className="layout">
       <ProtectRoute />
       <Header2 text="장바구니" />
       <CartItemList />
       <NavBar />
-    </>
+    </div>
   );
 }

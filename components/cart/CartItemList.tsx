@@ -66,6 +66,15 @@ export default function CartItemList() {
     }
   };
 
+  useEffect(() => {
+    const totalPrice = selectedItems.reduce((acc, item) => acc + item.regular_price * item.quantity, 0);
+
+    const totalDiscountPrice = selectedItems.reduce((acc, item) => acc + item.discount_price * item.quantity, 0);
+
+    setTotalPrice(totalPrice);
+    setTotalDiscountPrice(totalDiscountPrice);
+  }, [selectedItems]);
+
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
     const updatedCartItems = cartItems.map((item) => ({ ...item, selected: !selectAll }));
@@ -95,9 +104,9 @@ export default function CartItemList() {
     });
     setSelectedItems(updatedSelectedItems);
 
-    const totalPrice = updatedSelectedItems.reduce((acc, item) => acc + item.regular_price * item.quantity, 0);
+    const totalPrice = selectedItems.reduce((acc, item) => acc + item.regular_price * item.quantity, 0);
 
-    const totalDiscountPrice = updatedSelectedItems.reduce((acc, item) => acc + item.discount_price * item.quantity, 0);
+    const totalDiscountPrice = selectedItems.reduce((acc, item) => acc + item.discount_price * item.quantity, 0);
 
     setTotalPrice(totalPrice);
     setTotalDiscountPrice(totalDiscountPrice);
@@ -111,7 +120,7 @@ export default function CartItemList() {
       {cartItems?.length === 0 ? (
         <EmptyCart />
       ) : (
-        <div className="pt-5 pb-20 mx-3">
+        <div className="pt-5 mx-3">
           <div className="flex items-center mb-[22px] pb-3 border-b-[1px] border-black">
             <SelectAllCheckbox
               total={cartItems?.length}
@@ -130,7 +139,7 @@ export default function CartItemList() {
 
           <CartPaymentAmountInfo totalCost={totalPrice} totalDiscount={totalDiscountPrice} />
 
-          <div className="center gap-[7px] mt-[76px]">
+          <div className="center gap-[7px] mt-5">
             {/* todo: 바로구매 페이지로 이동 */}
             <Link href="/products/categories/0?sort=newest" className="w-[172px] h-[50px] btn-white grow py-[19px]">
               다른 제품 보기

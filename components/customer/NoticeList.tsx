@@ -6,11 +6,10 @@ import axiosInstance from '@/apis/config';
 import { NoticePostType } from '@/utils/types/responseType';
 
 type NoticeListProps = {
-  dataList: NoticePostType[]
-}
+  dataList: NoticePostType[];
+};
 
 export default function NoticeList({ dataList }: NoticeListProps) {
-
   const [selectIndex, setSelectIndex] = useState<number | null>(null);
   const [writeOpenModal, setWriteOpenModal] = useState<boolean>(false);
   const queryClient = useQueryClient(); // 쿼리 클라이언트 생성
@@ -20,7 +19,7 @@ export default function NoticeList({ dataList }: NoticeListProps) {
   const listClick = (index: number) => {
     setSelectIndex(selectIndex === index ? null : index);
     console.log(selectIndex);
-  } // 항목을 클릭했을때 호출되는 함수이고 index를 찾아서 클릭이 된다.
+  }; // 항목을 클릭했을때 호출되는 함수이고 index를 찾아서 클릭이 된다.
 
   const writeModal = () => {
     setSelectIndex(null); //리스트를 클릭해서 상세정보가 나온상태에서 글쓰기를 누르면 item이 있는걸로 간주하기때문에 사용
@@ -31,7 +30,7 @@ export default function NoticeList({ dataList }: NoticeListProps) {
   };
 
   const onDeleteClick = async (index: number) => {
-    const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
+    const isConfirmed = window.confirm('정말 삭제하시겠습니까?');
     if (!isConfirmed) {
       return;
     }
@@ -46,15 +45,11 @@ export default function NoticeList({ dataList }: NoticeListProps) {
 
   //interceptor.ts에 저장되어있는 axiosInstance 서버주소를통해 delete주소로 보낸다
   //토큰값을 임의로 저장해놓았음
-  const deleteNoticeMutation = useMutation(
-    (id: number) => axiosInstance.delete(`/api/notices/${id}`),
-    {
-      onSuccess: () => {
-        console.log('삭제 성공');
-      },
-    }
-  );
-
+  const deleteNoticeMutation = useMutation((id: number) => axiosInstance.delete(`/api/notices/${id}`), {
+    onSuccess: () => {
+      console.log('삭제 성공');
+    },
+  });
 
   return (
     <>
@@ -107,7 +102,6 @@ export default function NoticeList({ dataList }: NoticeListProps) {
           <CustomWriteModal
             setWriteOpenModal={setWriteOpenModal}
             item={selectIndex !== null ? dataList[selectIndex] : undefined} // 수정할 아이템 전달
-
           />,
           document.body,
         )}

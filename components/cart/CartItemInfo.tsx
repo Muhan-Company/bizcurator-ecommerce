@@ -17,24 +17,22 @@ export default function CartItemInfo({
 
   useEffect(() => {
     handleQtyChange(product_id, qty);
-  }, [product_id, qty]);
+  }, [qty, product_id]);
 
   return (
-    <div className="pl-3 flex flex-col md:grow md:flex-row md:items-center justify-between md:justify-around">
+    <div className="pl-3 flex flex-col md:grow md:flex-row md:items-center justify-between md:space-x-3 md:justify-around space-y-1.5 md:space-y-0">
       <div className="flex flex-col md:grow md:flex-row md:items-center md:justify-between">
         {/* 상품명 */}
-        <h3 className="text-label-sm md:text-[20px] font-medium">{name}</h3>
-        <div className="flex flex-col md:text-end">
+        <h3 className="text-label-sm md:text-base font-medium">{name}</h3>
+        <div className="flex flex-col md:text-end space-y-0.5 md:space-y-0">
           {/* 할인적용 가격 */}
-          <span className="text-label-sm md:text-title-lg font-bold">{discountPrice}원</span>
+          <span className="text-label-sm md:text-base font-bold">{discountPrice}원</span>
           {/* 정가 */}
           <span className="text-label-xs md:text-body-sm text-gray_01 line-through">{regularPrice}원</span>
         </div>
       </div>
       {/* 최소수량 입력받기 */}
-      <div className="md:absolute">
-        <Counter minimum_quantity={minimum_quantity} qty={qty} setQty={setQty} />
-      </div>
+      <Counter minimum_quantity={minimum_quantity} qty={qty} setQty={setQty} />
     </div>
   );
 }

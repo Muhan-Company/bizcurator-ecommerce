@@ -23,13 +23,15 @@ export default function Item() {
     return <p className="text-center leading-[100vh] text-red font-bold text-lg">상품 상세 정보 조회 실패</p>;
 
   return (
-    <>
+    <div className="layout">
       <ProtectRoute />
       <Header />
-      <ProductImage {...productInfo} />
-      <ProductInfo {...productInfo} />
+      <div className="md:flex mb-10 mt-5 items-start h-full">
+        <ProductImage {...productInfo} />
+        <ProductInfo {...productInfo} id={Number(id)} />
+      </div>
       <Purchase {...productInfo} id={Number(id)} />
       <Footer />
-    </>
+    </div>
   );
 }

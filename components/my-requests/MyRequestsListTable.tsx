@@ -38,7 +38,7 @@ export default function MyRequestsListTable({ reqDetails }: { reqDetails: ReqDet
           >
             <TableData>{idx + 1}</TableData>
             <TableData>{row.createdAt}</TableData>
-            <TableData className="flex flex-col justify-center">
+            <TableData className="center flex-col space-y-1">
               <RequestsState state={row.state} />
               <span className="grow">{row.requestType}</span>
             </TableData>

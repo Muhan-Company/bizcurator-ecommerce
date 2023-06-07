@@ -84,18 +84,18 @@ export default function Six({ formValues6 }: { formValues6: FormValues6 }) {
         {title} <span className="text-red">*</span>
         <p className="font-normal text-body-sm break-keep">{description}</p>
       </label>
-      <div className="grid grid-cols-3 h-[197px] gap-x-2">
+      <div className="grid grid-cols-3 lg:grid-cols-2 h-[197px] gap-x-2">
         <section className="h-full col-span-1">
           <textarea
             defaultValue={requestContext}
-            className="h-full max-w-full bg-gray-100 p-2 resize-none text-main rounded-lg outline-none font-normal text-body-sm placeholder:text-gray_01"
+            className="h-full w-full bg-gray-100 p-2 resize-none text-main rounded-lg outline-none font-normal text-body-sm placeholder:text-gray_01"
             placeholder={placeholder}
             {...register('request_message')}
           />
           {errors.request_message && <p className="err-msg">{errors.request_message.message}</p>}
         </section>
 
-        <div className="col-span-2">
+        <div className="col-span-2 lg:col-span-1">
           {preview ? (
             <section onClick={resetFile} className="relative h-full rounded-lg overflow-hidden">
               <Image src={preview} alt="Preview" fill className="object-cover" />
