@@ -9,7 +9,7 @@
 
 @layer components {
   .header-link {
-    @apply text-button-xs md:text-button-sm lg:text-button-md font-normal text-gray_01 w-32 h-14 leading-[56px] text-center;
+    @apply text-button-xs md:text-button-sm lg:text-button-sm font-normal text-gray_01 w-32 h-14 leading-[56px] text-center;
   }
 
   .btn-white {
@@ -187,5 +187,19 @@
 
   .sticky-header {
     @apply top-0 sticky z-20 bg-white;
+  }
+
+  .layout {
+    @apply sm:max-w-md md:max-w-xl lg:max-w-3xl sm:mx-auto;
+  }
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    /* Add your custom styles here */
+    @apply text-label-sm md:text-sm text-center;
   }
 }

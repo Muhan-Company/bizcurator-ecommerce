@@ -30,14 +30,16 @@ export default function Home({ weeklyTrending, monthlyTrending }: TrendingProps)
     <main>
       <Layout>
         <Header />
-        <MainBanner />
-        <ProductCategoryList />
-        <PromoBanner />
-        <WeeklyTrending weeklyTrending={weeklyTrending} />
-        <MonthlyTrending monthlyTrending={monthlyTrending} />
-        <RequestBanner />
-        <Footer />
+        <div className="px-3 sm:px-0">
+          <MainBanner />
+          <PromoBanner />
+          <ProductCategoryList />
+          <WeeklyTrending weeklyTrending={weeklyTrending} />
+          <MonthlyTrending monthlyTrending={monthlyTrending} />
+          <RequestBanner />
+        </div>
         <NavBar />
+        <Footer />
       </Layout>
     </main>
   );

@@ -8,16 +8,20 @@ import { useEffect } from 'react';
 import { setTokensCookie } from '@/utils/cookie';
 import { AxiosError } from 'axios';
 import useLogin from '@/hooks/uesLogin';
+import { useRecoilState } from 'recoil';
+import { logInModalState } from '@/atoms/modalAtoms';
+import useModal from '@/hooks/useModal';
 
-export default function LoginForm({ closeModal }: { closeModal: () => void }) {
+export default function LoginForm() {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormValues>({
-    mode: 'onChange',
     resolver: yupResolver(loginFormSchema),
   });
+  const [showLoginModal, setShowLoginModal] = useRecoilState(logInModalState);
+  const { closeModal } = useModal(showLoginModal, setShowLoginModal);
 
   const loginMutation = useLogin();
 

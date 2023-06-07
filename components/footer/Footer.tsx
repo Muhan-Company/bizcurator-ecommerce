@@ -11,8 +11,8 @@ export default function Footer() {
   const { openModal } = useModal(showLogInModal, setShowLogInModal);
 
   return (
-    <footer className="bg-main pt-5 pb-24 lg:py-10 lg:px-24 xl:px-48">
-      <div className="flex flex-col lg:flex-row items-center gap-y-5 lg:gap-x-5 pb-5">
+    <footer className="bg-main pt-5 pb-24 sm:pb-5 lg:p-10">
+      <div className="flex flex-col lg:flex-row items-center space-y-5 lg:space-x-5 pb-5">
         {accessToken ? null : (
           <>
             <button onClick={openModal} className="footer-btn">
