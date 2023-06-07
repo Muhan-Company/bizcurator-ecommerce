@@ -2,30 +2,32 @@ import { logInModalState } from '@/atoms/modalAtoms';
 import useAccessTokenCookie from '@/hooks/useAccessTokenCookie';
 import useModal from '@/hooks/useModal';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 
 export default function Footer() {
   const [showLogInModal, setShowLogInModal] = useRecoilState(logInModalState);
   const accessToken = useAccessTokenCookie();
+  const { push } = useRouter();
 
   const { openModal } = useModal(showLogInModal, setShowLogInModal);
 
   return (
     <footer className="bg-main pt-5 pb-24 sm:pb-5 lg:p-10">
-      <div className="flex flex-col lg:flex-row items-center space-y-5 lg:space-x-5 pb-5">
+      <div className="flex flex-col lg:flex-row items-center space-y-5 lg:space-y-0 lg:space-x-5 pb-5">
         {accessToken ? null : (
-          <>
+          <section className="lg:space-x-5 flex flex-col space-y-5 lg:space-y-0 lg:block">
             <button onClick={openModal} className="footer-btn">
               로그인
             </button>
-            <Link href={'/signup'} className="footer-btn">
+            <button onClick={() => push('/signup')} className="footer-btn">
               회원가입
-            </Link>
-          </>
+            </button>
+          </section>
         )}
-        <Link href={'/customer'} className="footer-btn">
+        <button onClick={() => push('/customer')} className="footer-btn">
           고객센터
-        </Link>
+        </button>
       </div>
       <div className="w-full seperator"></div>
       <div className="flex flex-col items-center lg:items-start py-5 gap-y-1.5 mb-5">
