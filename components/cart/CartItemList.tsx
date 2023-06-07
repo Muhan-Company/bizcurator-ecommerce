@@ -139,7 +139,7 @@ export default function CartItemList() {
 
           <CartPaymentAmountInfo totalCost={totalPrice} totalDiscount={totalDiscountPrice} />
 
-          <div className="center gap-[7px] mt-10">
+          <div className="center gap-[7px] mt-5">
             {/* todo: 바로구매 페이지로 이동 */}
             <Link href="/products/categories/0?sort=newest" className="w-[172px] h-[50px] btn-white grow py-[19px]">
               다른 제품 보기

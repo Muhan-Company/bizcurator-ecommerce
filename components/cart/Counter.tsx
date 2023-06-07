@@ -26,7 +26,7 @@ export default function Counter({ minimum_quantity, qty, setQty }: CounterPropsT
         )}
         <input
           type="number"
-          className="w-[34px] box-content"
+          className="w-[34px] box-content text-label-sm md:text-sm text-center"
           onChange={handleChange}
           value={qty}
           min={minimum_quantity}

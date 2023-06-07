@@ -13,21 +13,21 @@
   }
 
   .btn-white {
-    @apply center border border-[#DDDDDD] rounded-[8px] bg-white box-border cursor-pointer font-normal;
+    @apply center border border-[#DDDDDD] rounded-lg bg-white font-normal;
   }
   .btn-primary {
-    @apply center rounded-[8px] bg-primary text-white cursor-pointer font-normal;
+    @apply center rounded-lg bg-primary text-white font-normal;
   }
 
   .btn-mobile {
     @apply absolute bottom-[90px] w-full;
   }
   .btn-large {
-    @apply w-full h-[42px] center rounded-[8px] bg-primary text-white cursor-pointer font-medium;
+    @apply w-full h-[42px] center rounded-lg bg-primary text-white font-medium;
   }
 
   .btn-order-detail {
-    @apply w-[65px] h-[32px] ml-[6px] center border border-[#DDDDDD] rounded-[8px] bg-white box-border cursor-pointer font-normal;
+    @apply w-[65px] h-[32px] ml-[6px] center border border-[#DDDDDD] rounded-lg bg-white box-border cursor-pointer font-normal;
   }
 
   .btn-disabled {
@@ -197,9 +197,5 @@
   input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
-  }
-  input[type='number'] {
-    /* Add your custom styles here */
-    @apply text-label-sm md:text-sm text-center;
   }
 }
