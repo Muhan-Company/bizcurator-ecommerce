@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { MagnifyingGlassIcon } from '../Icons';
 import { useRouter } from 'next/router';
 import { sortByState } from '@/atoms/sortByAtom';
@@ -12,13 +12,13 @@ export default function SearchModal() {
 
   const [query, setQuery] = useState<string>('');
 
-  const router = useRouter();
+  const { push } = useRouter();
 
   const sortBy = useRecoilValue(sortByState);
 
-  const search = (e: React.FormEvent<HTMLFormElement>) => {
+  const search = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/products/results?search_query=${encodeURIComponent(query)}&sort=${sortBy}`);
+    push(`/products/results?search_query=${encodeURIComponent(query)}&sort=${sortBy}`);
     closeModal();
   };
 
@@ -35,10 +35,10 @@ export default function SearchModal() {
           className="text-lg md:text-xl outline-none flex-1"
           autoFocus
         />
-        <button type="submit">
+        <button type="submit" disabled={!query.trim()} className="disabled:opacity-50 disabled:cursor-not-allowed">
           <MagnifyingGlassIcon color="main" />
         </button>
-        <button hidden type="submit"></button>
+        <button hidden type="submit" disabled={!query.trim()}></button>
       </form>
       <div onClick={closeModal} className="modal-overlay"></div>
     </>
