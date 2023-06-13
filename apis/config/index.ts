@@ -1,6 +1,6 @@
 import { REFRESH_URL } from '@/utils/constants';
 import axios from 'axios';
-import { toast } from 'react-hot-toast';
+// import { toast } from 'react-hot-toast';
 import { getRefreshToken } from '../users';
 
 const axiosInstance = axios.create({
@@ -48,9 +48,9 @@ axiosInstance.interceptors.response.use(
     // Server-side에서 response 객체가 존재하지 않을 때 에러가 발생하기 때문에, response가 존재하면 코드 실행하는 조건 추가
     if (response && response.status && response.data) {
       const { data } = response;
-      toast.error(data?.message, {
-        id: 'response-error',
-      });
+      // toast.error(data?.message, {
+      //   id: 'response-error',
+      // });
 
       // 인증(토큰 만료) 에러일 경우
       if (data?.code === 401) {
