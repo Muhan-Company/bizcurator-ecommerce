@@ -2,16 +2,13 @@ import { useState } from 'react';
 import { MagnifyingGlassIcon } from '../Icons';
 import { useRouter } from 'next/router';
 import { sortByState } from '@/atoms/sortByAtom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { searchModalState } from '@/atoms/modalAtoms';
+import useModal from '@/hooks/useModal';
 
 export default function SearchModal() {
-  const setShowSearchModal = useSetRecoilState(searchModalState);
-
-  const closeModal = () => {
-    setShowSearchModal(false);
-    document.body.classList.remove('modal-open');
-  };
+  const [showSearchModal, setShowSearchModal] = useRecoilState(searchModalState);
+  const { closeModal } = useModal(showSearchModal, setShowSearchModal);
 
   const [query, setQuery] = useState<string>('');
 
