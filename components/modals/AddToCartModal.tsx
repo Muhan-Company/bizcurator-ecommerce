@@ -17,7 +17,7 @@ interface AddToCartProps {
   showAddToCartModal: boolean;
   setShowAddToCartModal: Dispatch<SetStateAction<boolean>>;
   quantity: number;
-  setQuantity: React.Dispatch<React.SetStateAction<number>>;
+  setQuantity: Dispatch<SetStateAction<number>>;
 }
 
 // todo: 클릭한 상품 data 가져와서 적용하기
